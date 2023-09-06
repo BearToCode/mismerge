@@ -36,6 +36,6 @@
 	class="limerge {clazz}"
 >
 	<View bind:mountedBlocks={mountedBlocks.lhs} blocks={blocks.lhs} />
-	<Connector {mountedBlocks} />
+	<Connector {mountedBlocks} colors={editorColors} />
 	<View bind:mountedBlocks={mountedBlocks.rhs} blocks={blocks.rhs} />
 </div>

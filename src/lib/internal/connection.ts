@@ -1,4 +1,5 @@
 import type { DiffBlock, MountedDiffBlock } from './blocks';
+import type { EditorColors } from './colors';
 
 export type BlockConnection<
 	From extends DiffBlock = DiffBlock,
@@ -30,7 +31,7 @@ export function generateConnections(blocks: MountedDiffBlock[]) {
 					from: referenceBlock,
 					to: block
 				});
-		} else if (block.type == 'partially_added') {
+		} else if (block.type == 'partially_removed') {
 			const referenceBlock = blocks.find((b) => b.id == block.referenceId);
 			if (referenceBlock)
 				connections.push({
@@ -42,7 +43,11 @@ export function generateConnections(blocks: MountedDiffBlock[]) {
 	return connections;
 }
 
-export function drawConnections(canvas: HTMLCanvasElement, connections: BlockConnection[]) {
+export function drawConnections(
+	canvas: HTMLCanvasElement,
+	connections: BlockConnection[],
+	colors: EditorColors
+) {
 	const ctx = canvas.getContext('2d');
 	if (!ctx) return;
 
@@ -50,16 +55,42 @@ export function drawConnections(canvas: HTMLCanvasElement, connections: BlockCon
 
 	for (const connection of connections) {
 		if (!connection.from.elem || !connection.to.elem) continue;
-
-		ctx.beginPath();
 		const fromOffsetTop = connection.from.elem.offsetTop;
 		const toOffsetTop = connection.to.elem.offsetTop;
-		const fromHeight = connection.from.elem.clientHeight;
-		const toHeight = connection.to.elem.clientHeight;
-		ctx.moveTo(fromOffsetTop, 0);
-		ctx.lineTo(toOffsetTop, width);
-		ctx.lineTo(toOffsetTop + toHeight, width);
-		ctx.lineTo(fromOffsetTop + fromHeight, 0);
+		const fromHeight = connection.from.elem.offsetHeight;
+		const toHeight = connection.to.elem.offsetHeight;
+
+		const BezierOffset = 8;
+
+		ctx.beginPath();
+		ctx.moveTo(0, fromOffsetTop);
+		ctx.bezierCurveTo(
+			BezierOffset, // first control point x
+			fromOffsetTop, // first control point y
+			width - BezierOffset, // second control point x
+			toOffsetTop, // second control point y
+			width, // end x
+			toOffsetTop // end y
+		);
+		ctx.lineTo(width, toOffsetTop + toHeight);
+		ctx.bezierCurveTo(
+			width - BezierOffset,
+			toOffsetTop + toHeight,
+			BezierOffset,
+			fromOffsetTop + fromHeight,
+			0,
+			fromOffsetTop + fromHeight
+		);
+		if (connection.from.type == 'added' || connection.from.type == 'added_placeholder')
+			ctx.fillStyle = colors.darkGreen;
+		else if (connection.from.type == 'removed' || connection.from.type == 'removed_placeholder')
+			ctx.fillStyle = colors.darkRed;
+		else {
+			const gradient = ctx.createLinearGradient(0, 0, width, 0);
+			gradient.addColorStop(0, colors.lightRed);
+			gradient.addColorStop(1, colors.lightGreen);
+			ctx.fillStyle = gradient;
+		}
 		ctx.fill();
 		ctx.closePath();
 	}

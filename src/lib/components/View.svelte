@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { DiffBlock, MountedDiffBlock } from '$lib/internal/blocks';
 	import type { EditorColors } from '$lib/internal/colors';
+	import { onMount } from 'svelte';
 	import AddedBlock from './blocks/AddedBlock.svelte';
 	import AddedBlockPlaceholder from './blocks/AddedBlockPlaceholder.svelte';
 	import PartiallyAddedBlock from './blocks/PartiallyAddedBlock.svelte';
@@ -16,6 +17,16 @@
 
 	let elements: HTMLDivElement[];
 	$: elements = new Array(blocks.length);
+
+	onMount(() => {
+		for (const [index, block] of blocks.entries()) {
+			mountedBlocks.push({
+				...block,
+				elem: elements[index]
+			});
+		}
+		mountedBlocks = mountedBlocks;
+	});
 </script>
 
 <div class="view {clazz}">
@@ -34,19 +45,6 @@
 			<PartiallyRemovedBlock bind:elem={elements[index]} {block} />
 		{:else if block.type == 'unchanged'}
 			<UnchangedBlock bind:elem={elements[index]} {block} />
-		{/if}
-
-		{#if index == blocks.length - 1}
-			<!-- Generate mounted blocks when all elements have been created -->
-			{@const _ = void (function () {
-				for (const [index, block] of blocks.entries()) {
-					mountedBlocks.push({
-						...block,
-						elem: elements[index]
-					});
-					mountedBlocks = mountedBlocks;
-				}
-			})()}
 		{/if}
 	{/each}
 </div>
