@@ -1,0 +1,66 @@
+.limerge {
+	display: flex;
+}
+
+.limerge .view {
+	width: calc(50% - 2rem);
+	position: relative;
+}
+
+.limerge .connector {
+	width: 4rem;
+}
+
+.limerge .connector canvas {
+	width: 100%;
+	height: 100%;
+}
+
+.limerge pre {
+	margin: 0;
+}
+
+.limerge .partially-added-block pre,
+.limerge .partially-removed-block pre {
+	display: inline;
+}
+
+.limerge .added-block {
+	background-color: var(--dark-green);
+}
+
+.limerge .removed-block {
+	background-color: var(--dark-red);
+}
+
+.limerge .partially-added-block {
+	background-color: var(--light-green);
+}
+
+.limerge .partially-removed-block {
+	background-color: var(--light-red);
+}
+
+.limerge .partially-added-block .added {
+	background-color: var(--dark-green);
+}
+
+.limerge .partially-removed-block .removed {
+	background-color: var(--dark-red);
+}
+
+.limerge .added-block-placeholder {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: var(--dark-green);
+}
+
+.limerge .removed-block-placeholder {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: var(--dark-red);
+}
