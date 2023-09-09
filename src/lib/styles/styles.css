@@ -7,6 +7,29 @@
 	position: relative;
 }
 
+.limerge .view textarea {
+	position: absolute;
+	left: 5rem;
+	right: 0;
+	top: 0;
+	bottom: 0;
+
+	width: 100%;
+	min-height: 100%;
+
+	border: none;
+	padding: 0;
+	margin: 0;
+
+	outline: none;
+	background: transparent;
+
+	resize: none;
+	overflow-y: hidden;
+
+	tab-size: 2rem;
+}
+
 .limerge .connector {
 	width: 4rem;
 	position: relative;
@@ -21,40 +44,60 @@
 	image-rendering: crisp-edges;
 }
 
-.limerge pre {
+.limerge .view pre {
 	margin: 0;
 }
 
-.limerge .partially-added-block pre,
-.limerge .partially-removed-block pre {
+.limerge .view .line {
+	display: flex;
+}
+
+.limerge .view .line .line-number {
+	width: 4rem;
+	text-align: right;
+	padding-right: 1rem;
+}
+
+.limerge .view .line .block {
+	width: calc(100% - 4rem);
+}
+
+.limerge .view.editable pre {
+	color: transparent;
+	white-space: pre-wrap;
+	tab-size: 2rem;
+}
+
+.limerge .block.partially_added pre,
+.limerge .block.partially_removed pre {
 	display: inline;
 }
 
-.limerge .added-block {
+.limerge .block.added {
 	background-color: var(--dark-green);
 }
 
-.limerge .removed-block {
+.limerge .block.removed {
 	background-color: var(--dark-red);
 }
 
-.limerge .partially-added-block {
+.limerge .block.partially_added {
 	background-color: var(--light-green);
 }
 
-.limerge .partially-removed-block {
+.limerge .block.partially_removed {
 	background-color: var(--light-red);
 }
 
-.limerge .partially-added-block .added {
+.limerge .block.partially_added .added {
 	background-color: var(--dark-green);
 }
 
-.limerge .partially-removed-block .removed {
+.limerge .block.partially_removed .removed {
 	background-color: var(--dark-red);
 }
 
-.limerge .added-block-placeholder {
+.limerge .added_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -62,7 +105,7 @@
 	background: var(--dark-green);
 }
 
-.limerge .removed-block-placeholder {
+.limerge .removed_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;

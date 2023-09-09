@@ -1,4 +1,4 @@
-import { type Change, diffChars, diffLines } from 'diff';
+import type { Change } from 'diff';
 
 export type DiffBlock =
 	| UnchangedBlock
@@ -16,8 +16,13 @@ export type DiffBlock =
  */
 type BaseDiffBlock = { id: string };
 
-export type UnchangedBlock = BaseDiffBlock & {
+type Line = {
 	content: string;
+	number: number;
+};
+
+export type UnchangedBlock = BaseDiffBlock & {
+	lines: Line[];
 	type: 'unchanged';
 };
 
@@ -25,7 +30,7 @@ export type UnchangedBlock = BaseDiffBlock & {
  * Whole line was added.
  */
 export type AddedBlock = BaseDiffBlock & {
-	content: string;
+	lines: Line[];
 	type: 'added';
 };
 
@@ -41,7 +46,7 @@ export type AddedBlockPlaceholder = BaseDiffBlock & {
  * Whole line was removed.
  */
 export type RemovedBlock = BaseDiffBlock & {
-	content: string;
+	lines: Line[];
 	type: 'removed';
 };
 
@@ -53,109 +58,192 @@ export type RemovedBlockPlaceholder = BaseDiffBlock & {
 	type: 'removed_placeholder';
 };
 
+export type LinesDiff = Array<{
+	number: number;
+	diff: Change[];
+}>;
+
+/**
+ * Line was partially added.
+ */
 export type PartiallyAddedBlock = BaseDiffBlock & {
 	referenceId: string;
 	type: 'partially_added';
-	diff: Change[];
+	lines: LinesDiff;
 };
 
+/**
+ * Line was partially removed.
+ */
 export type PartiallyRemovedBlock = BaseDiffBlock & {
 	referenceId: string;
 	type: 'partially_removed';
-	diff: Change[];
+	lines: LinesDiff;
 };
 
 export type MountedDiffBlock<Block extends DiffBlock = DiffBlock> = Block & {
 	elem: HTMLDivElement;
 };
 
-/**
- * Generate diff blocks for the editor.
- * @param lhs Left hand side content.
- * @param rhs Right hand side content.
- * @returns Diff blocks to use into Views.
- */
-export function generateDiffBlocks(lhs: string, rhs: string) {
-	const blocks: { lhs: DiffBlock[]; rhs: DiffBlock[] } = {
-		lhs: [],
-		rhs: []
-	};
+// /**
+//  * Generate diff blocks for the editor.
+//  * @param lhs Left hand side content.
+//  * @param rhs Right hand side content.
+//  * @returns Diff blocks to use into Views.
+//  */
+// export function generateDiffBlocks(lhs: string, rhs: string) {
+// 	const blocks: { lhs: DiffBlock[]; rhs: DiffBlock[] } = {
+// 		lhs: [],
+// 		rhs: []
+// 	};
 
-	let previousChange: Change | undefined;
-	let id = 0;
+// 	let previousChange: Change | undefined;
+// 	let id = 0;
+// 	let lhsLineNumber = 1;
+// 	let rhsLineNumber = 1;
 
-	const getId = () => (id++).toString();
+// 	const getId = () => (id++).toString();
+// 	const getLhsLineNumber = () => lhsLineNumber++;
+// 	const getRhsLineNumber = () => rhsLineNumber++;
+// 	const getLinesDiff = (lhs: string, rhs: string): Array<Change[]> =>
+// 		diffChars(lhs, rhs)
+// 			.map((change) =>
+// 				// "This \n is \n a change" => ["This \n" + "is \n", "a change"]
+// 				change.value.split('\n').map((line, index) => ({
+// 					...change,
+// 					value: line + (index == change.value.split('\n').length - 1 ? '' : '\n')
+// 				}))
+// 			)
+// 			.flat()
+// 			.reduce<Array<Change[]>>(
+// 				(acc, change) => {
+// 					const incomplete = acc[acc.length - 1];
+// 					incomplete.push(change);
+// 					if (change.value.endsWith('\n')) {
+// 						acc.push([]);
+// 					}
+// 					return acc;
+// 				},
+// 				[[]]
+// 			)
+// 			.map((t) => {
+// 				console.log(t);
+// 				return t;
+// 			});
+// 	const getLhsLinesDiff = (lhs: string, rhs: string): LinesDiff =>
+// 		getLinesDiff(lhs, rhs)
+// 			.filter((line) => line.find((change) => !change.added))
+// 			.map((line) => ({
+// 				number: getLhsLineNumber(),
+// 				diff: line
+// 			}));
+// 	const getRhsLinesDiff = (lhs: string, rhs: string): LinesDiff =>
+// 		getLinesDiff(lhs, rhs)
+// 			.filter((line) => line.find((change) => !change.removed))
+// 			.map((line) => ({
+// 				number: getRhsLineNumber(),
+// 				diff: line
+// 			}));
 
-	for (const change of diffLines(lhs, rhs)) {
-		if (!change.added && !change.removed) {
-			// Unchanged
-			const block: UnchangedBlock = {
-				type: 'unchanged',
-				content: change.value,
-				id: getId()
-			};
-			blocks.lhs.push(block);
-			blocks.rhs.push(block);
-		} else if (
-			(change.added && previousChange?.removed) ||
-			(previousChange?.added && change.removed)
-		) {
-			// Partially modified
-			// Remove "removed" blocks from previous iteration
-			blocks.lhs.pop();
-			blocks.rhs.pop();
+// 	const addLhsLines = <T>(block: T, content: string): T & { lines: Line[] } => {
+// 		console.log('lhs', content.replaceAll('\n', '\\n'));
+// 		return {
+// 			...block,
+// 			lines: removeEndOfLine(content)
+// 				.split('\n')
+// 				.map((line) => ({ content: line, number: getLhsLineNumber() }))
+// 		};
+// 	};
+// 	const addRhsLines = <T>(block: T, content: string): T & { lines: Line[] } => {
+// 		console.log('rhs', content.replaceAll('\n', '\\n'));
+// 		return {
+// 			...block,
+// 			lines: removeEndOfLine(content)
+// 				.split('\n')
+// 				.map((line) => ({ content: line, number: getRhsLineNumber() }))
+// 		};
+// 	};
 
-			const diff = diffChars(previousChange.value, change.value);
-			const partiallyAddedId = getId();
-			const partiallyRemovedId = getId();
+// 	const removeEndOfLine = (string: string) =>
+// 		string.endsWith('\n') ? string.slice(0, -1) : string;
 
-			const partiallyAddedBlock: PartiallyAddedBlock = {
-				referenceId: partiallyRemovedId,
-				type: 'partially_added',
-				diff,
-				id: partiallyAddedId
-			};
-			const partiallyRemovedBlock: PartiallyRemovedBlock = {
-				referenceId: partiallyAddedId,
-				type: 'partially_removed',
-				diff,
-				id: partiallyRemovedId
-			};
+// 	for (const change of diffLines(lhs, rhs)) {
+// 		if (!change.added && !change.removed) {
+// 			// Unchanged
+// 			const block = {
+// 				type: 'unchanged',
+// 				id: getId()
+// 			} as const;
+// 			blocks.lhs.push(addLhsLines(block, change.value));
+// 			blocks.rhs.push(addRhsLines(block, change.value));
+// 			// } else if (
+// 			// 	(change.added && previousChange?.removed) ||
+// 			// 	(previousChange?.added && change.removed)
+// 			// ) {
+// 			// 	// Partially modified
+// 			// 	// Remove blocks from previous iteration
+// 			// 	const popLhs = blocks.lhs.pop();
+// 			// 	const popRhs = blocks.rhs.pop();
+// 			// 	if (popLhs?.type == 'removed') lhsLineNumber -= popLhs.lines.length;
+// 			// 	if (popRhs?.type == 'added') rhsLineNumber -= popRhs.lines.length;
 
-			blocks.rhs.push(partiallyAddedBlock);
-			blocks.lhs.push(partiallyRemovedBlock);
-		} else if (change.added) {
-			// Added
-			const addedBlock: AddedBlock = {
-				type: 'added',
-				content: change.value,
-				id: getId()
-			};
-			const addedPlaceholderBlock: AddedBlockPlaceholder = {
-				referenceBlock: addedBlock,
-				type: 'added_placeholder',
-				id: getId()
-			};
-			blocks.rhs.push(addedBlock);
-			blocks.lhs.push(addedPlaceholderBlock);
-		} else if (change.removed) {
-			// Removed
-			const removedBlock: RemovedBlock = {
-				type: 'removed',
-				content: change.value,
-				id: getId()
-			};
-			const removedPlaceholderBlock: RemovedBlockPlaceholder = {
-				referenceBlock: removedBlock,
-				type: 'removed_placeholder',
-				id: getId()
-			};
-			blocks.rhs.push(removedPlaceholderBlock);
-			blocks.lhs.push(removedBlock);
-		}
+// 			// 	console.log(change, previousChange);
 
-		previousChange = change;
-	}
+// 			// 	const partiallyAddedId = getId();
+// 			// 	const partiallyRemovedId = getId();
 
-	return blocks;
-}
+// 			// 	const partiallyAddedBlock: PartiallyAddedBlock = {
+// 			// 		referenceId: partiallyRemovedId,
+// 			// 		type: 'partially_added',
+// 			// 		lines: getRhsLinesDiff(previousChange.value, change.value),
+// 			// 		id: partiallyAddedId
+// 			// 	};
+// 			// 	const partiallyRemovedBlock: PartiallyRemovedBlock = {
+// 			// 		referenceId: partiallyAddedId,
+// 			// 		type: 'partially_removed',
+// 			// 		lines: getLhsLinesDiff(previousChange.value, change.value),
+// 			// 		id: partiallyRemovedId
+// 			// 	};
+
+// 			// 	blocks.rhs.push(partiallyAddedBlock);
+// 			// 	blocks.lhs.push(partiallyRemovedBlock);
+// 		} else if (change.added) {
+// 			// Added
+// 			const addedBlock = addRhsLines(
+// 				{
+// 					type: 'added',
+// 					id: getId()
+// 				} as const,
+// 				change.value
+// 			);
+// 			const addedPlaceholderBlock: AddedBlockPlaceholder = {
+// 				referenceBlock: addedBlock,
+// 				type: 'added_placeholder',
+// 				id: getId()
+// 			};
+// 			blocks.rhs.push(addedBlock);
+// 			blocks.lhs.push(addedPlaceholderBlock);
+// 		} else if (change.removed) {
+// 			// Removed
+// 			const removedBlock: RemovedBlock = addLhsLines(
+// 				{
+// 					type: 'removed',
+// 					content: change.value,
+// 					id: getId()
+// 				} as const,
+// 				change.value
+// 			);
+// 			const removedPlaceholderBlock: RemovedBlockPlaceholder = {
+// 				referenceBlock: removedBlock,
+// 				type: 'removed_placeholder',
+// 				id: getId()
+// 			};
+// 			blocks.rhs.push(removedPlaceholderBlock);
+// 			blocks.lhs.push(removedBlock);
+// 		}
+
+// 		previousChange = change;
+// 	}
+
+// 	return blocks;
+// }

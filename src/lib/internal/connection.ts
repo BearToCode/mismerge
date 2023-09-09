@@ -46,7 +46,9 @@ export function generateConnections(blocks: MountedDiffBlock[]) {
 export function drawConnections(
 	canvas: HTMLCanvasElement,
 	connections: BlockConnection[],
-	colors: EditorColors
+	colors: EditorColors,
+	lhsViewElem: HTMLElement,
+	rhsViewElem: HTMLElement
 ) {
 	const ctx = canvas.getContext('2d');
 	if (!ctx) return;
@@ -55,8 +57,10 @@ export function drawConnections(
 
 	for (const connection of connections) {
 		if (!connection.from.elem || !connection.to.elem) continue;
-		const fromOffsetTop = connection.from.elem.offsetTop;
-		const toOffsetTop = connection.to.elem.offsetTop;
+		const fromOffsetTop =
+			connection.from.elem.getBoundingClientRect().top - lhsViewElem.getBoundingClientRect().top;
+		const toOffsetTop =
+			connection.to.elem.getBoundingClientRect().top - rhsViewElem.getBoundingClientRect().top;
 		const fromHeight = connection.from.elem.offsetHeight;
 		const toHeight = connection.to.elem.offsetHeight;
 

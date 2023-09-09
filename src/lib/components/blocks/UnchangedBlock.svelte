@@ -2,9 +2,17 @@
 	import type { UnchangedBlock } from '$lib/internal/blocks';
 
 	export let block: UnchangedBlock;
-	export let elem: HTMLDivElement;
 </script>
 
-<div bind:this={elem} class="unchanged-block">
-	<pre>{block.content}</pre>
+<div class="block {block.type}">
+	{#each block.lines as line}
+		<div class="line">
+			<div class="line-number">
+				{line.number}
+			</div>
+			<div class="content">
+				<pre>{line.content}</pre>
+			</div>
+		</div>
+	{/each}
 </div>

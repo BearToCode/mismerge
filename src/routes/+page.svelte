@@ -20,17 +20,12 @@
 
 <main>
 	<MergeEditor
-		lhs="asd
-abc
-def
-ghi
-jkl"
-		rhs="abc
-123
-def
-ghi456
-789
-10"
+		lhs="1
+2"
+		rhs="1
+3"
+		lhsEditable
+		rhsEditable
 	/>
 </main>
 

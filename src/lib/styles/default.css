@@ -1,3 +1,9 @@
 .limerge {
 	width: 100%;
 }
+
+.limerge pre,
+.limerge textarea {
+	font-family: 'Fira Code', monospace;
+	font-variant-ligatures: normal;
+}
