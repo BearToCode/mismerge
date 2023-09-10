@@ -176,9 +176,9 @@ class Assembler {
 				// Split diffs that include newlines into multiple diffs
 				.map((change) => {
 					// "This \n is \n a change" => ["This \n" + "is \n", "a change"]
-					return change.value.split('\n').map((line, index) => ({
+					return change.value.split('\n').map((line, index, lines) => ({
 						...change,
-						value: line + (index == change.value.split('\n').length - 1 ? '' : '\n')
+						value: line + (index == lines.length - 1 ? '' : '\n')
 					}));
 				})
 				// Flatten array
@@ -195,6 +195,9 @@ class Assembler {
 					},
 					[[]]
 				)
+				.filter((line, index, lines) => {
+					return !(index == lines.length - 1 && line.length == 1 && line[0].value == '');
+				})
 				// Add line numbers
 				.map((line) => ({
 					number: side === 'lhs' ? this.getLhsLineNumber() : this.getRhsLineNumber(),
@@ -204,13 +207,11 @@ class Assembler {
 	}
 
 	private removeEndOfLine(content: string, side: 'lhs' | 'rhs') {
-		if (
-			!this.linesDiff.find((change) => {
-				if (side == 'lhs') return !change.added;
-				return !change.removed;
-			})
-		)
-			return content;
+		const nextSideChange = this.linesDiff.find((change) => {
+			if (side == 'lhs') return !change.added;
+			return !change.removed;
+		});
+		if (!nextSideChange) return content;
 		return content.endsWith('\n') ? content.slice(0, -1) : content;
 	}
 
