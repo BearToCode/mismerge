@@ -27,7 +27,6 @@ class Assembler {
 		this.lhsLineNumber = 1;
 		this.rhsLineNumber = 1;
 		this.linesDiff = diffLines(lhs, rhs);
-
 		this.advance();
 		while (this.currentChange) {
 			this.assembleBlock(this.currentChange);
@@ -156,7 +155,7 @@ class Assembler {
 	}
 
 	private intoLines(content: string, side: 'lhs' | 'rhs') {
-		const lines = this.removeEndOfLine(content).split('\n');
+		const lines = this.removeEndOfLine(content, side).split('\n');
 		return lines.map((line) => ({
 			content: line,
 			number: side === 'lhs' ? this.getLhsLineNumber() : this.getRhsLineNumber()
@@ -166,16 +165,18 @@ class Assembler {
 	private intoLinesDiff(lhs: string, rhs: string, side: 'lhs' | 'rhs'): LinesDiff {
 		return (
 			diffWordsWithSpace(lhs, rhs)
+				.filter((change) => {
+					if (side === 'lhs') return !change.added;
+					return !change.removed;
+				})
 				// Split diffs that include newlines into multiple diffs
-				.map((change) =>
+				.map((change) => {
 					// "This \n is \n a change" => ["This \n" + "is \n", "a change"]
-					this.removeEndOfLine(change.value)
-						.split('\n')
-						.map((line, index) => ({
-							...change,
-							value: line + (index == change.value.split('\n').length - 1 ? '' : '\n')
-						}))
-				)
+					return change.value.split('\n').map((line, index) => ({
+						...change,
+						value: line + (index == change.value.split('\n').length - 1 ? '' : '\n')
+					}));
+				})
 				// Flatten array
 				.flat()
 				// Group by line
@@ -190,13 +191,6 @@ class Assembler {
 					},
 					[[]]
 				)
-				// Remove empty lines
-				.filter((line) =>
-					line.find((change) => {
-						if (side === 'lhs') return !change.added;
-						return !change.removed;
-					})
-				)
 				// Add line numbers
 				.map((line) => ({
 					number: side === 'lhs' ? this.getLhsLineNumber() : this.getRhsLineNumber(),
@@ -205,8 +199,14 @@ class Assembler {
 		);
 	}
 
-	private removeEndOfLine(content: string) {
-		if (!this.nextChange) return content;
+	private removeEndOfLine(content: string, side: 'lhs' | 'rhs') {
+		if (
+			!this.linesDiff.find((change) => {
+				if (side == 'lhs') return !change.added;
+				return !change.removed;
+			})
+		)
+			return content;
 		return content.endsWith('\n') ? content.slice(0, -1) : content;
 	}
 }
