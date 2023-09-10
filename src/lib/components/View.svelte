@@ -51,7 +51,7 @@
 </script>
 
 <div bind:this={elem} class="view {editable ? 'editable' : ''} {clazz}">
-	{#each blocks as block, index}
+	{#each blocks as block}
 		{#if block.type == 'added'}
 			<AddedBlock {block} />
 		{:else if block.type == 'added_placeholder'}

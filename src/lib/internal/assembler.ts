@@ -27,11 +27,15 @@ class Assembler {
 		this.lhsLineNumber = 1;
 		this.rhsLineNumber = 1;
 		this.linesDiff = diffLines(lhs, rhs);
+
 		this.advance();
 		while (this.currentChange) {
 			this.assembleBlock(this.currentChange);
 			this.advance();
 		}
+
+		this.addPlaceholderBlock('lhs');
+		this.addPlaceholderBlock('rhs');
 
 		return {
 			lhs: this.lhsBlocks,
@@ -208,6 +212,19 @@ class Assembler {
 		)
 			return content;
 		return content.endsWith('\n') ? content.slice(0, -1) : content;
+	}
+
+	private addPlaceholderBlock(side: 'lhs' | 'rhs') {
+		const blocks = side == 'lhs' ? this.lhsBlocks : this.rhsBlocks;
+		if (
+			!blocks.find((block) => !['added_placeholder', 'removed_placeholder'].includes(block.type))
+		) {
+			blocks.push({
+				type: 'unchanged',
+				id: this.getId(),
+				lines: [{ number: 1, content: '' }]
+			});
+		}
 	}
 }
 
