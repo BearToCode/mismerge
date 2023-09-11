@@ -5,6 +5,7 @@
 	import { joinOnUndefined } from '$lib/internal/utils';
 	import Connector from './Connector.svelte';
 	import View from './View.svelte';
+	import type { LineDiffAlgorithm } from '$lib/internal/diff';
 
 	/**
 	 * Left hand side content.
@@ -26,6 +27,11 @@
 	 * Whether the right hand side content is editable.
 	 */
 	export let rhsEditable = false;
+	/**
+	 * Line diff algorithm.
+	 * @default "words_with_space"
+	 */
+	export let lineDiffAlgorithm: LineDiffAlgorithm | undefined = undefined;
 	let clazz = '';
 	export { clazz as class };
 
@@ -47,7 +53,7 @@
 	let lhsViewElem: HTMLDivElement;
 	let rhsViewElem: HTMLDivElement;
 
-	$: blocks = assembleBlocks(lhs, rhs);
+	$: blocks = assembleBlocks(lhs, rhs, { lineDiffAlgorithm });
 </script>
 
 <div

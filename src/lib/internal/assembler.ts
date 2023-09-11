@@ -1,4 +1,4 @@
-import { diffLines, type Change, diffWordsWithSpace } from 'diff';
+import { diffLines, type Change } from 'diff';
 import type {
 	AddedBlock,
 	AddedBlockPlaceholder,
@@ -10,8 +10,11 @@ import type {
 	RemovedBlockPlaceholder,
 	UnchangedBlock
 } from './blocks';
+import { getLineDiffAlgorithm, type LineDiffAlgorithm } from './diff';
 
 class Assembler {
+	constructor(private readonly lineDiffAlgorithm: LineDiffAlgorithm) {}
+
 	public assemble(
 		lhs: string,
 		rhs: string
@@ -168,7 +171,7 @@ class Assembler {
 
 	private intoLinesDiff(lhs: string, rhs: string, side: 'lhs' | 'rhs'): LinesDiff {
 		return (
-			diffWordsWithSpace(lhs, rhs)
+			getLineDiffAlgorithm(this.lineDiffAlgorithm)(lhs, rhs)
 				.filter((change) => {
 					if (side === 'lhs') return !change.added;
 					return !change.removed;
@@ -233,8 +236,13 @@ class Assembler {
  * Generate blocks for the editor.
  * @param lhs Left hand side content.
  * @param rhs Right hand side content.
+ * @param options Assemble options.
  * @returns Diff blocks to use in the View component.
  */
-export function assembleBlocks(lhs: string, rhs: string) {
-	return new Assembler().assemble(lhs, rhs);
+export function assembleBlocks(
+	lhs: string,
+	rhs: string,
+	options?: { lineDiffAlgorithm?: LineDiffAlgorithm }
+) {
+	return new Assembler(options?.lineDiffAlgorithm ?? 'words_with_space').assemble(lhs, rhs);
 }
