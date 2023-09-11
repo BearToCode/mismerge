@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MergeEditor from '$lib/components/MergeEditor.svelte';
+	import DiffVisualizer from '$lib/components/DiffVisualizer.svelte';
 	import '$lib/styles/styles.css';
 	import '$lib/styles/default.css';
 </script>
@@ -19,7 +19,7 @@
 </svelte:head>
 
 <main>
-	<MergeEditor
+	<DiffVisualizer
 		lhs="1
 2"
 		rhs="1
