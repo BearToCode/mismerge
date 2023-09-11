@@ -2,7 +2,7 @@
 	import type { DiffBlock, MountedDiffBlock } from '$lib/internal/blocks';
 	import type { EditorColors } from '$lib/internal/colors';
 	import { assembleBlocks } from '$lib/internal/assembler';
-	import { joinOnUndefined } from '$lib/internal/utils';
+	import { joinWithDefault } from '$lib/internal/utils';
 	import Connector from './Connector.svelte';
 	import View from './View.svelte';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff';
@@ -49,7 +49,7 @@
 		lightRed: '#fff2f0',
 		darkRed: '#ffdfd8'
 	};
-	const editorColors = joinOnUndefined(colors, defaultColors);
+	const editorColors = joinWithDefault(colors, defaultColors);
 	let lhsViewElem: HTMLDivElement;
 	let rhsViewElem: HTMLDivElement;
 

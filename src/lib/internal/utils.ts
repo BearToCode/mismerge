@@ -1,9 +1,9 @@
 /**
- * Joins two objects, but only if the value in the partial object is undefined
- * @param partial Partial object to join
- * @param defaults Default object to join
- * @returns The joined object
+ * Join a partial object with its default values.
+ * @param partial The partial object.
+ * @param defaults Its default values.
+ * @returns The joined values.
  */
-export function joinOnUndefined<T extends object>(partial: Partial<T>, defaults: T): T {
+export function joinWithDefault<T extends object>(partial: Partial<T>, defaults: T): T {
 	return Object.assign({}, defaults, partial);
 }
