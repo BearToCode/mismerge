@@ -36,8 +36,7 @@ function remapEoF(str: string) {
 }
 
 export function twoWayDiff(lhs: string, rhs: string): TwoWayChange[] {
-	let baseDiff = diffLines(remapEoF(lhs), remapEoF(rhs));
-	if (baseDiff[0].value == '\r\n') baseDiff = baseDiff.splice(1, baseDiff.length - 1);
+	const baseDiff = diffLines(remapEoF(lhs), remapEoF(rhs));
 	return baseDiff.map((change) => ({
 		content: change.value,
 		lhs: change.removed || !change.added,
