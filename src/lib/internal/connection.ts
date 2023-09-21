@@ -1,68 +1,71 @@
-import type { DiffBlock, MountedDiffBlock } from './blocks';
 import type { EditorColors } from './colors';
+import type { BlockComponent } from './component';
 
-export type BlockConnection<
-	From extends DiffBlock = DiffBlock,
-	To extends DiffBlock = DiffBlock
-> = {
-	from: MountedDiffBlock<From>;
-	to: MountedDiffBlock<To>;
+export type Connection = {
+	from: BlockComponent;
+	to: BlockComponent;
 };
 
-/**
- * Generates connections between diff blocks.
- * @param blocks The blocks to generate connections for.
- * @returns The connections between the blocks.
- */
-export function generateConnections(blocks: MountedDiffBlock[]) {
-	const connections: BlockConnection[] = [];
-	for (const block of blocks) {
-		if (block.type == 'added_placeholder') {
-			const referenceBlock = blocks.find((b) => b.id == block.referenceBlock.id);
-			if (referenceBlock)
-				connections.push({
-					from: block,
-					to: referenceBlock
-				});
-		} else if (block.type == 'removed_placeholder') {
-			const referenceBlock = blocks.find((b) => b.id == block.referenceBlock.id);
-			if (referenceBlock)
-				connections.push({
-					from: referenceBlock,
-					to: block
-				});
-		} else if (block.type == 'partially_removed') {
-			const referenceBlock = blocks.find((b) => b.id == block.referenceId);
-			if (referenceBlock)
-				connections.push({
-					from: block,
-					to: referenceBlock
-				});
-		}
+function componentColor(blockComponent: BlockComponent, colors: EditorColors) {
+	switch (blockComponent.type) {
+		case 'added':
+		case 'added_placeholder':
+			return colors.addedDark;
+		case 'removed':
+		case 'removed_placeholder':
+			return colors.removedDark;
+		case 'partially_added':
+			return colors.addedLight;
+		case 'partially_removed':
+			return colors.removedLight;
+		case 'merge_modified':
+			return colors.modifiedDark;
+		case 'modified_placeholder':
+			return colors.modifiedLight;
+		default:
+			return `#000000`;
 	}
-	return connections;
 }
 
+/**
+ * Draw block connections onto a canvas.
+ * @param canvas HTML canvas element.
+ * @param connections Connections to draw.
+ * @param colors Editor colors to use.
+ * @param lhsViewElem Left hand side view HTML element.
+ * @param rhsViewElem Right hand side view HTML element.
+ * @param container Main container HTML element.
+ */
 export function drawConnections(
 	canvas: HTMLCanvasElement,
-	connections: BlockConnection[],
+	connections: Connection[],
 	colors: EditorColors,
-	lhsViewElem: HTMLElement,
-	rhsViewElem: HTMLElement
+	lhsViewElem: HTMLDivElement,
+	rhsViewElem: HTMLDivElement,
+	container: HTMLElement
 ) {
 	const ctx = canvas.getContext('2d');
 	if (!ctx) return;
 
 	const width = canvas.width;
 
+	ctx.reset();
 	for (const connection of connections) {
-		if (!connection.from.elem || !connection.to.elem) continue;
+		const fromElem = container.querySelector(`[id='${connection.from.id}']`);
+		const toElem = container.querySelector(`[id='${connection.to.id}']`);
+		if (
+			!fromElem ||
+			!toElem ||
+			!(fromElem instanceof HTMLDivElement) ||
+			!(toElem instanceof HTMLDivElement)
+		)
+			continue;
 		const fromOffsetTop =
-			connection.from.elem.getBoundingClientRect().top - lhsViewElem.getBoundingClientRect().top;
+			fromElem.getBoundingClientRect().top - lhsViewElem.getBoundingClientRect().top;
 		const toOffsetTop =
-			connection.to.elem.getBoundingClientRect().top - rhsViewElem.getBoundingClientRect().top;
-		const fromHeight = connection.from.elem.offsetHeight;
-		const toHeight = connection.to.elem.offsetHeight;
+			toElem.getBoundingClientRect().top - rhsViewElem.getBoundingClientRect().top;
+		const fromHeight = fromElem.offsetHeight;
+		const toHeight = toElem.offsetHeight;
 
 		const BezierOffset = 8;
 
@@ -85,16 +88,12 @@ export function drawConnections(
 			0,
 			fromOffsetTop + fromHeight
 		);
-		if (connection.from.type == 'added' || connection.from.type == 'added_placeholder')
-			ctx.fillStyle = colors.darkGreen;
-		else if (connection.from.type == 'removed' || connection.from.type == 'removed_placeholder')
-			ctx.fillStyle = colors.darkRed;
-		else {
-			const gradient = ctx.createLinearGradient(0, 0, width, 0);
-			gradient.addColorStop(0, colors.lightRed);
-			gradient.addColorStop(1, colors.lightGreen);
-			ctx.fillStyle = gradient;
-		}
+
+		const gradient = ctx.createLinearGradient(0, 0, width, 0);
+		gradient.addColorStop(0, componentColor(connection.from, colors));
+		gradient.addColorStop(1, componentColor(connection.to, colors));
+		ctx.fillStyle = gradient;
+
 		ctx.fill();
 		ctx.closePath();
 	}

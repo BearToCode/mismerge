@@ -1,72 +1,29 @@
 <script lang="ts">
-	import type { DiffBlock, MountedDiffBlock } from '$lib/internal/blocks';
-	import { onDestroy, onMount } from 'svelte';
-	import AddedBlock from './blocks/AddedBlock.svelte';
-	import AddedBlockPlaceholder from './blocks/AddedBlockPlaceholder.svelte';
-	import PartiallyAddedBlock from './blocks/PartiallyAddedBlock.svelte';
-	import PartiallyRemovedBlock from './blocks/PartiallyRemovedBlock.svelte';
-	import RemovedBlock from './blocks/RemovedBlock.svelte';
-	import RemovedBlockPlaceholder from './blocks/RemovedBlockPlaceholder.svelte';
-	import UnchangedBlock from './blocks/UnchangedBlock.svelte';
+	import type { BlockComponent } from '$lib/internal/component';
+	import type { Side } from '$lib/internal/blocks';
 
-	export let blocks: DiffBlock[];
-	export let mountedBlocks: MountedDiffBlock[];
+	export let components: BlockComponent[];
 	export let editable: boolean = false;
 	export let content: string;
+	export let side: Side;
 	export let elem: HTMLDivElement;
 	let clazz = '';
 	export { clazz as class };
 
 	let textarea: HTMLTextAreaElement | undefined;
 
-	function mountBlocks(elements: HTMLDivElement[]) {
-		mountedBlocks = [];
-		for (const [index, block] of blocks.entries()) {
-			mountedBlocks.push({
-				...block,
-				elem: elements[index]
-			});
-		}
-		mountedBlocks = mountedBlocks;
-	}
+	let sideComponents: BlockComponent[] = [];
 
-	function updateBlocks() {
-		const children = elem.getElementsByClassName('block') as HTMLCollectionOf<HTMLDivElement>;
-		if (children.length == blocks.length) mountBlocks(Array.from(children));
-	}
-
-	let observer: MutationObserver | undefined;
-	onMount(() => {
-		observer = new MutationObserver(updateBlocks);
-		observer.observe(elem, {
-			childList: true,
-			attributes: false,
-			characterData: false,
-			subtree: true
-		});
-
-		updateBlocks();
-	});
-	onDestroy(() => observer?.disconnect());
+	$: sideComponents = components.filter((component) => component.side.eq(side));
 </script>
 
 <div bind:this={elem} class="view {editable ? 'editable' : ''} {clazz}">
-	{#each blocks as block}
-		{#if block.type == 'added'}
-			<AddedBlock {block} />
-		{:else if block.type == 'added_placeholder'}
-			<AddedBlockPlaceholder {block} />
-		{:else if block.type == 'removed'}
-			<RemovedBlock {block} />
-		{:else if block.type == 'removed_placeholder'}
-			<RemovedBlockPlaceholder {block} />
-		{:else if block.type == 'partially_added'}
-			<PartiallyAddedBlock {block} />
-		{:else if block.type == 'partially_removed'}
-			<PartiallyRemovedBlock {block} />
-		{:else if block.type == 'unchanged'}
-			<UnchangedBlock {block} />
-		{/if}
+	{#each sideComponents as blockComponent}
+		<svelte:component
+			this={blockComponent.component}
+			component={blockComponent}
+			{...blockComponent.props}
+		/>
 	{/each}
 
 	{#if editable}

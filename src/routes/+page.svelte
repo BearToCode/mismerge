@@ -2,6 +2,7 @@
 	import DiffVisualizer from '$lib/components/DiffVisualizer.svelte';
 	import '$lib/styles/styles.css';
 	import '$lib/styles/default.css';
+	import MergeEditor from '$lib/components/MergeEditor.svelte';
 </script>
 
 <svelte:head>
@@ -19,14 +20,38 @@
 </svelte:head>
 
 <main>
-	<DiffVisualizer
+	<MergeEditor
 		lhs="1
-2"
-		rhs="1
+2
 3"
-		lhsEditable
-		rhsEditable
+		ctr="
+1
+2
+a
+c
+3"
+		rhs="1
+a
+2
+3"
 	/>
+	<!-- <DiffVisualizer
+		lhs="1
+3
+2
+3
+9
+5"
+		lhsEditable
+		rhs="1
+a
+2
+3
+5
+9
+"
+		rhsEditable
+	/> -->
 </main>
 
 <style>

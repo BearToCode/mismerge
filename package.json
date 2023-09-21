@@ -49,6 +49,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"diff": "^5.1.0"
+		"diff": "^5.1.0",
+		"nanoid": "^5.0.1"
 	}
 }

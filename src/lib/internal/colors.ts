@@ -1,6 +1,8 @@
 export type EditorColors = {
-	lightGreen: `#${string}`;
-	darkGreen: `#${string}`;
-	lightRed: `#${string}`;
-	darkRed: `#${string}`;
+	addedLight: `#${string}`;
+	addedDark: `#${string}`;
+	removedLight: `#${string}`;
+	removedDark: `#${string}`;
+	modifiedLight: `#${string}`;
+	modifiedDark: `#${string}`;
 };

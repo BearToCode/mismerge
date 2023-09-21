@@ -1,7 +1,9 @@
 <script lang="ts">
-	import type { AddedBlockPlaceholder } from '$lib/internal/blocks';
+	import type { AddedBlock } from '$lib/internal/blocks';
+	import type { BlockComponent } from '$lib/internal/component';
 
-	export let block: AddedBlockPlaceholder;
+	export let block: AddedBlock;
+	export let component: BlockComponent;
 </script>
 
-<div class="block {block.type}" />
+<div class="block {block.placeholderType}" id={component.id} />

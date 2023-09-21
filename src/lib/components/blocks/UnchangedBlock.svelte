@@ -1,11 +1,14 @@
 <script lang="ts">
-	import type { UnchangedBlock } from '$lib/internal/blocks';
+	import type { Line, UnchangedBlock } from '$lib/internal/blocks';
+	import type { BlockComponent } from '$lib/internal/component';
 
 	export let block: UnchangedBlock;
+	export let lines: Line[];
+	export let component: BlockComponent;
 </script>
 
-<div class="block {block.type}">
-	{#each block.lines as line}
+<div class="block {block.type}" id={component.id}>
+	{#each lines as line}
 		<div class="line">
 			<div class="line-number">
 				{line.number}

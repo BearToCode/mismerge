@@ -3,8 +3,15 @@
 }
 
 .limerge .view {
-	width: calc(50% - 2rem);
 	position: relative;
+}
+
+.limerge.diff-visualizer .view {
+	width: calc(50% - 2rem);
+}
+
+.limerge.merge-editor .view {
+	width: calc(33.333% - 2rem);
 }
 
 .limerge .view textarea {
@@ -95,6 +102,10 @@
 
 .limerge .block.partially_removed .removed {
 	background-color: var(--dark-red);
+}
+
+.limerge .block.merge_modified {
+	background-color: var(--blue);
 }
 
 .limerge .added_placeholder {

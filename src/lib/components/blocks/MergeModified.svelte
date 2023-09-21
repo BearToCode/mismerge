@@ -7,7 +7,7 @@
 	export let component: BlockComponent;
 </script>
 
-<div class="block {block.removedType}" id={component.id}>
+<div class="block {block.type}" id={component.id}>
 	{#each lines as line}
 		<div class="line">
 			<div class="line-number">
@@ -15,10 +15,8 @@
 			</div>
 			<div class="content">
 				{#each line.diff as change}
-					{#if change.removed}
-						<pre><span class="removed">{change.value}</span></pre>
-					{:else if !change.added}
-						<pre><span class="unchanged">{change.value}</span></pre>
+					{#if !change.removed}
+						<pre>{change.value}</pre>
 					{/if}
 				{/each}
 			</div>
