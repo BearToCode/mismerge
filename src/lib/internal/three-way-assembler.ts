@@ -22,6 +22,8 @@ class ThreeWayAssembler {
 
 		this.linesDiff = threeWayDiff(this.lhs, this.ctr, this.rhs);
 
+		console.log([...this.linesDiff]);
+
 		this.addPlaceholderBlocks();
 
 		this.advance();

@@ -66,6 +66,7 @@
 
 	$: blocks = assembleThreeWay(lhs, ctr, rhs, { lineDiffAlgorithm });
 	$: renderComponents(blocks);
+	$: console.log(blocks);
 
 	let observer: MutationObserver | undefined;
 	onMount(() => {
@@ -97,19 +98,37 @@
 	class="limerge merge-editor {clazz}"
 	bind:this={container}
 >
-	<View content={lhs} side={ThreeWaySide.lhs} bind:components bind:elem={lhsViewElem} />
+	<View
+		bind:content={lhs}
+		editable
+		side={ThreeWaySide.lhs}
+		bind:components
+		bind:elem={lhsViewElem}
+	/>
 	<Connector
 		colors={editorColors}
 		bind:draw={drawLhsConnections}
 		bind:lhsViewElem
 		bind:rhsViewElem={ctrViewElem}
 	/>
-	<View content={ctr} side={ThreeWaySide.ctr} bind:components bind:elem={ctrViewElem} />
+	<View
+		bind:content={ctr}
+		editable
+		side={ThreeWaySide.ctr}
+		bind:components
+		bind:elem={ctrViewElem}
+	/>
 	<Connector
 		colors={editorColors}
 		bind:draw={drawRhsConnections}
 		bind:lhsViewElem={ctrViewElem}
 		bind:rhsViewElem
 	/>
-	<View content={rhs} side={ThreeWaySide.rhs} bind:components bind:elem={rhsViewElem} />
+	<View
+		bind:content={rhs}
+		editable
+		side={ThreeWaySide.rhs}
+		bind:components
+		bind:elem={rhsViewElem}
+	/>
 </div>

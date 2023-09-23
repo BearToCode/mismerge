@@ -20,15 +20,15 @@ export function getLineDiffAlgorithm(type: LineDiffAlgorithm) {
 
 export type TwoWayChange = {
 	content: string;
-	lhs?: boolean;
-	rhs?: boolean;
+	lhs: boolean;
+	rhs: boolean;
 };
 
 export type ThreeWayChange = {
 	content: string;
-	lhs?: boolean;
-	ctr?: boolean;
-	rhs?: boolean;
+	lhs: boolean;
+	ctr: boolean;
+	rhs: boolean;
 };
 
 function remapEoF(str: string) {
@@ -63,7 +63,9 @@ export function threeWayDiff(lhs: string, ctr: string, rhs: string): ThreeWayCha
 			// LHS added changes
 			changes.push({
 				content: lhsChange.content,
-				lhs: true
+				lhs: true,
+				ctr: false,
+				rhs: false
 			});
 		}
 
@@ -71,7 +73,9 @@ export function threeWayDiff(lhs: string, ctr: string, rhs: string): ThreeWayCha
 			// RHS added change
 			changes.push({
 				content: rhsChange.content,
-				rhs: true
+				rhs: true,
+				ctr: false,
+				lhs: false
 			});
 		}
 

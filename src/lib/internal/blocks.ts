@@ -166,7 +166,7 @@ export class AddedBlock extends LinkedComponentsBlock {
 	public placeholderType = 'added_placeholder';
 
 	public readonly lines: Line[];
-	public readonly side: Side;
+	public readonly side: MaybeArray<Side>;
 	public readonly placeholderSide: MaybeArray<Side>;
 
 	constructor(id: string, lines: Line[], side: Side, placeholderSide: MaybeArray<Side>) {
@@ -178,12 +178,15 @@ export class AddedBlock extends LinkedComponentsBlock {
 
 	public render() {
 		return [
-			new BlockComponent({
-				component: AddedBlockComponent,
-				props: { block: this },
-				side: this.side,
-				type: this.type
-			}),
+			...[this.side].flat().map(
+				(side) =>
+					new BlockComponent({
+						component: AddedBlockComponent,
+						props: { block: this },
+						side,
+						type: this.type
+					})
+			),
 			...[this.placeholderSide].flat().map(
 				(side) =>
 					new BlockComponent({
@@ -203,10 +206,15 @@ export class RemovedBlock extends LinkedComponentsBlock {
 	public placeholderType = 'removed_placeholder';
 
 	public readonly lines: Line[];
-	public readonly side: Side;
+	public readonly side: MaybeArray<Side>;
 	public readonly placeholderSide: MaybeArray<Side>;
 
-	constructor(id: string, lines: Line[], side: Side, placeholderSide: MaybeArray<Side>) {
+	constructor(
+		id: string,
+		lines: Line[],
+		side: MaybeArray<Side>,
+		placeholderSide: MaybeArray<Side>
+	) {
 		super(id);
 		this.lines = lines;
 		this.side = side;
@@ -215,12 +223,15 @@ export class RemovedBlock extends LinkedComponentsBlock {
 
 	public render() {
 		return [
-			new BlockComponent({
-				component: RemovedBlockComponent,
-				props: { block: this },
-				side: this.side,
-				type: this.type
-			}),
+			...[this.side].flat().map(
+				(side) =>
+					new BlockComponent({
+						component: RemovedBlockComponent,
+						props: { block: this },
+						side,
+						type: this.type
+					})
+			),
 			...[this.placeholderSide].flat().map(
 				(side) =>
 					new BlockComponent({
