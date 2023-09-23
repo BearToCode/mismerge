@@ -1,4 +1,5 @@
 import { diffChars, diffLines, diffWords, diffWordsWithSpace } from 'diff';
+import { TwoWaySide } from './blocks';
 
 export type LineDiffAlgorithm = 'characters' | 'words' | 'words_with_space';
 
@@ -18,37 +19,58 @@ export function getLineDiffAlgorithm(type: LineDiffAlgorithm) {
 	}
 }
 
-export type TwoWayChange = {
+export type OneWayChange = {
 	content: string;
 	lhs: boolean;
 	rhs: boolean;
 };
 
-export type ThreeWayChange = {
+export type TwoWayChange = {
 	content: string;
 	lhs: boolean;
 	ctr: boolean;
 	rhs: boolean;
 };
 
+export function sidesFromOneWayChange(change: OneWayChange): TwoWaySide[] {
+	const sides: TwoWaySide[] = [];
+	if (change.lhs) sides.push(TwoWaySide.lhs);
+	if (change.rhs) sides.push(TwoWaySide.rhs);
+	return sides;
+}
+
+export function sidesFromTwoWayChange(change: TwoWayChange): TwoWaySide[] {
+	const sides: TwoWaySide[] = [];
+	if (change.lhs) sides.push(TwoWaySide.lhs);
+	if (change.ctr) sides.push(TwoWaySide.ctr);
+	if (change.rhs) sides.push(TwoWaySide.rhs);
+	return sides;
+}
+
 function remapEoF(str: string) {
 	return str.replaceAll('\r\n', '\n').replaceAll('\n', '\r\n') + '\r\n';
 }
 
-export function twoWayDiff(lhs: string, rhs: string): TwoWayChange[] {
-	const baseDiff = diffLines(remapEoF(lhs), remapEoF(rhs));
-	return baseDiff.map((change) => ({
+export function OneWayDiff(lhs: string, rhs: string): OneWayChange[] {
+	const lhsRemapped = remapEoF(lhs);
+	const rhsRemapped = remapEoF(rhs);
+
+	const baseDiff = diffLines(lhsRemapped, rhsRemapped);
+
+	const diff = baseDiff.map((change) => ({
 		content: change.value,
 		lhs: change.removed || !change.added,
 		rhs: change.added || !change.removed
 	}));
+
+	return diff;
 }
 
-export function threeWayDiff(lhs: string, ctr: string, rhs: string): ThreeWayChange[] {
-	const lhsBaseDiff = twoWayDiff(lhs, ctr);
-	const rhsBaseDiff = twoWayDiff(ctr, rhs);
+export function TwoWayDiff(lhs: string, ctr: string, rhs: string): TwoWayChange[] {
+	const lhsBaseDiff = OneWayDiff(lhs, ctr);
+	const rhsBaseDiff = OneWayDiff(ctr, rhs);
 
-	const changes: ThreeWayChange[] = [];
+	const changes: TwoWayChange[] = [];
 
 	const lhsLinesChanges = splitChangesIntoLines(lhsBaseDiff);
 	const rhsLinesChanges = splitChangesIntoLines(rhsBaseDiff);
@@ -56,8 +78,8 @@ export function threeWayDiff(lhs: string, ctr: string, rhs: string): ThreeWayCha
 	let lhsIndex = 0;
 	let rhsIndex = 0;
 	while (lhsIndex < lhsLinesChanges.length || rhsIndex < rhsLinesChanges.length) {
-		let lhsChange: TwoWayChange | undefined;
-		let rhsChange: TwoWayChange | undefined;
+		let lhsChange: OneWayChange | undefined;
+		let rhsChange: OneWayChange | undefined;
 
 		for (; (lhsChange = lhsLinesChanges.at(lhsIndex)) && !lhsChange.rhs; lhsIndex++) {
 			// LHS added changes
@@ -117,7 +139,7 @@ export function threeWayDiff(lhs: string, ctr: string, rhs: string): ThreeWayCha
 	return changes;
 }
 
-function splitChangesIntoLines(changes: TwoWayChange[]): TwoWayChange[] {
+function splitChangesIntoLines(changes: OneWayChange[]): OneWayChange[] {
 	return changes
 		.map((change) =>
 			removeEndOfLine(change.content)

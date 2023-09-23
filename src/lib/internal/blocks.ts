@@ -17,77 +17,77 @@ export abstract class Side {
 	public abstract isOnTheLeftOf(side: typeof this): boolean;
 }
 
-export class TwoWaySide extends Side {
-	public static get lhs(): TwoWaySide {
-		return new TwoWaySide('lhs');
+export class OneWaySide extends Side {
+	public static get lhs(): OneWaySide {
+		return new OneWaySide('lhs');
 	}
-	public static get rhs(): TwoWaySide {
-		return new TwoWaySide('rhs');
+	public static get rhs(): OneWaySide {
+		return new OneWaySide('rhs');
 	}
 
 	constructor(private readonly side: 'lhs' | 'rhs') {
 		super();
 	}
 
-	public eq(side: TwoWaySide): boolean {
+	public eq(side: OneWaySide): boolean {
 		return side.side == this.side;
 	}
 
 	public opposite() {
-		if (this.side == 'lhs') return TwoWaySide.rhs;
-		return TwoWaySide.lhs;
+		if (this.side == 'lhs') return OneWaySide.rhs;
+		return OneWaySide.lhs;
 	}
 
 	public isOnTheRightOf(side: this): boolean {
-		return side.eq(TwoWaySide.rhs) && this.eq(TwoWaySide.lhs);
+		return side.eq(OneWaySide.rhs) && this.eq(OneWaySide.lhs);
 	}
 
 	public isOnTheLeftOf(side: this): boolean {
-		return side.eq(TwoWaySide.lhs) && this.eq(TwoWaySide.rhs);
+		return side.eq(OneWaySide.lhs) && this.eq(OneWaySide.rhs);
 	}
 }
 
-export class ThreeWaySide extends Side {
-	public static get lhs(): ThreeWaySide {
-		return new ThreeWaySide('lhs');
+export class TwoWaySide extends Side {
+	public static get lhs(): TwoWaySide {
+		return new TwoWaySide('lhs');
 	}
-	public static get ctr(): ThreeWaySide {
-		return new ThreeWaySide('ctr');
+	public static get ctr(): TwoWaySide {
+		return new TwoWaySide('ctr');
 	}
-	public static get rhs(): ThreeWaySide {
-		return new ThreeWaySide('rhs');
+	public static get rhs(): TwoWaySide {
+		return new TwoWaySide('rhs');
 	}
 
 	constructor(private readonly side: 'lhs' | 'ctr' | 'rhs') {
 		super();
 	}
 
-	public eq(side: ThreeWaySide): boolean {
+	public eq(side: TwoWaySide): boolean {
 		return this.side == side.side;
 	}
 
-	public adjacentSides(): ThreeWaySide[] {
+	public adjacentSides(): TwoWaySide[] {
 		switch (this.side) {
 			case 'lhs':
-				return [new ThreeWaySide('ctr')];
+				return [new TwoWaySide('ctr')];
 			case 'ctr':
-				return [new ThreeWaySide('lhs'), new ThreeWaySide('rhs')];
+				return [new TwoWaySide('lhs'), new TwoWaySide('rhs')];
 			case 'rhs':
-				return [new ThreeWaySide('ctr')];
+				return [new TwoWaySide('ctr')];
 		}
 	}
 
 	public isOnTheRightOf(side: this): boolean {
 		return (
-			(this.eq(ThreeWaySide.rhs) && side.eq(ThreeWaySide.ctr)) ||
-			(this.eq(ThreeWaySide.ctr) && side.eq(ThreeWaySide.lhs))
+			(this.eq(TwoWaySide.rhs) && side.eq(TwoWaySide.ctr)) ||
+			(this.eq(TwoWaySide.ctr) && side.eq(TwoWaySide.lhs))
 		);
 	}
 
 	public isOnTheLeftOf(side: this): boolean {
 		return (
-			(this.eq(ThreeWaySide.lhs) && side.eq(ThreeWaySide.ctr)) ||
-			(this.eq(ThreeWaySide.ctr) && side.eq(ThreeWaySide.rhs))
+			(this.eq(TwoWaySide.lhs) && side.eq(TwoWaySide.ctr)) ||
+			(this.eq(TwoWaySide.ctr) && side.eq(TwoWaySide.rhs))
 		);
 	}
 }
@@ -168,12 +168,19 @@ export class AddedBlock extends LinkedComponentsBlock {
 	public readonly lines: Line[];
 	public readonly side: MaybeArray<Side>;
 	public readonly placeholderSide: MaybeArray<Side>;
+	public readonly unchangedSide?: Side;
 
-	constructor(id: string, lines: Line[], side: Side, placeholderSide: MaybeArray<Side>) {
-		super(id);
-		this.lines = lines;
-		this.side = side;
-		this.placeholderSide = placeholderSide;
+	constructor(params: {
+		id: string;
+		lines: Line[];
+		side: Side;
+		placeholderSide: MaybeArray<Side>;
+		unchangedSide?: Side;
+	}) {
+		super(params.id);
+		this.lines = params.lines;
+		this.side = params.side;
+		this.placeholderSide = params.placeholderSide;
 	}
 
 	public render() {
@@ -209,16 +216,16 @@ export class RemovedBlock extends LinkedComponentsBlock {
 	public readonly side: MaybeArray<Side>;
 	public readonly placeholderSide: MaybeArray<Side>;
 
-	constructor(
-		id: string,
-		lines: Line[],
-		side: MaybeArray<Side>,
-		placeholderSide: MaybeArray<Side>
-	) {
-		super(id);
-		this.lines = lines;
-		this.side = side;
-		this.placeholderSide = placeholderSide;
+	constructor(params: {
+		id: string;
+		lines: Line[];
+		side: MaybeArray<Side>;
+		placeholderSide: MaybeArray<Side>;
+	}) {
+		super(params.id);
+		this.lines = params.lines;
+		this.side = params.side;
+		this.placeholderSide = params.placeholderSide;
 	}
 
 	public render() {

@@ -2,8 +2,8 @@
 	import type { LineDiffAlgorithm } from '$lib/internal/diff';
 	import type { EditorColors } from '$lib/internal/colors';
 	import type { BlockComponent } from '$lib/internal/component';
-	import { TwoWaySide, type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
-	import { assembleTwoWay } from '$lib/internal/two-way-assembler';
+	import { OneWaySide, type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
+	import { assembleOneWay } from '$lib/internal/one-way-assembler';
 	import { joinWithDefault } from '$lib/internal/utils';
 	import View from './View.svelte';
 	import type { Connection } from '$lib/internal/connection';
@@ -70,7 +70,7 @@
 			.flat();
 	}
 
-	$: blocks = assembleTwoWay(lhs, rhs, { lineDiffAlgorithm });
+	$: blocks = assembleOneWay(lhs, rhs, { lineDiffAlgorithm });
 	$: renderComponents(blocks);
 
 	let observer: MutationObserver | undefined;
@@ -99,7 +99,7 @@
 >
 	<View
 		editable={lhsEditable}
-		side={TwoWaySide.lhs}
+		side={OneWaySide.lhs}
 		bind:components
 		bind:content={lhs}
 		bind:elem={lhsViewElem}
@@ -114,7 +114,7 @@
 	{/if}
 	<View
 		editable={rhsEditable}
-		side={TwoWaySide.rhs}
+		side={OneWaySide.rhs}
 		bind:components
 		bind:content={rhs}
 		bind:elem={rhsViewElem}

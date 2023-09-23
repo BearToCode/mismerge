@@ -1,5 +1,4 @@
 <script lang="ts">
-	import DiffVisualizer from '$lib/components/DiffVisualizer.svelte';
 	import '$lib/styles/styles.css';
 	import '$lib/styles/default.css';
 	import MergeEditor from '$lib/components/MergeEditor.svelte';

@@ -1,4 +1,4 @@
-import { assembleTwoWay } from '$lib/internal/two-way-assembler';
+import { assembleOneWay } from '$lib/internal/one-way-assembler';
 import { expect, test } from 'vitest';
 import dedent from 'dedent';
 import {
@@ -7,10 +7,10 @@ import {
 	RemovedBlock,
 	UnchangedBlock
 } from '$lib/internal/blocks';
-import { assembleThreeWay } from '$lib/internal/three-way-assembler';
+import { assembleTwoWay } from '$lib/internal/two-way-assembler';
 
-test('assemble-two-way unchanged', () => {
-	const blocks = assembleTwoWay(
+test('assemble-one-way unchanged', () => {
+	const blocks = assembleOneWay(
 		dedent`1
            2
            3`,
@@ -22,8 +22,8 @@ test('assemble-two-way unchanged', () => {
 	expect(blocks.at(0)).toBeInstanceOf(UnchangedBlock);
 });
 
-test('assemble-two-way added', () => {
-	const blocks = assembleTwoWay(
+test('assemble-one-way added', () => {
+	const blocks = assembleOneWay(
 		dedent`1
            2
            3`,
@@ -37,8 +37,8 @@ test('assemble-two-way added', () => {
 	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
 });
 
-test('assemble-two-way removed', () => {
-	const blocks = assembleTwoWay(
+test('assemble-one-way removed', () => {
+	const blocks = assembleOneWay(
 		dedent`1
 					 2
 					 3
@@ -52,8 +52,8 @@ test('assemble-two-way removed', () => {
 	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
 });
 
-test('assemble-two-way added and removed', () => {
-	const blocks = assembleTwoWay(
+test('assemble-one-way added and removed', () => {
+	const blocks = assembleOneWay(
 		dedent`1
 					 2
 					 3
@@ -70,8 +70,8 @@ test('assemble-two-way added and removed', () => {
 	expect(blocks.at(2)).toBeInstanceOf(RemovedBlock);
 });
 
-test('assemble-two-way modified', () => {
-	const blocks = assembleTwoWay(
+test('assemble-one-way modified', () => {
+	const blocks = assembleOneWay(
 		dedent`1
 					 2
 					 3
@@ -86,8 +86,8 @@ test('assemble-two-way modified', () => {
 	expect(blocks.at(1)).toBeInstanceOf(PartiallyModifiedBlock);
 });
 
-test('assemble-three-way unchanged', () => {
-	const blocks = assembleThreeWay(
+test('assemble-two-way unchanged', () => {
+	const blocks = assembleTwoWay(
 		dedent`1
 					 2
 					 3`,
@@ -101,8 +101,8 @@ test('assemble-three-way unchanged', () => {
 	expect(blocks.at(0)).toBeInstanceOf(UnchangedBlock);
 });
 
-test('assemble-three-way added', () => {
-	const blocks = assembleThreeWay(
+test('assemble-two-way added', () => {
+	const blocks = assembleTwoWay(
 		dedent`1
 					 2
 					 3`,
@@ -119,8 +119,8 @@ test('assemble-three-way added', () => {
 	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
 });
 
-test('assemble-three-way removed lhs', () => {
-	const blocks = assembleThreeWay(
+test('assemble-two-way removed lhs', () => {
+	const blocks = assembleTwoWay(
 		dedent`1
 					 2
 					 3
@@ -137,8 +137,8 @@ test('assemble-three-way removed lhs', () => {
 	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
 });
 
-test('assemble-three-way removed rhs', () => {
-	const blocks = assembleThreeWay(
+test('assemble-two-way removed rhs', () => {
+	const blocks = assembleTwoWay(
 		dedent`1
 					 2
 					 3`,

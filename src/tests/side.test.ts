@@ -1,9 +1,9 @@
-import { ThreeWaySide, TwoWaySide } from '$lib/internal/blocks';
+import { TwoWaySide, OneWaySide } from '$lib/internal/blocks';
 import { test, expect } from 'vitest';
 
-test('two-way-side relative positions', () => {
-	const lhs = TwoWaySide.lhs;
-	const rhs = TwoWaySide.rhs;
+test('one-way-side relative positions', () => {
+	const lhs = OneWaySide.lhs;
+	const rhs = OneWaySide.rhs;
 
 	expect(lhs.isOnTheLeftOf(rhs));
 	expect(rhs.isOnTheRightOf(lhs));
@@ -15,17 +15,17 @@ test('two-way-side relative positions', () => {
 	expect(!rhs.isOnTheRightOf(rhs));
 });
 
-test('two-way-side eq', () => {
-	expect(TwoWaySide.lhs.eq(TwoWaySide.lhs));
-	expect(!TwoWaySide.rhs.eq(TwoWaySide.lhs));
-	expect(TwoWaySide.rhs.eq(TwoWaySide.rhs));
-	expect(!TwoWaySide.lhs.eq(TwoWaySide.rhs));
+test('one-way-side eq', () => {
+	expect(OneWaySide.lhs.eq(OneWaySide.lhs));
+	expect(!OneWaySide.rhs.eq(OneWaySide.lhs));
+	expect(OneWaySide.rhs.eq(OneWaySide.rhs));
+	expect(!OneWaySide.lhs.eq(OneWaySide.rhs));
 });
 
-test('three-way-side relative positions', () => {
-	const lhs = ThreeWaySide.lhs;
-	const ctr = ThreeWaySide.ctr;
-	const rhs = ThreeWaySide.rhs;
+test('two-way-side relative positions', () => {
+	const lhs = TwoWaySide.lhs;
+	const ctr = TwoWaySide.ctr;
+	const rhs = TwoWaySide.rhs;
 
 	expect(lhs.isOnTheLeftOf(ctr));
 	expect(!lhs.isOnTheLeftOf(rhs));
@@ -50,13 +50,13 @@ test('three-way-side relative positions', () => {
 	expect(!rhs.isOnTheRightOf(rhs));
 });
 
-test('three-way-side eq', () => {
-	expect(ThreeWaySide.lhs.eq(ThreeWaySide.lhs));
-	expect(!ThreeWaySide.ctr.eq(ThreeWaySide.lhs));
-	expect(ThreeWaySide.ctr.eq(ThreeWaySide.ctr));
-	expect(!ThreeWaySide.lhs.eq(ThreeWaySide.ctr));
-	expect(!ThreeWaySide.rhs.eq(ThreeWaySide.lhs));
-	expect(!ThreeWaySide.rhs.eq(ThreeWaySide.ctr));
-	expect(ThreeWaySide.rhs.eq(ThreeWaySide.rhs));
-	expect(!ThreeWaySide.lhs.eq(ThreeWaySide.rhs));
+test('two-way-side eq', () => {
+	expect(TwoWaySide.lhs.eq(TwoWaySide.lhs));
+	expect(!TwoWaySide.ctr.eq(TwoWaySide.lhs));
+	expect(TwoWaySide.ctr.eq(TwoWaySide.ctr));
+	expect(!TwoWaySide.lhs.eq(TwoWaySide.ctr));
+	expect(!TwoWaySide.rhs.eq(TwoWaySide.lhs));
+	expect(!TwoWaySide.rhs.eq(TwoWaySide.ctr));
+	expect(TwoWaySide.rhs.eq(TwoWaySide.rhs));
+	expect(!TwoWaySide.lhs.eq(TwoWaySide.rhs));
 });
