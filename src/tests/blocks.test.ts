@@ -101,7 +101,7 @@ test('assemble-two-way unchanged', () => {
 	expect(blocks.at(0)).toBeInstanceOf(UnchangedBlock);
 });
 
-test('assemble-two-way added', () => {
+test('assemble-two-way removed', () => {
 	const blocks = assembleTwoWay(
 		dedent`1
 					 2
@@ -110,24 +110,6 @@ test('assemble-two-way added', () => {
 					 2
 					 3
 					 4`,
-		dedent`1
-					 2
-					 3`
-	);
-
-	expect(blocks).toHaveLength(2);
-	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
-});
-
-test('assemble-two-way removed lhs', () => {
-	const blocks = assembleTwoWay(
-		dedent`1
-					 2
-					 3
-					 4`,
-		dedent`1
-					 2
-					 3`,
 		dedent`1
 					 2
 					 3`
@@ -137,7 +119,25 @@ test('assemble-two-way removed lhs', () => {
 	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
 });
 
-test('assemble-two-way removed rhs', () => {
+test('assemble-two-way added lhs', () => {
+	const blocks = assembleTwoWay(
+		dedent`1
+					 2
+					 3
+					 4`,
+		dedent`1
+					 2
+					 3`,
+		dedent`1
+					 2
+					 3`
+	);
+
+	expect(blocks).toHaveLength(2);
+	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
+});
+
+test('assemble-two-way added rhs', () => {
 	const blocks = assembleTwoWay(
 		dedent`1
 					 2
@@ -152,5 +152,5 @@ test('assemble-two-way removed rhs', () => {
 	);
 
 	expect(blocks).toHaveLength(2);
-	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
+	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
 });

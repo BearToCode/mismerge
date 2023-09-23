@@ -59,19 +59,16 @@ class TwoWayAssembler {
 		if (change.lhs && change.ctr && change.rhs) {
 			this.assembleUnchangedBlock(change);
 		} else if (change.ctr) {
-			this.assembleAddedBlock(change);
-		} else if (change.lhs || change.rhs) {
 			this.assembleRemovedBlock(change);
+		} else if (change.lhs || change.rhs) {
+			this.assembleAddedBlock(change);
 		} else {
 			console.error('Invalid combination of sides in change', change);
 		}
 	}
 
 	private assembleAddedBlock(change: TwoWayChange) {
-		const side = TwoWaySide.ctr;
-
-		if (change.lhs) this.assembleUnchangedBlock(change, [TwoWaySide.lhs]);
-		if (change.rhs) this.assembleUnchangedBlock(change, [TwoWaySide.rhs]);
+		const side = change.lhs ? TwoWaySide.lhs : change.ctr ? TwoWaySide.ctr : TwoWaySide.rhs;
 
 		const block = new AddedBlock({
 			id: this.getId(),
@@ -88,7 +85,10 @@ class TwoWayAssembler {
 	}
 
 	private assembleRemovedBlock(change: TwoWayChange) {
-		const side = change.lhs ? TwoWaySide.lhs : change.ctr ? TwoWaySide.ctr : TwoWaySide.rhs;
+		const side = TwoWaySide.ctr;
+
+		if (change.lhs) this.assembleUnchangedBlock(change, [TwoWaySide.lhs]);
+		if (change.rhs) this.assembleUnchangedBlock(change, [TwoWaySide.rhs]);
 
 		const block = new RemovedBlock({
 			id: this.getId(),
