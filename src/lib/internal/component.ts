@@ -3,7 +3,7 @@ import type { Side } from './blocks';
 import { nanoid } from 'nanoid';
 
 export class BlockComponent<T extends Record<string, unknown> = Record<string, unknown>> {
-	public readonly id = nanoid(6);
+	public readonly id = '@' + nanoid(6);
 	public readonly component: typeof SvelteComponent<{ component: BlockComponent<T> } & T>;
 	public readonly side: Side;
 	public readonly props: T;
