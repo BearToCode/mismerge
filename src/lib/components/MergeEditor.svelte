@@ -66,7 +66,6 @@
 
 	$: blocks = assembleThreeWay(lhs, ctr, rhs, { lineDiffAlgorithm });
 	$: renderComponents(blocks);
-	$: console.log(blocks);
 
 	let observer: MutationObserver | undefined;
 	onMount(() => {
