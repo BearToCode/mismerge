@@ -1,13 +1,14 @@
 <script lang="ts">
-	import type { AddedBlock } from '$lib/internal/blocks';
+	import type { AddedBlock, Line } from '$lib/internal/blocks';
 	import type { BlockComponent } from '$lib/internal/component';
 
 	export let block: AddedBlock;
 	export let component: BlockComponent;
+	export let lines: Line[];
 </script>
 
 <div class="block {block.type}" id={component.id}>
-	{#each block.lines as line}
+	{#each lines as line}
 		<div class="line">
 			<div class="line-number">
 				{line.number}

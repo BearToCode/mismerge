@@ -8,12 +8,11 @@ import {
 	type LineDiff,
 	type DiffBlock,
 	AddedBlock,
-	Side,
 	RemovedBlock,
 	UnchangedBlock,
-	PartiallyModifiedBlock,
-	OneWaySide
+	PartiallyModifiedBlock
 } from './blocks';
+import { Side, OneWaySide } from './side';
 import type { Change } from 'diff';
 import { nanoid } from 'nanoid';
 
@@ -42,8 +41,6 @@ class OneWayAssembler {
 		this.addSideLineNumber = 1;
 
 		this.linesDiff = OneWayDiff(this.lhs, this.rhs);
-
-		this.addPlaceholderBlocks();
 
 		this.advance();
 		while (this.currentChange) {
@@ -103,15 +100,19 @@ class OneWayAssembler {
 		if (this.addSide.eq(side)) {
 			block = new AddedBlock({
 				id: this.getId(),
-				lines: this.intoLines(change.content, side),
-				side,
+				sidesData: {
+					lines: this.intoLines(change.content, side),
+					side
+				},
 				placeholderSide: side.opposite()
 			});
 		} else {
 			block = new RemovedBlock({
 				id: this.getId(),
-				lines: this.intoLines(change.content, side),
-				side,
+				sidesData: {
+					lines: this.intoLines(change.content, side),
+					side
+				},
 				placeholderSide: side.opposite()
 			});
 		}
@@ -119,34 +120,40 @@ class OneWayAssembler {
 	}
 
 	private assembleUnchangedBlock(change: OneWayChange) {
-		const block = new UnchangedBlock(this.getId(), [
-			{
-				lines: this.intoLines(change.content, this.addSide),
-				side: this.addSide
-			},
-			{
-				lines: this.intoLines(change.content, this.removeSide),
-				side: this.removeSide
-			}
-		]);
+		const block = new UnchangedBlock({
+			id: this.getId(),
+			sidesData: [
+				{
+					lines: this.intoLines(change.content, this.addSide),
+					side: this.addSide
+				},
+				{
+					lines: this.intoLines(change.content, this.removeSide),
+					side: this.removeSide
+				}
+			]
+		});
 		this.blocks.push(block);
 	}
 
 	private assemblePartiallyModifiedBlock(lhsChange: OneWayChange, rhsChange: OneWayChange) {
 		const oldString = this.addSide.eq(OneWaySide.rhs) ? lhsChange.content : rhsChange.content;
 		const newString = this.addSide.eq(OneWaySide.rhs) ? rhsChange.content : lhsChange.content;
-		const block = new PartiallyModifiedBlock(this.getId(), [
-			{
-				type: 'added',
-				lines: this.intoLinesDiff(oldString, newString, this.addSide),
-				side: this.addSide
-			},
-			{
-				type: 'removed',
-				lines: this.intoLinesDiff(oldString, newString, this.removeSide),
-				side: this.removeSide
-			}
-		]);
+		const block = new PartiallyModifiedBlock({
+			id: this.getId(),
+			sidesData: [
+				{
+					type: 'added',
+					lines: this.intoLinesDiff(oldString, newString, this.addSide),
+					side: this.addSide
+				},
+				{
+					type: 'removed',
+					lines: this.intoLinesDiff(oldString, newString, this.removeSide),
+					side: this.removeSide
+				}
+			]
+		});
 		this.blocks.push(block);
 	}
 
@@ -207,15 +214,6 @@ class OneWayAssembler {
 
 	private removeEndOfLine(content: string) {
 		return content.endsWith('\n') ? content.slice(0, -1) : content;
-	}
-
-	private addPlaceholderBlocks() {
-		const placeholderBlock = (side: OneWaySide) =>
-			new UnchangedBlock(this.getId(), { side, lines: [{ number: 1, content: '' }] });
-		if (!this.linesDiff.find((change) => change.lhs))
-			this.blocks.push(placeholderBlock(OneWaySide.lhs));
-		if (!this.linesDiff.find((change) => change.rhs))
-			this.blocks.push(placeholderBlock(OneWaySide.rhs));
 	}
 }
 

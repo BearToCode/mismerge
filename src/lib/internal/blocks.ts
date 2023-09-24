@@ -1,5 +1,7 @@
 import type { MaybeArray } from './utils';
 import type { Change } from 'diff';
+import type { Connection } from './connection';
+import type { Side } from './side';
 import { BlockComponent } from './component';
 import UnchangedBlockComponent from '$lib/components/blocks/UnchangedBlock.svelte';
 import AddedBlockComponent from '$lib/components/blocks/AddedBlock.svelte';
@@ -8,91 +10,8 @@ import RemovedBlockComponent from '$lib/components/blocks/RemovedBlock.svelte';
 import RemovedBlockPlaceholderComponent from '$lib/components/blocks/RemovedBlockPlaceholder.svelte';
 import PartiallyRemovedBlockComponent from '$lib/components/blocks/PartiallyRemovedBlock.svelte';
 import PartiallyAddedBlockComponent from '$lib/components/blocks/PartiallyAddedBlock.svelte';
-import MergeModifiedComponent from '$lib/components/blocks/MergeModified.svelte';
-import type { Connection } from './connection';
-
-export abstract class Side {
-	public abstract eq(side: typeof this): boolean;
-	public abstract isOnTheRightOf(side: typeof this): boolean;
-	public abstract isOnTheLeftOf(side: typeof this): boolean;
-}
-
-export class OneWaySide extends Side {
-	public static get lhs(): OneWaySide {
-		return new OneWaySide('lhs');
-	}
-	public static get rhs(): OneWaySide {
-		return new OneWaySide('rhs');
-	}
-
-	constructor(private readonly side: 'lhs' | 'rhs') {
-		super();
-	}
-
-	public eq(side: OneWaySide): boolean {
-		return side.side == this.side;
-	}
-
-	public opposite() {
-		if (this.side == 'lhs') return OneWaySide.rhs;
-		return OneWaySide.lhs;
-	}
-
-	public isOnTheRightOf(side: this): boolean {
-		return side.eq(OneWaySide.rhs) && this.eq(OneWaySide.lhs);
-	}
-
-	public isOnTheLeftOf(side: this): boolean {
-		return side.eq(OneWaySide.lhs) && this.eq(OneWaySide.rhs);
-	}
-}
-
-export class TwoWaySide extends Side {
-	public static get lhs(): TwoWaySide {
-		return new TwoWaySide('lhs');
-	}
-	public static get ctr(): TwoWaySide {
-		return new TwoWaySide('ctr');
-	}
-	public static get rhs(): TwoWaySide {
-		return new TwoWaySide('rhs');
-	}
-
-	constructor(private readonly side: 'lhs' | 'ctr' | 'rhs') {
-		super();
-	}
-
-	public eq(side: TwoWaySide): boolean {
-		return this.side == side.side;
-	}
-
-	public adjacentSides(): TwoWaySide[] {
-		switch (this.side) {
-			case 'lhs':
-				return [new TwoWaySide('ctr')];
-			case 'ctr':
-				return [new TwoWaySide('lhs'), new TwoWaySide('rhs')];
-			case 'rhs':
-				return [new TwoWaySide('ctr')];
-		}
-	}
-
-	public isOnTheRightOf(side: this): boolean {
-		return (
-			(this.eq(TwoWaySide.rhs) && side.eq(TwoWaySide.ctr)) ||
-			(this.eq(TwoWaySide.ctr) && side.eq(TwoWaySide.lhs))
-		);
-	}
-
-	public isOnTheLeftOf(side: this): boolean {
-		return (
-			(this.eq(TwoWaySide.lhs) && side.eq(TwoWaySide.ctr)) ||
-			(this.eq(TwoWaySide.ctr) && side.eq(TwoWaySide.rhs))
-		);
-	}
-}
-
-export type Direction = 'left-to-right' | 'right-to-left';
+import MergeConflictBlockComponent from '$lib/components/blocks/MergeConflictBlock.svelte';
+import MergeConflictPlaceholderComponent from '$lib/components/blocks/MergeConflictPlaceholder.svelte';
 
 export type Line = {
 	number: number;
@@ -142,9 +61,9 @@ export class UnchangedBlock extends DiffBlock {
 
 	public readonly sidesData: MaybeArray<UnchangedSideData>;
 
-	constructor(id: string, sidesData: MaybeArray<UnchangedSideData>) {
-		super(id);
-		this.sidesData = sidesData;
+	constructor(params: { id: string; sidesData: MaybeArray<UnchangedSideData> }) {
+		super(params.id);
+		this.sidesData = params.sidesData;
 	}
 
 	public render() {
@@ -161,35 +80,36 @@ export class UnchangedBlock extends DiffBlock {
 	}
 }
 
+type AddedSideData = {
+	side: Side;
+	lines: Line[];
+};
+
 export class AddedBlock extends LinkedComponentsBlock {
 	public type = 'added';
 	public placeholderType = 'added_placeholder';
 
-	public readonly lines: Line[];
-	public readonly side: MaybeArray<Side>;
+	public readonly sidesData: MaybeArray<AddedSideData>;
 	public readonly placeholderSide: MaybeArray<Side>;
 	public readonly unchangedSide?: Side;
 
 	constructor(params: {
 		id: string;
-		lines: Line[];
-		side: Side;
+		sidesData: MaybeArray<AddedSideData>;
 		placeholderSide: MaybeArray<Side>;
-		unchangedSide?: Side;
 	}) {
 		super(params.id);
-		this.lines = params.lines;
-		this.side = params.side;
+		this.sidesData = params.sidesData;
 		this.placeholderSide = params.placeholderSide;
 	}
 
 	public render() {
 		return [
-			...[this.side].flat().map(
-				(side) =>
+			...[this.sidesData].flat().map(
+				({ side, lines }) =>
 					new BlockComponent({
 						component: AddedBlockComponent,
-						props: { block: this },
+						props: { block: this, lines },
 						side,
 						type: this.type
 					})
@@ -208,33 +128,35 @@ export class AddedBlock extends LinkedComponentsBlock {
 	}
 }
 
+type RemovedSideData = {
+	side: Side;
+	lines: Line[];
+};
+
 export class RemovedBlock extends LinkedComponentsBlock {
 	public type = 'removed';
 	public placeholderType = 'removed_placeholder';
 
-	public readonly lines: Line[];
-	public readonly side: MaybeArray<Side>;
+	public readonly sidesData: MaybeArray<RemovedSideData>;
 	public readonly placeholderSide: MaybeArray<Side>;
 
 	constructor(params: {
 		id: string;
-		lines: Line[];
-		side: MaybeArray<Side>;
+		sidesData: MaybeArray<RemovedSideData>;
 		placeholderSide: MaybeArray<Side>;
 	}) {
 		super(params.id);
-		this.lines = params.lines;
-		this.side = params.side;
+		this.sidesData = params.sidesData;
 		this.placeholderSide = params.placeholderSide;
 	}
 
 	public render() {
 		return [
-			...[this.side].flat().map(
-				(side) =>
+			...[this.sidesData].flat().map(
+				({ side, lines }) =>
 					new BlockComponent({
 						component: RemovedBlockComponent,
-						props: { block: this },
+						props: { block: this, lines },
 						side,
 						type: this.type
 					})
@@ -254,7 +176,7 @@ export class RemovedBlock extends LinkedComponentsBlock {
 }
 
 type PartiallyModifiedSideData = {
-	type: 'added' | 'removed' | 'modified';
+	type: 'added' | 'removed';
 	side: Side;
 	lines: LineDiff[];
 };
@@ -263,13 +185,12 @@ export class PartiallyModifiedBlock extends LinkedComponentsBlock {
 	public type = 'partially_modified';
 	public addedType = 'partially_added';
 	public removedType = 'partially_removed';
-	public modifiedType = 'partially_modified';
 
 	public readonly sidesData: PartiallyModifiedSideData[];
 
-	constructor(id: string, sidesData: PartiallyModifiedSideData[]) {
-		super(id);
-		this.sidesData = sidesData;
+	constructor(params: { id: string; sidesData: PartiallyModifiedSideData[] }) {
+		super(params.id);
+		this.sidesData = params.sidesData;
 	}
 
 	public render() {
@@ -280,8 +201,6 @@ export class PartiallyModifiedBlock extends LinkedComponentsBlock {
 						return PartiallyAddedBlockComponent;
 					case 'removed':
 						return PartiallyRemovedBlockComponent;
-					case 'modified':
-						return MergeModifiedComponent;
 				}
 			})();
 			return new BlockComponent({
@@ -294,11 +213,55 @@ export class PartiallyModifiedBlock extends LinkedComponentsBlock {
 							return this.addedType;
 						case 'removed':
 							return this.removedType;
-						case 'modified':
-							return this.modifiedType;
 					}
 				})()
 			});
 		});
+	}
+}
+
+type MergeConflictSideData = {
+	side: Side;
+	lines: Line[];
+};
+
+export class MergeConflictBlock extends LinkedComponentsBlock {
+	public type = 'merge_conflict';
+	public placeholderType = 'merge_conflict_placeholder';
+
+	public readonly sidesData: MergeConflictSideData[];
+	public readonly placeholderSide: MaybeArray<Side>;
+
+	constructor(params: {
+		id: string;
+		sidesData: MergeConflictSideData[];
+		placeholderSide?: MaybeArray<Side>;
+	}) {
+		super(params.id);
+		this.sidesData = params.sidesData;
+		this.placeholderSide = params.placeholderSide ?? [];
+	}
+
+	public render() {
+		return [
+			...this.sidesData.map(({ side, lines }) => {
+				return new BlockComponent({
+					component: MergeConflictBlockComponent,
+					props: { block: this, lines },
+					side,
+					type: this.type
+				});
+			}),
+			...[this.placeholderSide].flat().map(
+				(side) =>
+					new BlockComponent({
+						component: MergeConflictPlaceholderComponent,
+						props: { block: this },
+						side,
+						placeholder: true,
+						type: this.placeholderType
+					})
+			)
+		];
 	}
 }

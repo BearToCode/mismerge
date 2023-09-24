@@ -20,19 +20,16 @@
 
 <main>
 	<MergeEditor
-		lhs="
+		lhs="1
 2
 3"
-		ctr="
-1
+		ctr="1
 2
-a
-c
 3"
 		rhs="1
-a
 2
-3"
+3
+4"
 	/>
 	<!-- <DiffVisualizer
 		lhs="1

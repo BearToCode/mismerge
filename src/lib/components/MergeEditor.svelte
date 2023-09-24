@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { LinkedComponentsBlock, type DiffBlock, TwoWaySide } from '$lib/internal/blocks';
-	import type { EditorColors } from '$lib/internal/colors';
 	import type { BlockComponent } from '$lib/internal/component';
 	import type { Connection } from '$lib/internal/connection';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff';
@@ -9,6 +7,9 @@
 	import Connector from './Connector.svelte';
 	import View from './View.svelte';
 	import { assembleTwoWay } from '$lib/internal/two-way-assembler';
+	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
+	import { type EditorColors, DefaultEditorColors } from '$lib/internal/colors';
+	import { TwoWaySide } from '$lib/internal/side';
 
 	export let lhs: string;
 	export let ctr: string;
@@ -26,16 +27,7 @@
 	let clazz = '';
 	export { clazz as class };
 
-	const defaultColors: EditorColors = {
-		addedLight: '#d4eed4',
-		addedDark: '#bee6bd',
-		removedLight: '#fff2f0',
-		removedDark: '#ffdfd8',
-		modifiedLight: '#e4f4f5',
-		modifiedDark: '#d3f0f2'
-	};
-
-	const editorColors = joinWithDefault(userColors, defaultColors);
+	const editorColors = joinWithDefault(userColors, DefaultEditorColors);
 
 	let blocks: DiffBlock[] = [];
 	let lhsConnections: Connection[] = [];
@@ -88,11 +80,11 @@
 
 <div
 	style="
-		--light-green: {editorColors.addedLight};
-		--dark-green: {editorColors.addedDark};
-		--light-red: {editorColors.removedLight};
-		--dark-red: {editorColors.removedDark};
-    --blue: {editorColors.modifiedDark};
+		--added: {editorColors.added};
+		--removed: {editorColors.removed};
+    --conflict: {editorColors.conflict};
+		--modified: {editorColors.modified};
+		--modified-overlay: {editorColors.modifiedOverlay};
 	"
 	class="limerge merge-editor {clazz}"
 	bind:this={container}

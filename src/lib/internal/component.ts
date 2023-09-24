@@ -1,5 +1,5 @@
 import type { SvelteComponent } from 'svelte';
-import type { Side } from './blocks';
+import type { Side } from './side';
 import { nanoid } from 'nanoid';
 
 export class BlockComponent<T extends Record<string, unknown> = Record<string, unknown>> {

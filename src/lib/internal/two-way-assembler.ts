@@ -1,5 +1,12 @@
 import { type LineDiffAlgorithm, TwoWayDiff, type TwoWayChange } from './diff';
-import { type DiffBlock, AddedBlock, RemovedBlock, UnchangedBlock, TwoWaySide } from './blocks';
+import {
+	type DiffBlock,
+	AddedBlock,
+	RemovedBlock,
+	UnchangedBlock,
+	MergeConflictBlock
+} from './blocks';
+import { TwoWaySide } from './side';
 import { nanoid } from 'nanoid';
 
 export interface TwoWayAssemblerOptions {
@@ -29,6 +36,8 @@ class TwoWayAssembler {
 			this.assembleBlock(this.currentChange);
 			this.advance();
 		}
+
+		this.generateMergeConflictBlocks();
 
 		return this.blocks;
 	}
@@ -60,7 +69,7 @@ class TwoWayAssembler {
 			this.assembleUnchangedBlock(change);
 		} else if (change.ctr) {
 			this.assembleRemovedBlock(change);
-		} else if (change.lhs || change.rhs) {
+		} else if (!change.ctr && (change.lhs || change.rhs)) {
 			this.assembleAddedBlock(change);
 		} else {
 			console.error('Invalid combination of sides in change', change);
@@ -72,8 +81,10 @@ class TwoWayAssembler {
 
 		const block = new AddedBlock({
 			id: this.getId(),
-			lines: this.intoLines(change.content, side),
-			side,
+			sidesData: {
+				lines: this.intoLines(change.content, side),
+				side
+			},
 			placeholderSide: side.adjacentSides().filter((side) => {
 				if (side.eq(TwoWaySide.lhs)) return !change.lhs;
 				if (side.eq(TwoWaySide.ctr)) return !change.ctr;
@@ -87,13 +98,27 @@ class TwoWayAssembler {
 	private assembleRemovedBlock(change: TwoWayChange) {
 		const side = TwoWaySide.ctr;
 
-		if (change.lhs) this.assembleUnchangedBlock(change, [TwoWaySide.lhs]);
-		if (change.rhs) this.assembleUnchangedBlock(change, [TwoWaySide.rhs]);
+		const sidesData = [
+			{
+				lines: this.intoLines(change.content, side),
+				side
+			}
+		];
+
+		if (change.lhs)
+			sidesData.push({
+				lines: this.intoLines(change.content, TwoWaySide.lhs),
+				side: TwoWaySide.lhs
+			});
+		if (change.rhs)
+			sidesData.push({
+				lines: this.intoLines(change.content, TwoWaySide.rhs),
+				side: TwoWaySide.rhs
+			});
 
 		const block = new RemovedBlock({
 			id: this.getId(),
-			lines: this.intoLines(change.content, side),
-			side,
+			sidesData,
 			placeholderSide: side.adjacentSides().filter((side) => {
 				if (side.eq(TwoWaySide.lhs)) return !change.lhs;
 				if (side.eq(TwoWaySide.ctr)) return !change.ctr;
@@ -104,19 +129,17 @@ class TwoWayAssembler {
 		this.blocks.push(block);
 	}
 
-	private assembleUnchangedBlock(
-		change: TwoWayChange,
-		sides: TwoWaySide[] = [TwoWaySide.lhs, TwoWaySide.ctr, TwoWaySide.rhs]
-	) {
-		const block = new UnchangedBlock(
-			this.getId(),
-			sides.map((side) => ({ side, lines: this.intoLines(change.content, side) }))
-		);
+	private assembleUnchangedBlock(change: TwoWayChange) {
+		const sides: TwoWaySide[] = [TwoWaySide.lhs, TwoWaySide.ctr, TwoWaySide.rhs];
+		const block = new UnchangedBlock({
+			id: this.getId(),
+			sidesData: sides.map((side) => ({ side, lines: this.intoLines(change.content, side) }))
+		});
 		this.blocks.push(block);
 	}
 
 	private intoLines(content: string, side: TwoWaySide) {
-		const lines = this.removeEndOfLine(content, side).split('\n');
+		const lines = this.removeEndOfLine(content).split('\r\n');
 		return lines.map((line) => ({
 			content: line,
 			number: side.eq(TwoWaySide.lhs)
@@ -127,26 +150,71 @@ class TwoWayAssembler {
 		}));
 	}
 
-	private removeEndOfLine(content: string, side: TwoWaySide) {
-		const nextSideChange = this.linesDiff.find(
-			(change) =>
-				(side.eq(TwoWaySide.lhs) && change.lhs) ||
-				(side.eq(TwoWaySide.ctr) && change.ctr) ||
-				(side.eq(TwoWaySide.rhs) && change.rhs)
-		);
-		if (!nextSideChange) return content;
-		return content.endsWith('\n') ? content.slice(0, -1) : content;
+	private removeEndOfLine(content: string) {
+		return content.endsWith('\r\n') ? content.slice(0, -2) : content;
 	}
 
 	private addPlaceholderBlocks() {
 		const placeholderBlock = (side: TwoWaySide) =>
-			new UnchangedBlock(this.getId(), { side, lines: [{ number: 1, content: '' }] });
+			new UnchangedBlock({
+				id: this.getId(),
+				sidesData: { side, lines: [{ number: 1, content: '' }] }
+			});
 		if (!this.linesDiff.find((change) => change.lhs))
 			this.blocks.push(placeholderBlock(TwoWaySide.lhs));
 		if (!this.linesDiff.find((change) => change.ctr))
 			this.blocks.push(placeholderBlock(TwoWaySide.ctr));
 		if (!this.linesDiff.find((change) => change.rhs))
 			this.blocks.push(placeholderBlock(TwoWaySide.rhs));
+	}
+
+	private generateMergeConflictBlocks() {
+		const blocks: DiffBlock[] = [];
+		let conflictBlocks: (AddedBlock | RemovedBlock)[] = [];
+		for (const [index, block] of this.blocks.entries()) {
+			if (block instanceof AddedBlock || block instanceof RemovedBlock) {
+				conflictBlocks.push(block);
+			}
+
+			if (block instanceof UnchangedBlock || index == this.blocks.length - 1) {
+				// Must have at least >= 2 blocks to be a conflict
+				if (conflictBlocks.length == 1) {
+					blocks.push(conflictBlocks[0]);
+					conflictBlocks = [];
+				} else if (conflictBlocks.length > 1) {
+					const sidesData = [];
+					const lhs = TwoWaySide.lhs;
+					const ctr = TwoWaySide.ctr;
+					const rhs = TwoWaySide.rhs;
+					const placeholderSides = new Set<TwoWaySide>([lhs, ctr, rhs]);
+					for (const conflictBlock of conflictBlocks) {
+						const blockSides = [conflictBlock.sidesData].flat();
+						sidesData.push(...blockSides);
+
+						if (blockSides.find(({ side }) => side.eq(TwoWaySide.lhs)))
+							placeholderSides.delete(lhs);
+						if (blockSides.find(({ side }) => side.eq(TwoWaySide.ctr)))
+							placeholderSides.delete(ctr);
+						if (blockSides.find(({ side }) => side.eq(TwoWaySide.rhs)))
+							placeholderSides.delete(rhs);
+					}
+
+					const conflictBlock = new MergeConflictBlock({
+						id: this.getId(),
+						sidesData,
+						placeholderSide: Array.from(placeholderSides)
+					});
+
+					blocks.push(conflictBlock);
+					conflictBlocks = [];
+				}
+
+				if (block instanceof UnchangedBlock) {
+					blocks.push(block);
+				}
+			}
+		}
+		this.blocks = blocks;
 	}
 }
 

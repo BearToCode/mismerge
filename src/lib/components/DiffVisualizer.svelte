@@ -1,14 +1,15 @@
 <script lang="ts">
 	import type { LineDiffAlgorithm } from '$lib/internal/diff';
-	import type { EditorColors } from '$lib/internal/colors';
-	import type { BlockComponent } from '$lib/internal/component';
-	import { OneWaySide, type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
-	import { assembleOneWay } from '$lib/internal/one-way-assembler';
 	import { joinWithDefault } from '$lib/internal/utils';
-	import View from './View.svelte';
-	import type { Connection } from '$lib/internal/connection';
-	import Connector from './Connector.svelte';
 	import { onDestroy, onMount } from 'svelte';
+	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
+	import { type DiffColors, DefaultDiffColors } from '$lib/internal/colors';
+	import type { BlockComponent } from '$lib/internal/component';
+	import type { Connection } from '$lib/internal/connection';
+	import { assembleOneWay } from '$lib/internal/one-way-assembler';
+	import { OneWaySide } from '$lib/internal/side';
+	import View from './View.svelte';
+	import Connector from './Connector.svelte';
 
 	/**
 	 * Left hand side content.
@@ -21,7 +22,7 @@
 	/**
 	 * Custom colors to use for the editor.
 	 */
-	let userColors: Partial<EditorColors> = {};
+	let userColors: Partial<DiffColors> = {};
 	export { userColors as colors };
 	/**
 	 * Whether the left hand side content is editable.
@@ -39,15 +40,7 @@
 	let clazz = '';
 	export { clazz as class };
 
-	const defaultColors: EditorColors = {
-		addedLight: '#d4eed4',
-		addedDark: '#bee6bd',
-		removedLight: '#fff2f0',
-		removedDark: '#ffdfd8',
-		modifiedLight: '#e4f4f5',
-		modifiedDark: '#d3f0f2'
-	};
-	const editorColors = joinWithDefault(userColors, defaultColors);
+	const colors = joinWithDefault(userColors, DefaultDiffColors);
 
 	let blocks: DiffBlock[] = [];
 	let connections: Connection[] = [];
@@ -89,10 +82,10 @@
 
 <div
 	style="
-		--light-green: {editorColors.addedLight};
-		--dark-green: {editorColors.addedDark};
-		--light-red: {editorColors.removedLight};
-		--dark-red: {editorColors.removedDark};
+		--added: {colors.added};
+		--removed: {colors.addedOverlay};
+		--added-overlay: {colors.removed};
+		--removed-overlay: {colors.removedOverlay};
 	"
 	class="limerge diff-visualizer {clazz}"
 	bind:this={container}
@@ -105,12 +98,7 @@
 		bind:elem={lhsViewElem}
 	/>
 	{#if container}
-		<Connector
-			colors={editorColors}
-			bind:draw={drawConnections}
-			bind:lhsViewElem
-			bind:rhsViewElem
-		/>
+		<Connector {colors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
 	{/if}
 	<View
 		editable={rhsEditable}

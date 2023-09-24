@@ -1,4 +1,4 @@
-import type { EditorColors } from './colors';
+import type { DiffColors, EditorColors } from './colors';
 import type { BlockComponent } from './component';
 
 export type Connection = {
@@ -6,24 +6,27 @@ export type Connection = {
 	to: BlockComponent;
 };
 
-function componentColor(blockComponent: BlockComponent, colors: EditorColors) {
+function componentColor(
+	blockComponent: BlockComponent,
+	colors: Partial<EditorColors & DiffColors>
+): `#${string}` {
+	const defaultColor = '#000000';
 	switch (blockComponent.type) {
 		case 'added':
 		case 'added_placeholder':
-			return colors.addedDark;
+			return colors.added ?? defaultColor;
 		case 'removed':
 		case 'removed_placeholder':
-			return colors.removedDark;
+			return colors.removed ?? defaultColor;
+		case 'merge_conflict':
+		case 'merge_conflict_placeholder':
+			return colors.conflict ?? defaultColor;
 		case 'partially_added':
-			return colors.addedLight;
+			return colors.addedOverlay ?? defaultColor;
 		case 'partially_removed':
-			return colors.removedLight;
-		case 'merge_modified':
-			return colors.modifiedDark;
-		case 'modified_placeholder':
-			return colors.modifiedLight;
+			return colors.removedOverlay ?? defaultColor;
 		default:
-			return `#000000`;
+			return defaultColor;
 	}
 }
 
@@ -39,7 +42,7 @@ function componentColor(blockComponent: BlockComponent, colors: EditorColors) {
 export function drawConnections(
 	canvas: HTMLCanvasElement,
 	connections: Connection[],
-	colors: EditorColors,
+	colors: EditorColors | DiffColors,
 	lhsViewElem: HTMLDivElement,
 	rhsViewElem: HTMLDivElement,
 	container: HTMLElement

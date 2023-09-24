@@ -1,5 +1,5 @@
 import { diffChars, diffLines, diffWords, diffWordsWithSpace } from 'diff';
-import { TwoWaySide } from './blocks';
+import { TwoWaySide } from './side';
 
 export type LineDiffAlgorithm = 'characters' | 'words' | 'words_with_space';
 
@@ -143,9 +143,9 @@ function splitChangesIntoLines(changes: OneWayChange[]): OneWayChange[] {
 	return changes
 		.map((change) =>
 			removeEndOfLine(change.content)
-				.split('\n')
+				.split('\r\n')
 				.map((line) => ({
-					content: line + '\n',
+					content: line + '\r\n',
 					lhs: change.lhs,
 					rhs: change.rhs
 				}))
@@ -154,5 +154,5 @@ function splitChangesIntoLines(changes: OneWayChange[]): OneWayChange[] {
 }
 
 function removeEndOfLine(string: string) {
-	return string.endsWith('\n') ? string.slice(0, -1) : string;
+	return string.endsWith('\r\n') ? string.slice(0, -2) : string;
 }

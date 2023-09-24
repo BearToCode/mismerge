@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/component';
-	import type { Side } from '$lib/internal/blocks';
+	import type { Side } from '$lib/internal/side';
 
 	export let components: BlockComponent[];
 	export let editable: boolean = false;

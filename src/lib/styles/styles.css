@@ -81,31 +81,31 @@
 }
 
 .limerge .block.added {
-	background-color: var(--dark-green);
+	background-color: var(--added);
 }
 
 .limerge .block.removed {
-	background-color: var(--dark-red);
+	background-color: var(--removed);
 }
 
 .limerge .block.partially_added {
-	background-color: var(--light-green);
+	background-color: var(--added-overlay);
 }
 
 .limerge .block.partially_removed {
-	background-color: var(--light-red);
+	background-color: var(--removed-overlay);
 }
 
 .limerge .block.partially_added .added {
-	background-color: var(--dark-green);
+	background-color: var(--added);
 }
 
 .limerge .block.partially_removed .removed {
-	background-color: var(--dark-red);
+	background-color: var(--removed);
 }
 
-.limerge .block.merge_modified {
-	background-color: var(--blue);
+.limerge .block.merge_conflict {
+	background-color: var(--conflict);
 }
 
 .limerge .added_placeholder {
@@ -113,7 +113,7 @@
 	left: 0;
 	right: 0;
 	height: 2px;
-	background: var(--dark-green);
+	background: var(--added);
 }
 
 .limerge .removed_placeholder {
@@ -121,5 +121,13 @@
 	left: 0;
 	right: 0;
 	height: 2px;
-	background: var(--dark-red);
+	background: var(--removed);
+}
+
+.limerge .merge_conflict_placeholder {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: var(--conflict);
 }
