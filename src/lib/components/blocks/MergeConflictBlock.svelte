@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Line, PartiallyModifiedBlock } from '$lib/internal/blocks';
+	import type { Line } from '$lib/internal/blocks';
+	import type { PartiallyModifiedBlock } from '$lib/internal/blocks/partially-modified';
 	import type { BlockComponent } from '$lib/internal/component';
 
 	export let block: PartiallyModifiedBlock;

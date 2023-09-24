@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { AddedBlock, Line } from '$lib/internal/blocks';
+	import type { Line } from '$lib/internal/blocks';
+	import type { AddedBlock } from '$lib/internal/blocks/added';
 	import type { BlockComponent } from '$lib/internal/component';
 
 	export let block: AddedBlock;

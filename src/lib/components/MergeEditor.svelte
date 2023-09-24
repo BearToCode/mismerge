@@ -7,9 +7,9 @@
 	import Connector from './Connector.svelte';
 	import View from './View.svelte';
 	import { assembleTwoWay } from '$lib/internal/two-way-assembler';
-	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 	import { type EditorColors, DefaultEditorColors } from '$lib/internal/colors';
 	import { TwoWaySide } from '$lib/internal/side';
+	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 
 	export let lhs: string;
 	export let ctr: string;

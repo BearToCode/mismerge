@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { Line, UnchangedBlock } from '$lib/internal/blocks';
+	import type { Line } from '$lib/internal/blocks';
+	import type { UnchangedBlock } from '$lib/internal/blocks/unchanged';
 	import type { BlockComponent } from '$lib/internal/component';
 
 	export let block: UnchangedBlock;

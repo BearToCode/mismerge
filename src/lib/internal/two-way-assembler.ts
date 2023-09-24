@@ -1,11 +1,9 @@
+import type { DiffBlock } from './blocks';
+import { AddedBlock } from './blocks/added';
+import { MergeConflictBlock } from './blocks/merge-conflict';
+import { RemovedBlock } from './blocks/removed';
+import { UnchangedBlock } from './blocks/unchanged';
 import { type LineDiffAlgorithm, TwoWayDiff, type TwoWayChange } from './diff';
-import {
-	type DiffBlock,
-	AddedBlock,
-	RemovedBlock,
-	UnchangedBlock,
-	MergeConflictBlock
-} from './blocks';
 import { TwoWaySide } from './side';
 import { nanoid } from 'nanoid';
 

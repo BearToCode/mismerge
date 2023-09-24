@@ -1,19 +1,16 @@
-import {
-	getLineDiffAlgorithm,
-	OneWayDiff,
-	type LineDiffAlgorithm,
-	type OneWayChange
-} from './diff';
-import {
-	type LineDiff,
-	type DiffBlock,
-	AddedBlock,
-	RemovedBlock,
-	UnchangedBlock,
-	PartiallyModifiedBlock
-} from './blocks';
-import { Side, OneWaySide } from './side';
+import type { DiffBlock, LineDiff } from './blocks';
 import type { Change } from 'diff';
+import { AddedBlock } from './blocks/added';
+import { PartiallyModifiedBlock } from './blocks/partially-modified';
+import { RemovedBlock } from './blocks/removed';
+import { UnchangedBlock } from './blocks/unchanged';
+import {
+	type LineDiffAlgorithm,
+	type OneWayChange,
+	getLineDiffAlgorithm,
+	OneWayDiff
+} from './diff';
+import { Side, OneWaySide } from './side';
 import { nanoid } from 'nanoid';
 
 export interface OneWayAssemblerOptions {
