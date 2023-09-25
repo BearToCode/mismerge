@@ -1,3 +1,4 @@
+import { get, writable } from 'svelte/store';
 import type { DiffBlock } from './blocks';
 import { AddedBlock, type AddedSideData } from './blocks/added';
 import { MergeConflictBlock } from './blocks/merge-conflict';
@@ -23,9 +24,9 @@ class TwoWayAssembler {
 
 		this.blocks = [];
 
-		this.lhsLineNumber = 1;
-		this.ctrLineNumber = 1;
-		this.rhsLineNumber = 1;
+		this.lhsLineNumber.set(1);
+		this.ctrLineNumber.set(1);
+		this.rhsLineNumber.set(1);
 
 		this.linesDiff = twoWayDiff(this.lhs, this.ctr, this.rhs);
 
@@ -49,17 +50,14 @@ class TwoWayAssembler {
 
 	private blocks: DiffBlock[] = [];
 
-	private lhsLineNumber = 1;
-	private ctrLineNumber = 1;
-	private rhsLineNumber = 1;
+	private lhsLineNumber = writable(1);
+	private ctrLineNumber = writable(1);
+	private rhsLineNumber = writable(1);
 
 	private linesDiff: TwoWayChange[] = [];
 	private currentChange: TwoWayChange | undefined;
 
 	private getId = () => nanoid(6);
-	private getLhsLineNumber = () => this.lhsLineNumber++;
-	private getCtrLineNumber = () => this.ctrLineNumber++;
-	private getRhsLineNumber = () => this.rhsLineNumber++;
 
 	private advance() {
 		return (this.currentChange = this.linesDiff.shift());
@@ -141,14 +139,19 @@ class TwoWayAssembler {
 
 	private intoLines(content: string, side: TwoWaySide) {
 		const lines = this.removeEndOfLine(content).split('\r\n');
-		return lines.map((line) => ({
-			content: line,
-			number: side.eq(TwoWaySide.lhs)
-				? this.getLhsLineNumber()
+		return lines.map((line) => {
+			const lineNumberStore = side.eq(TwoWaySide.lhs)
+				? this.lhsLineNumber
 				: side.eq(TwoWaySide.ctr)
-				? this.getCtrLineNumber()
-				: this.getRhsLineNumber()
-		}));
+				? this.ctrLineNumber
+				: this.rhsLineNumber;
+			const number = get(lineNumberStore);
+			lineNumberStore.update((n) => n + 1);
+			return {
+				content: line,
+				number
+			};
+		});
 	}
 
 	private removeEndOfLine(content: string) {
@@ -232,22 +235,23 @@ class TwoWayAssembler {
 				continue;
 			}
 
-			const lhsContent =
-				(block.sidesData.find(({ side }) => side.eq(TwoWaySide.lhs))?.lines ?? [])
-					.map((change) => change.content)
-					.join('\n') + '\n';
-			const ctrContent =
-				(block.sidesData.find(({ side }) => side.eq(TwoWaySide.ctr))?.lines ?? [])
-					.map((change) => change.content)
-					.join('\n') + '\n';
-			const rhsContent =
-				(block.sidesData.find(({ side }) => side.eq(TwoWaySide.rhs))?.lines ?? [])
-					.map((change) => change.content)
-					.join('\n') + '\n';
+			const lhsSideData = block.sidesData.find(({ side }) => side.eq(TwoWaySide.lhs));
+			const ctrSideData = block.sidesData.find(({ side }) => side.eq(TwoWaySide.ctr));
+			const rhsSideData = block.sidesData.find(({ side }) => side.eq(TwoWaySide.rhs));
+
+			const lhsContent = lhsSideData?.lines.map((change) => change.content).join('\n') + '\n';
+			const ctrContent = ctrSideData?.lines.map((change) => change.content).join('\n') + '\n';
+			const rhsContent = rhsSideData?.lines.map((change) => change.content).join('\n') + '\n';
+
+			this.lhsLineNumber.set(lhsSideData?.lines[0].number ?? 1);
+			this.ctrLineNumber.set(ctrSideData?.lines[0].number ?? 1);
+			this.rhsLineNumber.set(rhsSideData?.lines[0].number ?? 1);
 
 			if (lhsContent === ctrContent) {
 				const diff = diff2Sides(ctrContent, rhsContent, {
-					algorithm: this.options?.lineDiffAlgorithm
+					algorithm: this.options?.lineDiffAlgorithm,
+					lhsLineNumber: this.ctrLineNumber,
+					rhsLineNumber: this.rhsLineNumber
 				});
 				const modifiedBlock = new ModifiedBlock({
 					modifiedSidesData: [
@@ -272,7 +276,9 @@ class TwoWayAssembler {
 
 			if (ctrContent === rhsContent) {
 				const diff = diff2Sides(lhsContent, ctrContent, {
-					algorithm: this.options?.lineDiffAlgorithm
+					algorithm: this.options?.lineDiffAlgorithm,
+					lhsLineNumber: this.lhsLineNumber,
+					rhsLineNumber: this.ctrLineNumber
 				});
 				const modifiedBlock = new ModifiedBlock({
 					modifiedSidesData: [
