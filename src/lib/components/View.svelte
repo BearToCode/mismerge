@@ -11,19 +11,17 @@
 
 	let textarea: HTMLTextAreaElement | undefined;
 	let containerElem: HTMLDivElement;
-	let viewContentElem: HTMLDivElement;
 
 	export { containerElem as elem };
 
 	let sideComponents: BlockComponent[] = [];
 	let scrollWidth = 0;
-	$: scrollWidth = viewContentElem?.clientWidth ?? 0;
 
 	$: sideComponents = components.filter((component) => component.side.eq(side));
 </script>
 
 <div bind:this={containerElem} class="view {editable ? 'editable' : ''} {clazz}">
-	<div bind:this={viewContentElem} class="view-content">
+	<div bind:clientWidth={scrollWidth} class="view-content">
 		{#each sideComponents as blockComponent}
 			<svelte:component
 				this={blockComponent.component}
