@@ -18,7 +18,7 @@
 	 * Line diff algorithm.
 	 * @default "words_with_space"
 	 */
-	export let lineDiffAlgorithm: LineDiffAlgorithm = 'characters';
+	export let lineDiffAlgorithm: LineDiffAlgorithm = 'words_with_space';
 	/**
 	 * Custom colors to use for the editor.
 	 */
