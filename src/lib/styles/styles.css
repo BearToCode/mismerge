@@ -4,6 +4,13 @@
 
 .limerge .view {
 	position: relative;
+	overflow-x: auto;
+}
+
+.limerge .view .view-content {
+	width: fit-content;
+	min-width: 100%;
+	position: relative;
 }
 
 .limerge.diff-visualizer .view {
@@ -21,7 +28,8 @@
 	top: 0;
 	bottom: 0;
 
-	width: 100%;
+	width: calc(var(--scroll-width) - 5rem);
+	tab-size: 2;
 	min-height: 100%;
 
 	border: none;
@@ -53,16 +61,20 @@
 
 .limerge .view pre {
 	margin: 0;
+	white-space: pre;
+	tab-size: 4;
 }
 
 .limerge .view .line {
 	display: flex;
+	min-height: fit-content;
 }
 
 .limerge .view .line .line-number {
 	width: 4rem;
 	text-align: right;
 	padding-right: 1rem;
+	flex-shrink: 0;
 }
 
 .limerge .view .line .block {
@@ -71,7 +83,6 @@
 
 .limerge .view.editable pre {
 	color: transparent;
-	white-space: pre-wrap;
 	tab-size: 2rem;
 }
 

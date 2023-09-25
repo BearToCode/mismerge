@@ -33,7 +33,7 @@ function remapEoF(str: string) {
 	return str.replaceAll('\r\n', '\n').replaceAll('\n', '\r\n') + '\r\n';
 }
 
-export function OneWayDiff(lhs: string, rhs: string): OneWayChange[] {
+export function oneWayDiff(lhs: string, rhs: string): OneWayChange[] {
 	const lhsRemapped = remapEoF(lhs);
 	const rhsRemapped = remapEoF(rhs);
 
@@ -48,9 +48,9 @@ export function OneWayDiff(lhs: string, rhs: string): OneWayChange[] {
 	return diff;
 }
 
-export function TwoWayDiff(lhs: string, ctr: string, rhs: string): TwoWayChange[] {
-	const lhsBaseDiff = OneWayDiff(lhs, ctr);
-	const rhsBaseDiff = OneWayDiff(ctr, rhs);
+export function twoWayDiff(lhs: string, ctr: string, rhs: string): TwoWayChange[] {
+	const lhsBaseDiff = oneWayDiff(lhs, ctr);
+	const rhsBaseDiff = oneWayDiff(ctr, rhs);
 
 	const changes: TwoWayChange[] = [];
 

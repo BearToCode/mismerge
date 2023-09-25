@@ -1,14 +1,14 @@
-import { TwoWayDiff, OneWayDiff } from '$lib/internal/diff';
+import { twoWayDiff, oneWayDiff } from '$lib/internal/diff';
 import { expect, test } from 'vitest';
 import dedent from 'dedent';
 
 test('one-way-diff empty', () => {
-	const diff = OneWayDiff('', '');
+	const diff = oneWayDiff('', '');
 	expect(diff.at(0)).toMatchObject({ content: '\r\n', lhs: true, rhs: true });
 });
 
 test('one-way-diff lhs addition', () => {
-	const diff = OneWayDiff(
+	const diff = oneWayDiff(
 		dedent`1
            2
            3`,
@@ -20,7 +20,7 @@ test('one-way-diff lhs addition', () => {
 });
 
 test('one-way-diff rhs addition', () => {
-	const diff = OneWayDiff(
+	const diff = oneWayDiff(
 		dedent`1
            2`,
 		dedent`1
@@ -32,7 +32,7 @@ test('one-way-diff rhs addition', () => {
 });
 
 test('one-way-diff edit', () => {
-	const diff = OneWayDiff(
+	const diff = oneWayDiff(
 		dedent`1
            a
            3`,
@@ -47,7 +47,7 @@ test('one-way-diff edit', () => {
 });
 
 test('one-way-diff unchanged', () => {
-	const diff = OneWayDiff(
+	const diff = oneWayDiff(
 		dedent`1
            2
            3`,
@@ -59,7 +59,7 @@ test('one-way-diff unchanged', () => {
 });
 
 test('one-way-diff starting lhs newline', () => {
-	const diff = OneWayDiff(
+	const diff = oneWayDiff(
 		`
 1`,
 		dedent`1`
@@ -69,7 +69,7 @@ test('one-way-diff starting lhs newline', () => {
 });
 
 test('one-way-diff starting rhs newline', () => {
-	const diff = OneWayDiff(
+	const diff = oneWayDiff(
 		dedent`1`,
 		`
 1`
@@ -79,12 +79,12 @@ test('one-way-diff starting rhs newline', () => {
 });
 
 test('two-way-diff empty', () => {
-	const diff = TwoWayDiff('', '', '');
+	const diff = twoWayDiff('', '', '');
 	expect(diff.at(0)).toMatchObject({ content: '\r\n', lhs: true, ctr: true, rhs: true });
 });
 
 test('two-way-diff addition lhs', () => {
-	const diff = TwoWayDiff(
+	const diff = twoWayDiff(
 		dedent`1
            2
            3`,
@@ -98,7 +98,7 @@ test('two-way-diff addition lhs', () => {
 });
 
 test('two-way-diff addition ctr', () => {
-	const diff = TwoWayDiff(
+	const diff = twoWayDiff(
 		dedent`1
 					 2`,
 		dedent`1
@@ -112,7 +112,7 @@ test('two-way-diff addition ctr', () => {
 });
 
 test('two-way-diff addition rhs', () => {
-	const diff = TwoWayDiff(
+	const diff = twoWayDiff(
 		dedent`1
 					 2`,
 		dedent`1
@@ -126,7 +126,7 @@ test('two-way-diff addition rhs', () => {
 });
 
 test('two-way-diff edit', () => {
-	const diff = TwoWayDiff(
+	const diff = twoWayDiff(
 		dedent`1
 					 a
 					 3`,
@@ -145,7 +145,7 @@ test('two-way-diff edit', () => {
 });
 
 test('two-way-diff unchanged', () => {
-	const diff = TwoWayDiff(
+	const diff = twoWayDiff(
 		dedent`1
 					 2
 					 3`,

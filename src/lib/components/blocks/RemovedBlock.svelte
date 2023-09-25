@@ -15,7 +15,7 @@
 				{line.number}
 			</div>
 			<div class="content">
-				<pre>{line.content}</pre>
+				<pre>{line.content || ' '}</pre>
 			</div>
 		</div>
 	{/each}

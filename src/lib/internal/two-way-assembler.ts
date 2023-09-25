@@ -4,7 +4,7 @@ import { MergeConflictBlock } from './blocks/merge-conflict';
 import { ModifiedBlock } from './blocks/modified';
 import { RemovedBlock, type RemovedSideData } from './blocks/removed';
 import { UnchangedBlock } from './blocks/unchanged';
-import { TwoWayDiff, type TwoWayChange } from './diff';
+import { twoWayDiff, type TwoWayChange } from './diff';
 import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
 import { TwoWaySide } from './side';
 import { nanoid } from 'nanoid';
@@ -27,7 +27,7 @@ class TwoWayAssembler {
 		this.ctrLineNumber = 1;
 		this.rhsLineNumber = 1;
 
-		this.linesDiff = TwoWayDiff(this.lhs, this.ctr, this.rhs);
+		this.linesDiff = twoWayDiff(this.lhs, this.ctr, this.rhs);
 
 		this.addPlaceholderBlocks();
 

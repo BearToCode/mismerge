@@ -4,7 +4,7 @@ import { AddedBlock } from './blocks/added';
 import { PartiallyModifiedBlock } from './blocks/partially-modified';
 import { RemovedBlock } from './blocks/removed';
 import { UnchangedBlock } from './blocks/unchanged';
-import { type OneWayChange, OneWayDiff } from './diff';
+import { type OneWayChange, oneWayDiff } from './diff';
 import { diff2Sides, type LineDiff, type LineDiffAlgorithm } from './line-diff';
 import { Side, OneWaySide } from './side';
 import { nanoid } from 'nanoid';
@@ -33,7 +33,7 @@ class OneWayAssembler {
 		this.removeSideLineNumber.set(1);
 		this.addSideLineNumber.set(1);
 
-		this.linesDiff = OneWayDiff(this.lhs, this.rhs);
+		this.linesDiff = oneWayDiff(this.lhs, this.rhs);
 
 		this.advance();
 		while (this.currentChange) {

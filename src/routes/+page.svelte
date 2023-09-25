@@ -21,7 +21,8 @@
 
 <main>
 	<MergeEditor
-		lhs="1
+		lhs="abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
+1
 2
 3"
 		ctr="1
