@@ -1,15 +1,11 @@
-import type { DiffBlock, LineDiff } from './blocks';
-import type { Change } from 'diff';
+import { get, writable } from 'svelte/store';
+import type { DiffBlock } from './blocks';
 import { AddedBlock } from './blocks/added';
 import { PartiallyModifiedBlock } from './blocks/partially-modified';
 import { RemovedBlock } from './blocks/removed';
 import { UnchangedBlock } from './blocks/unchanged';
-import {
-	type LineDiffAlgorithm,
-	type OneWayChange,
-	getLineDiffAlgorithm,
-	OneWayDiff
-} from './diff';
+import { type OneWayChange, OneWayDiff } from './diff';
+import { diff2Sides, type LineDiff, type LineDiffAlgorithm } from './line-diff';
 import { Side, OneWaySide } from './side';
 import { nanoid } from 'nanoid';
 
@@ -20,7 +16,7 @@ export interface OneWayAssemblerOptions {
 
 class OneWayAssembler {
 	constructor(private readonly options?: OneWayAssemblerOptions) {
-		if (options?.direction ?? 'left-to-right' == 'left-to-right') {
+		if ((options?.direction ?? 'left-to-right') == 'left-to-right') {
 			this.removeSide = OneWaySide.lhs;
 			this.addSide = OneWaySide.rhs;
 		} else {
@@ -34,8 +30,8 @@ class OneWayAssembler {
 		this.rhs = rhs;
 
 		this.blocks = [];
-		this.removeSideLineNumber = 1;
-		this.addSideLineNumber = 1;
+		this.removeSideLineNumber.set(1);
+		this.addSideLineNumber.set(1);
 
 		this.linesDiff = OneWayDiff(this.lhs, this.rhs);
 
@@ -56,8 +52,8 @@ class OneWayAssembler {
 
 	private blocks: DiffBlock[] = [];
 
-	private removeSideLineNumber = 1;
-	private addSideLineNumber = 1;
+	private removeSideLineNumber = writable(1);
+	private addSideLineNumber = writable(1);
 
 	private linesDiff: OneWayChange[] = [];
 	private currentChange: OneWayChange | undefined;
@@ -65,8 +61,6 @@ class OneWayAssembler {
 	private nextChange: OneWayChange | undefined;
 
 	private getId = () => nanoid(6);
-	private getRemoveSideLineNumber = () => this.removeSideLineNumber++;
-	private getAddSideLineNumber = () => this.addSideLineNumber++;
 
 	private advance() {
 		this.previousChange = this.currentChange;
@@ -134,19 +128,38 @@ class OneWayAssembler {
 	}
 
 	private assemblePartiallyModifiedBlock(lhsChange: OneWayChange, rhsChange: OneWayChange) {
-		const oldString = this.addSide.eq(OneWaySide.rhs) ? lhsChange.content : rhsChange.content;
-		const newString = this.addSide.eq(OneWaySide.rhs) ? rhsChange.content : lhsChange.content;
+		let lhsLines: LineDiff[];
+		let rhsLines: LineDiff[];
+
+		if (this.addSide.eq(OneWaySide.lhs)) {
+			const diff = diff2Sides(lhsChange.content, rhsChange.content, {
+				algorithm: this.options?.lineDiffAlgorithm,
+				lhsLineNumber: this.addSideLineNumber,
+				rhsLineNumber: this.removeSideLineNumber
+			});
+			lhsLines = diff.lhs;
+			rhsLines = diff.rhs;
+		} else {
+			const diff = diff2Sides(lhsChange.content, rhsChange.content, {
+				algorithm: this.options?.lineDiffAlgorithm,
+				lhsLineNumber: this.removeSideLineNumber,
+				rhsLineNumber: this.addSideLineNumber
+			});
+			lhsLines = diff.lhs;
+			rhsLines = diff.rhs;
+		}
+
 		const block = new PartiallyModifiedBlock({
 			id: this.getId(),
 			sidesData: [
 				{
 					type: 'added',
-					lines: this.intoLinesDiff(oldString, newString, this.addSide),
+					lines: this.addSide.eq(OneWaySide.lhs) ? lhsLines : rhsLines,
 					side: this.addSide
 				},
 				{
 					type: 'removed',
-					lines: this.intoLinesDiff(oldString, newString, this.removeSide),
+					lines: this.addSide.eq(OneWaySide.lhs) ? rhsLines : lhsLines,
 					side: this.removeSide
 				}
 			]
@@ -156,57 +169,17 @@ class OneWayAssembler {
 
 	private intoLines(content: string, side: Side) {
 		const lines = this.removeEndOfLine(content).split('\n');
-		return lines.map((line) => ({
-			content: line,
-			number: side.eq(this.removeSide)
-				? this.getRemoveSideLineNumber()
-				: this.getAddSideLineNumber()
-		}));
-	}
-
-	private intoLinesDiff(oldString: string, newString: string, side: Side): LineDiff[] {
-		return (
-			getLineDiffAlgorithm(this.options?.lineDiffAlgorithm ?? 'words_with_space')(
-				oldString,
-				newString
-			)
-				.filter((change) => {
-					if (side.eq(this.removeSide)) return !change.added;
-					return !change.removed;
-				})
-				// Split diffs that include newlines into multiple diffs
-				.map((change) => {
-					// "This \n is \n a change" => ["This \n" + "is \n", "a change"]
-					return change.value.split('\n').map((line, index, lines) => ({
-						...change,
-						value: line + (index == lines.length - 1 ? '' : '\n')
-					}));
-				})
-				// Flatten array
-				.flat()
-				// Group by line
-				.reduce<Array<Change[]>>(
-					(acc, change) => {
-						const incomplete = acc[acc.length - 1];
-						incomplete.push(change);
-						if (change.value.endsWith('\n')) {
-							acc.push([]);
-						}
-						return acc;
-					},
-					[[]]
-				)
-				.filter((line, index, lines) => {
-					return !(index == lines.length - 1 && line.length == 1 && line[0].value == '');
-				})
-				// Add line numbers
-				.map((line) => ({
-					number: side.eq(this.addSide)
-						? this.getAddSideLineNumber()
-						: this.getRemoveSideLineNumber(),
-					diff: line
-				}))
-		);
+		return lines.map((line) => {
+			const lineNumberStore = side.eq(this.removeSide)
+				? this.removeSideLineNumber
+				: this.addSideLineNumber;
+			const number = get(lineNumberStore);
+			lineNumberStore.set(number + 1);
+			return {
+				content: line,
+				number
+			};
+		});
 	}
 
 	private removeEndOfLine(content: string) {

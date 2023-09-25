@@ -5,7 +5,7 @@ import { BlockComponent } from '../component';
 import AddedBlockComponent from '$lib/components/blocks/AddedBlock.svelte';
 import AddedBlockPlaceholderComponent from '$lib/components/blocks/AddedBlockPlaceholder.svelte';
 
-type AddedSideData = {
+export type AddedSideData = {
 	side: Side;
 	lines: Line[];
 };

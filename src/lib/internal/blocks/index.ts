@@ -1,4 +1,3 @@
-import type { Change } from 'diff';
 import type { BlockComponent } from '../component';
 import type { MaybeArray } from '../utils';
 import type { Connection } from '../connection';
@@ -6,11 +5,6 @@ import type { Connection } from '../connection';
 export type Line = {
 	number: number;
 	content: string;
-};
-
-export type LineDiff = {
-	diff: Change[];
-	number: number;
 };
 
 export abstract class DiffBlock {

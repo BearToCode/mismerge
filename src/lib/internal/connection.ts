@@ -10,21 +10,21 @@ function componentColor(
 	blockComponent: BlockComponent,
 	colors: Partial<EditorColors & DiffColors>
 ): `#${string}` {
-	const defaultColor = '#000000';
+	const defaultColor = '#ffffff';
 	switch (blockComponent.type) {
 		case 'added':
 		case 'added_placeholder':
+		case 'partially_added':
 			return colors.added ?? defaultColor;
 		case 'removed':
 		case 'removed_placeholder':
+		case 'partially_removed':
 			return colors.removed ?? defaultColor;
 		case 'merge_conflict':
 		case 'merge_conflict_placeholder':
 			return colors.conflict ?? defaultColor;
-		case 'partially_added':
-			return colors.addedOverlay ?? defaultColor;
-		case 'partially_removed':
-			return colors.removedOverlay ?? defaultColor;
+		case 'modified':
+			return colors.modified ?? defaultColor;
 		default:
 			return defaultColor;
 	}

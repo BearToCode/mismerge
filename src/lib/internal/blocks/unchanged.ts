@@ -25,7 +25,7 @@ export class UnchangedBlock extends DiffBlock {
 			({ side, lines }) =>
 				new BlockComponent({
 					component: UnchangedBlockComponent,
-					props: { block: this, lines },
+					props: { lines },
 					side,
 					type: this.type
 				})

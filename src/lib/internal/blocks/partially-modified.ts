@@ -1,8 +1,9 @@
-import { type LineDiff, LinkedComponentsBlock } from '.';
+import { LinkedComponentsBlock } from '.';
 import type { Side } from '../side';
 import { BlockComponent } from '../component';
 import PartiallyRemovedBlockComponent from '$lib/components/blocks/PartiallyRemovedBlock.svelte';
 import PartiallyAddedBlockComponent from '$lib/components/blocks/PartiallyAddedBlock.svelte';
+import type { LineDiff } from '../line-diff';
 
 type PartiallyModifiedSideData = {
 	type: 'added' | 'removed';

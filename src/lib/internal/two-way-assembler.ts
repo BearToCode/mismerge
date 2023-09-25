@@ -1,9 +1,11 @@
 import type { DiffBlock } from './blocks';
-import { AddedBlock } from './blocks/added';
+import { AddedBlock, type AddedSideData } from './blocks/added';
 import { MergeConflictBlock } from './blocks/merge-conflict';
-import { RemovedBlock } from './blocks/removed';
+import { ModifiedBlock } from './blocks/modified';
+import { RemovedBlock, type RemovedSideData } from './blocks/removed';
 import { UnchangedBlock } from './blocks/unchanged';
-import { type LineDiffAlgorithm, TwoWayDiff, type TwoWayChange } from './diff';
+import { TwoWayDiff, type TwoWayChange } from './diff';
+import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
 import { TwoWaySide } from './side';
 import { nanoid } from 'nanoid';
 
@@ -36,6 +38,7 @@ class TwoWayAssembler {
 		}
 
 		this.generateMergeConflictBlocks();
+		this.generateModifiedBlocks();
 
 		return this.blocks;
 	}
@@ -180,15 +183,21 @@ class TwoWayAssembler {
 					blocks.push(conflictBlocks[0]);
 					conflictBlocks = [];
 				} else if (conflictBlocks.length > 1) {
-					const sidesData = [];
+					const sidesData: (AddedSideData | RemovedSideData)[] = [];
 					const lhs = TwoWaySide.lhs;
 					const ctr = TwoWaySide.ctr;
 					const rhs = TwoWaySide.rhs;
 					const placeholderSides = new Set<TwoWaySide>([lhs, ctr, rhs]);
 					for (const conflictBlock of conflictBlocks) {
 						const blockSides = [conflictBlock.sidesData].flat();
-						sidesData.push(...blockSides);
-
+						for (const blockSide of blockSides) {
+							let currentSide;
+							if ((currentSide = sidesData.find(({ side }) => side.eq(blockSide.side)))) {
+								currentSide.lines.push(...blockSide.lines);
+							} else {
+								sidesData.push(blockSide);
+							}
+						}
 						if (blockSides.find(({ side }) => side.eq(TwoWaySide.lhs)))
 							placeholderSides.delete(lhs);
 						if (blockSides.find(({ side }) => side.eq(TwoWaySide.ctr)))
@@ -211,6 +220,82 @@ class TwoWayAssembler {
 					blocks.push(block);
 				}
 			}
+		}
+		this.blocks = blocks;
+	}
+
+	private generateModifiedBlocks() {
+		const blocks: DiffBlock[] = [];
+		for (const block of this.blocks) {
+			if (!(block instanceof MergeConflictBlock)) {
+				blocks.push(block);
+				continue;
+			}
+
+			const lhsContent =
+				(block.sidesData.find(({ side }) => side.eq(TwoWaySide.lhs))?.lines ?? [])
+					.map((change) => change.content)
+					.join('\n') + '\n';
+			const ctrContent =
+				(block.sidesData.find(({ side }) => side.eq(TwoWaySide.ctr))?.lines ?? [])
+					.map((change) => change.content)
+					.join('\n') + '\n';
+			const rhsContent =
+				(block.sidesData.find(({ side }) => side.eq(TwoWaySide.rhs))?.lines ?? [])
+					.map((change) => change.content)
+					.join('\n') + '\n';
+
+			if (lhsContent === ctrContent) {
+				const diff = diff2Sides(ctrContent, rhsContent, {
+					algorithm: this.options?.lineDiffAlgorithm
+				});
+				const modifiedBlock = new ModifiedBlock({
+					modifiedSidesData: [
+						{
+							side: TwoWaySide.ctr,
+							lines: diff.lhs
+						},
+						{
+							side: TwoWaySide.rhs,
+							lines: diff.rhs
+						}
+					],
+					unchangedSideData: {
+						side: TwoWaySide.lhs,
+						lines: block.sidesData.find(({ side }) => side.eq(TwoWaySide.lhs))?.lines ?? []
+					},
+					id: this.getId()
+				});
+				blocks.push(modifiedBlock);
+				continue;
+			}
+
+			if (ctrContent === rhsContent) {
+				const diff = diff2Sides(lhsContent, ctrContent, {
+					algorithm: this.options?.lineDiffAlgorithm
+				});
+				const modifiedBlock = new ModifiedBlock({
+					modifiedSidesData: [
+						{
+							side: TwoWaySide.lhs,
+							lines: diff.lhs
+						},
+						{
+							side: TwoWaySide.ctr,
+							lines: diff.rhs
+						}
+					],
+					unchangedSideData: {
+						side: TwoWaySide.rhs,
+						lines: block.sidesData.find(({ side }) => side.eq(TwoWaySide.rhs))?.lines ?? []
+					},
+					id: this.getId()
+				});
+				blocks.push(modifiedBlock);
+				continue;
+			}
+
+			blocks.push(block);
 		}
 		this.blocks = blocks;
 	}

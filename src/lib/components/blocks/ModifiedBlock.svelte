@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { PartiallyModifiedBlock } from '$lib/internal/blocks/partially-modified';
+	import type { ModifiedBlock } from '$lib/internal/blocks/modified';
 	import type { BlockComponent } from '$lib/internal/component';
 	import type { LineDiff } from '$lib/internal/line-diff';
 
-	export let block: PartiallyModifiedBlock;
+	export let block: ModifiedBlock;
 	export let lines: LineDiff[];
 	export let component: BlockComponent;
 </script>
 
-<div class="block {block.addedType}" id={component.id}>
+<div class="block {block.type}" id={component.id}>
 	{#each lines as line}
 		<div class="line">
 			<div class="line-number">

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { LineDiff } from '$lib/internal/blocks';
 	import type { PartiallyModifiedBlock } from '$lib/internal/blocks/partially-modified';
 	import type { BlockComponent } from '$lib/internal/component';
+	import type { LineDiff } from '$lib/internal/line-diff';
 
 	export let block: PartiallyModifiedBlock;
 	export let lines: LineDiff[];
@@ -15,11 +15,11 @@
 				{line.number}
 			</div>
 			<div class="content">
-				{#each line.diff as change}
-					{#if change.removed}
-						<pre><span class="removed">{change.value}</span></pre>
-					{:else if !change.added}
-						<pre><span class="unchanged">{change.value}</span></pre>
+				{#each line.parts as part}
+					{#if part.overlay}
+						<pre><span class="overlay">{part.content}</span></pre>
+					{:else}
+						<pre><span>{part.content}</span></pre>
 					{/if}
 				{/each}
 			</div>

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/component';
 	import type { Connection } from '$lib/internal/connection';
-	import type { LineDiffAlgorithm } from '$lib/internal/diff';
 	import { joinWithDefault } from '$lib/internal/utils';
 	import { onMount, onDestroy } from 'svelte';
 	import Connector from './Connector.svelte';
@@ -10,6 +9,7 @@
 	import { type EditorColors, DefaultEditorColors } from '$lib/internal/colors';
 	import { TwoWaySide } from '$lib/internal/side';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
+	import type { LineDiffAlgorithm } from '$lib/internal/line-diff';
 
 	export let lhs: string;
 	export let ctr: string;
@@ -18,7 +18,7 @@
 	 * Line diff algorithm.
 	 * @default "words_with_space"
 	 */
-	export let lineDiffAlgorithm: LineDiffAlgorithm = 'words_with_space';
+	export let lineDiffAlgorithm: LineDiffAlgorithm = 'characters';
 	/**
 	 * Custom colors to use for the editor.
 	 */

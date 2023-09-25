@@ -5,7 +5,7 @@ import { BlockComponent } from '../component';
 import RemovedBlockComponent from '$lib/components/blocks/RemovedBlock.svelte';
 import RemovedBlockPlaceholderComponent from '$lib/components/blocks/RemovedBlockPlaceholder.svelte';
 
-type RemovedSideData = {
+export type RemovedSideData = {
 	side: Side;
 	lines: Line[];
 };

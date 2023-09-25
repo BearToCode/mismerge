@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { LineDiffAlgorithm } from '$lib/internal/diff';
 	import { joinWithDefault } from '$lib/internal/utils';
 	import { onDestroy, onMount } from 'svelte';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
@@ -10,6 +9,7 @@
 	import { OneWaySide } from '$lib/internal/side';
 	import View from './View.svelte';
 	import Connector from './Connector.svelte';
+	import type { LineDiffAlgorithm } from '$lib/internal/line-diff';
 
 	/**
 	 * Left hand side content.
@@ -83,8 +83,8 @@
 <div
 	style="
 		--added: {colors.added};
-		--removed: {colors.addedOverlay};
-		--added-overlay: {colors.removed};
+		--removed: {colors.removed};
+		--added-overlay: {colors.addedOverlay};
 		--removed-overlay: {colors.removedOverlay};
 	"
 	class="limerge diff-visualizer {clazz}"

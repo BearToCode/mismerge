@@ -26,11 +26,11 @@ export class OneWaySide extends Side {
 	}
 
 	public isOnTheRightOf(side: this): boolean {
-		return side.eq(OneWaySide.rhs) && this.eq(OneWaySide.lhs);
+		return this.eq(OneWaySide.rhs) && side.eq(OneWaySide.lhs);
 	}
 
 	public isOnTheLeftOf(side: this): boolean {
-		return side.eq(OneWaySide.lhs) && this.eq(OneWaySide.rhs);
+		return this.eq(OneWaySide.lhs) && side.eq(OneWaySide.rhs);
 	}
 }
 

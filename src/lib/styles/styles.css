@@ -76,7 +76,8 @@
 }
 
 .limerge .block.partially_added pre,
-.limerge .block.partially_removed pre {
+.limerge .block.partially_removed pre,
+.limerge .block.modified pre {
 	display: inline;
 }
 
@@ -89,23 +90,31 @@
 }
 
 .limerge .block.partially_added {
-	background-color: var(--added-overlay);
-}
-
-.limerge .block.partially_removed {
-	background-color: var(--removed-overlay);
-}
-
-.limerge .block.partially_added .added {
 	background-color: var(--added);
 }
 
-.limerge .block.partially_removed .removed {
+.limerge .block.partially_removed {
 	background-color: var(--removed);
+}
+
+.limerge .block.partially_added .overlay {
+	background-color: var(--added-overlay);
+}
+
+.limerge .block.partially_removed .overlay {
+	background-color: var(--removed-overlay);
 }
 
 .limerge .block.merge_conflict {
 	background-color: var(--conflict);
+}
+
+.limerge .block.modified {
+	background-color: var(--modified);
+}
+
+.limerge .block.modified .overlay {
+	background-color: var(--modified-overlay);
 }
 
 .limerge .added_placeholder {
