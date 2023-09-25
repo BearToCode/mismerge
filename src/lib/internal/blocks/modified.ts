@@ -55,7 +55,7 @@ export class ModifiedBlock extends LinkedComponentsBlock {
 			),
 			new BlockComponent({
 				component: UnchangedBlockComponent,
-				props: { block: this, lines: this.unchangedSideData.lines },
+				props: { lines: this.unchangedSideData.lines },
 				side: this.unchangedSideData.side,
 				type: UnchangedBlock.prototype.type
 			})
