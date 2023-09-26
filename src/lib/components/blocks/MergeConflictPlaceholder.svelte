@@ -6,4 +6,4 @@
 	export let component: BlockComponent;
 </script>
 
-<div class="block {block.placeholderType}" id={component.id} />
+<div class="msm__block {block.placeholderType}" id={component.id} />

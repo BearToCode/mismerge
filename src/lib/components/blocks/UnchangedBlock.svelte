@@ -6,9 +6,9 @@
 	export let component: BlockComponent;
 </script>
 
-<div class="block {component.type}" id={component.id}>
+<div class="msm__block {component.type}" id={component.id}>
 	{#each lines as line}
-		<div class="line">
+		<div class="msm__line">
 			<div class="content">
 				<pre>{line.content || ' '}</pre>
 			</div>

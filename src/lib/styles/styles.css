@@ -15,14 +15,14 @@
 
 /* View */
 
-.mismerge .view {
+.mismerge .msm__view {
 	position: relative;
 	display: flex;
 	flex-grow: 1;
 	max-width: 100%;
 }
 
-.mismerge .view .view-content {
+.mismerge .msm__view .msm__view-content {
 	width: fit-content;
 	min-width: calc(100% - 4rem);
 	position: relative;
@@ -30,12 +30,12 @@
 	overflow-y: hidden;
 }
 
-.mismerge .view .view-content .wrapper {
+.mismerge .msm__view .msm__view-content .msm__wrapper {
 	width: fit-content;
 	min-width: 100%;
 }
 
-.mismerge .view textarea {
+.mismerge .msm__view textarea {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -61,13 +61,13 @@
 
 /* Connector */
 
-.mismerge .connector {
+.mismerge .msm__connector {
 	width: 2.5rem;
 	position: relative;
 	flex-shrink: 0;
 }
 
-.mismerge .connector canvas {
+.mismerge .msm__connector canvas {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -78,117 +78,117 @@
 
 /* View */
 
-.mismerge .view pre {
+.mismerge .msm__view pre {
 	margin: 0;
 	white-space: pre;
 	tab-size: 4;
 }
 
-.mismerge .view.editable .view-content .line pre {
+.mismerge .msm__view.editable .msm__view-content .line pre {
 	color: transparent;
 }
 
-.mismerge .view .view-content .line pre {
+.mismerge .msm__view .msm__view-content .msm__line pre {
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 	tab-size: 2rem;
 }
 
-.mismerge .view .line {
+.mismerge .msm__view .msm__line {
 	display: flex;
 	min-height: fit-content;
 }
 
 /* Line numbers */
 
-.mismerge .view .line-number {
+.mismerge .msm__view .msm__line-number {
 	width: 4rem;
 	text-align: right;
 	flex-shrink: 0;
 }
 
-.mismerge .view .left .line-number pre {
+.mismerge .msm__view .left .msm__line-number pre {
 	text-align: left;
 	padding-left: 1rem;
 }
 
-.mismerge .view .right .line-number pre {
+.mismerge .msm__view .right .msm__line-number pre {
 	text-align: right;
 	padding-right: 1rem;
 }
 
 /* Blocks */
 
-.mismerge .block {
+.mismerge .msm__block {
 	width: 100%;
 }
 
-.mismerge .block.partially_added pre,
-.mismerge .block.partially_removed pre,
-.mismerge .block.modified pre {
+.mismerge .msm__block.partially_added pre,
+.mismerge .msm__block.partially_removed pre,
+.mismerge .msm__block.modified pre {
 	display: inline;
 }
 
 /* Blocks and line numbers backgrounds */
 
-.mismerge .block.added,
-.mismerge .line-number.added {
+.mismerge .msm__block.added,
+.mismerge .msm__line-number.added {
 	background-color: var(--added);
 }
 
 .mismerge .block.removed,
-.mismerge .line-number.removed {
+.mismerge .msm__line-number.removed {
 	background-color: var(--removed);
 }
 
-.mismerge .block.partially_added,
-.mismerge .line-number.partially_added {
+.mismerge .msm__block.partially_added,
+.mismerge .msm__line-number.partially_added {
 	background-color: var(--added);
 }
 
-.mismerge .block.partially_removed,
-.mismerge .line-number.partially_removed {
+.mismerge .msm__block.partially_removed,
+.mismerge .msm__line-number.partially_removed {
 	background-color: var(--removed);
 }
 
-.mismerge .block.merge_conflict,
-.mismerge .line-number.merge_conflict {
+.mismerge .msm__block.merge_conflict,
+.mismerge .msm__line-number.merge_conflict {
 	background-color: var(--conflict);
 }
 
-.mismerge .block.modified,
-.mismerge .line-number.modified {
+.mismerge .msm__block.modified,
+.mismerge .msm__line-number.modified {
 	background-color: var(--modified);
 }
 
 /* Overlays */
 
-.mismerge .block.partially_added .overlay {
+.mismerge .msm__block.partially_added .overlay {
 	background-color: var(--added-overlay);
 }
 
-.mismerge .block.partially_removed .overlay {
+.mismerge .msm__block.partially_removed .overlay {
 	background-color: var(--removed-overlay);
 }
 
-.mismerge .block.modified .overlay {
+.mismerge .msm__block.modified .overlay {
 	background-color: var(--modified-overlay);
 }
 
 /* Placeholders */
 
-.mismerge .block.added_placeholder,
-.mismerge .block.removed_placeholder,
-.mismerge .block.merge_conflict_placeholder {
+.mismerge .msm__block.added_placeholder,
+.mismerge .msm__block.removed_placeholder,
+.mismerge .msm__block.merge_conflict_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;
 	height: 2px;
 }
 
-.mismerge .line-placeholder.added_placeholder,
-.mismerge .line-placeholder.removed_placeholder,
-.mismerge .line-placeholder.merge_conflict_placeholder {
+.mismerge .msm__line-placeholder.added_placeholder,
+.mismerge .msm__line-placeholder.removed_placeholder,
+.mismerge .msm__line-placeholder.merge_conflict_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;

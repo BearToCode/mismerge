@@ -25,13 +25,15 @@
 	$: generateLines(components);
 </script>
 
-<div class="line-numbers {side}">
+<div class="msm__line-numbers {side}">
 	{#each linesComponents as { startingLineNumber, component }}
 		{#if component.placeholder}
-			<div class="line-placeholder {component.type}" />
+			<div class="msm__line-placeholder {component.type}" />
 		{:else}
 			{#each { length: component.linesCount } as _, i}
-				<div class="line-number {component.type}"><pre>{startingLineNumber + i}</pre></div>
+				<div class="msm__line-number {component.type}">
+					<pre>{startingLineNumber + i}</pre>
+				</div>
 			{/each}
 		{/if}
 	{/each}

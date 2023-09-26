@@ -12,12 +12,12 @@
 	font-variant-ligatures: normal;
 }
 
-.mismerge .connector,
-.mismerge .line-numbers {
+.mismerge .msm__connector,
+.mismerge .msm__line-numbers {
 	background-color: #fbfcfc;
 }
 
-.mismerge .line-numbers {
+.mismerge .msm__line-numbers {
 	color: #797b7e;
 	font-weight: 500;
 }

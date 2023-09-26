@@ -8,10 +8,10 @@
 	export let lines: Line[];
 </script>
 
-<div class="block {block.type}" id={component.id}>
+<div class="msm__block {block.type}" id={component.id}>
 	{#each lines as line}
-		<div class="line">
-			<div class="content">
+		<div class="msm__line">
+			<div class="msm__content">
 				<pre>{line.content || ' '}</pre>
 			</div>
 		</div>

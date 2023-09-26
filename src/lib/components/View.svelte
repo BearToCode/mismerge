@@ -38,12 +38,12 @@
 	}
 </script>
 
-<div bind:this={containerElem} class="view {editable ? 'editable' : ''} {clazz}">
+<div bind:this={containerElem} class="msm__view {editable ? 'editable' : ''} {clazz}">
 	{#if lineNumbersSide == 'left'}
 		<LineNumbers side={lineNumbersSide} components={sideComponents} />
 	{/if}
-	<div class="view-content">
-		<div bind:clientWidth={width} class="wrapper">
+	<div class="msm__view-content">
+		<div bind:clientWidth={width} class="msm__wrapper">
 			{#each sideComponents as blockComponent}
 				<svelte:component
 					this={blockComponent.component}

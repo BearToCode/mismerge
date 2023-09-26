@@ -8,9 +8,9 @@
 	export let component: BlockComponent;
 </script>
 
-<div class="block {block.type}" id={component.id}>
+<div class="msm__block {block.type}" id={component.id}>
 	{#each lines as line}
-		<div class="line">
+		<div class="msm__line">
 			<div class="content">
 				{#each line.parts as part}
 					{#if part.overlay}

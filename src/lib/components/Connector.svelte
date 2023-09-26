@@ -41,6 +41,6 @@
 	}
 </script>
 
-<div class="connector" bind:offsetWidth={width} bind:offsetHeight={height}>
+<div class="msm__connector" bind:offsetWidth={width} bind:offsetHeight={height}>
 	<canvas bind:this={canvas} />
 </div>
