@@ -9,7 +9,7 @@
 
 .limerge .view .view-content {
 	width: fit-content;
-	min-width: calc(100% - 5rem);
+	min-width: calc(100% - 4rem);
 	position: relative;
 	overflow-x: auto;
 	overflow-y: hidden;

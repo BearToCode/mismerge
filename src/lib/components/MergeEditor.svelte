@@ -26,6 +26,21 @@
 	export { userColors as colors };
 	let clazz = '';
 	export { clazz as class };
+	/**
+	 * Whether the left-hand side content is editable.
+	 * @default false
+	 */
+	export let lhsEditable = false;
+	/**
+	 * Whether the center content is editable.
+	 * @default true
+	 */
+	export let ctrEditable = true;
+	/**
+	 * Whether the right-hand side content is editable.
+	 * @default false
+	 */
+	export let rhsEditable = false;
 
 	const editorColors = joinWithDefault(userColors, DefaultEditorColors);
 
@@ -90,12 +105,12 @@
 	bind:this={container}
 >
 	<View
-		bind:content={lhs}
-		editable
+		editable={lhsEditable}
 		side={TwoWaySide.lhs}
+		lineNumbersSide="right"
+		bind:content={lhs}
 		bind:components
 		bind:elem={lhsViewElem}
-		lineNumbersSide="right"
 	/>
 	<Connector
 		colors={editorColors}
@@ -103,12 +118,24 @@
 		bind:lhsViewElem
 		bind:rhsViewElem={ctrViewElem}
 	/>
-	<View bind:content={ctr} editable side={TwoWaySide.ctr} bind:components bind:elem={ctrViewElem} />
+	<View
+		editable={ctrEditable}
+		side={TwoWaySide.ctr}
+		bind:content={ctr}
+		bind:components
+		bind:elem={ctrViewElem}
+	/>
 	<Connector
 		colors={editorColors}
 		bind:draw={drawRhsConnections}
 		bind:lhsViewElem={ctrViewElem}
 		bind:rhsViewElem
 	/>
-	<View bind:content={rhs} editable side={TwoWaySide.rhs} bind:components bind:elem={rhsViewElem} />
+	<View
+		editable={rhsEditable}
+		side={TwoWaySide.rhs}
+		bind:content={rhs}
+		bind:components
+		bind:elem={rhsViewElem}
+	/>
 </div>
