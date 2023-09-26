@@ -21,11 +21,11 @@
 }
 
 .limerge.diff-visualizer .view {
-	width: calc(50% - 2rem);
+	width: calc(50% - 1.25rem);
 }
 
 .limerge.merge-editor .view {
-	width: calc(33.333% - 2rem);
+	width: calc(33.333% - 1.666rem);
 }
 
 .limerge .view textarea {
@@ -35,12 +35,12 @@
 	top: 0;
 	bottom: 0;
 
-	width: var(--scroll-width);
+	width: calc(var(--scroll-width) - 1rem);
 	min-height: 100%;
 	overflow-y: hidden;
 
 	border: none;
-	padding: 0;
+	padding: 0 0.5rem 0 0.5rem;
 	margin: 0;
 
 	outline: none;
@@ -49,11 +49,13 @@
 	resize: none;
 	overflow-y: hidden;
 
-	tab-size: 2rem;
+	font-size: inherit;
 }
 
+/* Connector */
+
 .limerge .connector {
-	width: 4rem;
+	width: 2.5rem;
 	position: relative;
 }
 
@@ -66,14 +68,21 @@
 	image-rendering: crisp-edges;
 }
 
+/* View */
+
 .limerge .view pre {
 	margin: 0;
 	white-space: pre;
 	tab-size: 4;
 }
 
-.limerge .view.editable .view-content pre {
+.limerge .view.editable .view-content .line pre {
 	color: transparent;
+}
+
+.limerge .view .view-content .line pre {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 	tab-size: 2rem;
 }
 

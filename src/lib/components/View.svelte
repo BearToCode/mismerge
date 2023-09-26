@@ -35,6 +35,8 @@
 					component={blockComponent}
 					{...blockComponent.props}
 				/>
+				<!-- TODO: find out the origin of unknown props warnings -->
+				<!-- {@const _ = void console.log(blockComponent, blockComponent.props)} -->
 			{/each}
 		</div>
 

@@ -1,9 +1,23 @@
 .limerge {
 	width: 100%;
+	border: 1px solid #e1e4e8;
+	border-radius: 4px;
+	min-height: 600px;
+	font-size: 1rem;
 }
 
 .limerge pre,
 .limerge textarea {
 	font-family: 'Fira Code', monospace;
 	font-variant-ligatures: normal;
+}
+
+.limerge .connector,
+.limerge .line-numbers {
+	background-color: #fbfcfc;
+}
+
+.limerge .line-numbers {
+	color: #797b7e;
+	font-weight: 500;
 }
