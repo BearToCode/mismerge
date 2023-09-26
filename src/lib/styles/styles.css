@@ -4,13 +4,20 @@
 
 .limerge .view {
 	position: relative;
-	overflow-x: auto;
+	display: flex;
 }
 
 .limerge .view .view-content {
 	width: fit-content;
-	min-width: 100%;
+	min-width: calc(100% - 5rem);
 	position: relative;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.limerge .view .view-content .wrapper {
+	width: fit-content;
+	min-width: 100%;
 }
 
 .limerge.diff-visualizer .view {
@@ -23,14 +30,14 @@
 
 .limerge .view textarea {
 	position: absolute;
-	left: 5rem;
+	left: 0;
 	right: 0;
 	top: 0;
 	bottom: 0;
 
-	width: calc(var(--scroll-width) - 5rem);
-	tab-size: 2;
+	width: var(--scroll-width);
 	min-height: 100%;
+	overflow-y: hidden;
 
 	border: none;
 	padding: 0;
@@ -65,25 +72,38 @@
 	tab-size: 4;
 }
 
+.limerge .view.editable .view-content pre {
+	color: transparent;
+	tab-size: 2rem;
+}
+
 .limerge .view .line {
 	display: flex;
 	min-height: fit-content;
 }
 
-.limerge .view .line .line-number {
+/* Line numbers */
+
+.limerge .view .line-number {
 	width: 4rem;
 	text-align: right;
-	padding-right: 1rem;
 	flex-shrink: 0;
 }
 
-.limerge .view .line .block {
-	width: calc(100% - 4rem);
+.limerge .view .left .line-number pre {
+	text-align: left;
+	padding-left: 1rem;
 }
 
-.limerge .view.editable pre {
-	color: transparent;
-	tab-size: 2rem;
+.limerge .view .right .line-number pre {
+	text-align: right;
+	padding-right: 1rem;
+}
+
+/* Blocks */
+
+.limerge .block {
+	width: 100%;
 }
 
 .limerge .block.partially_added pre,
@@ -92,21 +112,39 @@
 	display: inline;
 }
 
-.limerge .block.added {
+/* Blocks and line numbers backgrounds */
+
+.limerge .block.added,
+.limerge .line-number.added {
 	background-color: var(--added);
 }
 
-.limerge .block.removed {
+.limerge .block.removed,
+.limerge .line-number.removed {
 	background-color: var(--removed);
 }
 
-.limerge .block.partially_added {
+.limerge .block.partially_added,
+.limerge .line-number.partially_added {
 	background-color: var(--added);
 }
 
-.limerge .block.partially_removed {
+.limerge .block.partially_removed,
+.limerge .line-number.partially_removed {
 	background-color: var(--removed);
 }
+
+.limerge .block.merge_conflict,
+.limerge .line-number.merge_conflict {
+	background-color: var(--conflict);
+}
+
+.limerge .block.modified,
+.limerge .line-number.modified {
+	background-color: var(--modified);
+}
+
+/* Overlays */
 
 .limerge .block.partially_added .overlay {
 	background-color: var(--added-overlay);
@@ -116,38 +154,38 @@
 	background-color: var(--removed-overlay);
 }
 
-.limerge .block.merge_conflict {
-	background-color: var(--conflict);
-}
-
-.limerge .block.modified {
-	background-color: var(--modified);
-}
-
 .limerge .block.modified .overlay {
 	background-color: var(--modified-overlay);
 }
 
-.limerge .added_placeholder {
+/* Placeholders */
+
+.limerge .block.added_placeholder,
+.limerge .block.removed_placeholder,
+.limerge .block.merge_conflict_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;
 	height: 2px;
-	background: var(--added);
+}
+
+.limerge .line-placeholder.added_placeholder,
+.limerge .line-placeholder.removed_placeholder,
+.limerge .line-placeholder.merge_conflict_placeholder {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 2px;
+}
+
+.limerge .added_placeholder {
+	background-color: var(--added);
 }
 
 .limerge .removed_placeholder {
-	position: absolute;
-	left: 0;
-	right: 0;
-	height: 2px;
-	background: var(--removed);
+	background-color: var(--removed);
 }
 
 .limerge .merge_conflict_placeholder {
-	position: absolute;
-	left: 0;
-	right: 0;
-	height: 2px;
-	background: var(--conflict);
+	background-color: var(--conflict);
 }

@@ -1,13 +1,13 @@
 import type { BlockComponent } from '../component';
 import type { MaybeArray } from '../utils';
 import type { Connection } from '../connection';
+import type { Side } from '../side';
 
 export type Line = {
-	number: number;
 	content: string;
 };
 
-export abstract class DiffBlock {
+export abstract class DiffBlock<SideType extends Side> {
 	public readonly id: string;
 	public abstract type: string;
 
@@ -16,9 +16,10 @@ export abstract class DiffBlock {
 	}
 
 	public abstract render(): MaybeArray<BlockComponent>;
+	public abstract linesCount(side: SideType): number;
 }
 
-export abstract class LinkedComponentsBlock extends DiffBlock {
+export abstract class LinkedComponentsBlock<SideType extends Side> extends DiffBlock<SideType> {
 	public connections(components: BlockComponent[]): Connection[] {
 		const connections: Connection[] = [];
 		for (const [leftIndex, leftComponent] of components.entries()) {

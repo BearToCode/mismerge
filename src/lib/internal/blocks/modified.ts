@@ -7,7 +7,7 @@ import UnchangedBlockComponent from '$lib/components/blocks/UnchangedBlock.svelt
 import { UnchangedBlock } from './unchanged';
 import type { Connection } from '../connection';
 
-export class ModifiedBlock extends LinkedComponentsBlock {
+export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 	public type = 'modified';
 
 	public readonly modifiedSidesData: {
@@ -32,6 +32,13 @@ export class ModifiedBlock extends LinkedComponentsBlock {
 		this.unchangedSideData = params.unchangedSideData;
 	}
 
+	public linesCount(side: TwoWaySide): number {
+		return (
+			[...this.modifiedSidesData, this.unchangedSideData].find((sideData) => sideData.side.eq(side))
+				?.lines.length ?? 0
+		);
+	}
+
 	public connections(components: BlockComponent<Record<string, unknown>>[]): Connection[] {
 		const filteredComponents = components.filter(
 			(component) => component.type !== UnchangedBlock.prototype.type
@@ -49,6 +56,7 @@ export class ModifiedBlock extends LinkedComponentsBlock {
 					new BlockComponent({
 						component: ModifiedBlockComponent,
 						props: { block: this, lines: sideData.lines },
+						linesCount: this.linesCount(sideData.side),
 						side: sideData.side,
 						type: this.type
 					})
@@ -56,6 +64,7 @@ export class ModifiedBlock extends LinkedComponentsBlock {
 			new BlockComponent({
 				component: UnchangedBlockComponent,
 				props: { lines: this.unchangedSideData.lines },
+				linesCount: this.linesCount(this.unchangedSideData.side),
 				side: this.unchangedSideData.side,
 				type: UnchangedBlock.prototype.type
 			})

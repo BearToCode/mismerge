@@ -5,26 +5,30 @@ import { BlockComponent } from '../component';
 import RemovedBlockComponent from '$lib/components/blocks/RemovedBlock.svelte';
 import RemovedBlockPlaceholderComponent from '$lib/components/blocks/RemovedBlockPlaceholder.svelte';
 
-export type RemovedSideData = {
-	side: Side;
+export type RemovedSideData<SideType extends Side> = {
+	side: SideType;
 	lines: Line[];
 };
 
-export class RemovedBlock extends LinkedComponentsBlock {
+export class RemovedBlock<SideType extends Side = Side> extends LinkedComponentsBlock<SideType> {
 	public type = 'removed';
 	public placeholderType = 'removed_placeholder';
 
-	public readonly sidesData: MaybeArray<RemovedSideData>;
+	public readonly sidesData: MaybeArray<RemovedSideData<SideType>>;
 	public readonly placeholderSide: MaybeArray<Side>;
 
 	constructor(params: {
 		id: string;
-		sidesData: MaybeArray<RemovedSideData>;
+		sidesData: MaybeArray<RemovedSideData<SideType>>;
 		placeholderSide: MaybeArray<Side>;
 	}) {
 		super(params.id);
 		this.sidesData = params.sidesData;
 		this.placeholderSide = params.placeholderSide;
+	}
+
+	public linesCount(side: SideType): number {
+		return [this.sidesData].flat().find((sideData) => sideData.side.eq(side))?.lines.length ?? 0;
 	}
 
 	public render() {
@@ -34,6 +38,7 @@ export class RemovedBlock extends LinkedComponentsBlock {
 					new BlockComponent({
 						component: RemovedBlockComponent,
 						props: { block: this, lines },
+						linesCount: this.linesCount(side),
 						side,
 						type: this.type
 					})
@@ -43,6 +48,7 @@ export class RemovedBlock extends LinkedComponentsBlock {
 					new BlockComponent({
 						component: RemovedBlockPlaceholderComponent,
 						props: { block: this },
+						linesCount: 0,
 						side,
 						placeholder: true,
 						type: this.placeholderType

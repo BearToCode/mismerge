@@ -11,9 +11,6 @@
 <div class="block {block.addedType}" id={component.id}>
 	{#each lines as line}
 		<div class="line">
-			<div class="line-number">
-				{line.number}
-			</div>
 			<div class="content">
 				{#each line.parts as part}
 					{#if part.overlay}

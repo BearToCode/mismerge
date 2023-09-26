@@ -7,7 +7,7 @@
 	import View from './View.svelte';
 	import { assembleTwoWay } from '$lib/internal/two-way-assembler';
 	import { type EditorColors, DefaultEditorColors } from '$lib/internal/colors';
-	import { TwoWaySide } from '$lib/internal/side';
+	import { Side, TwoWaySide } from '$lib/internal/side';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 	import type { LineDiffAlgorithm } from '$lib/internal/line-diff';
 
@@ -29,7 +29,7 @@
 
 	const editorColors = joinWithDefault(userColors, DefaultEditorColors);
 
-	let blocks: DiffBlock[] = [];
+	let blocks: DiffBlock<Side>[] = [];
 	let lhsConnections: Connection[] = [];
 	let rhsConnections: Connection[] = [];
 	let components: BlockComponent[] = [];
@@ -41,7 +41,7 @@
 	let drawLhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 	let drawRhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 
-	function renderComponents(blocks: DiffBlock[]) {
+	function renderComponents(blocks: DiffBlock<Side>[]) {
 		lhsConnections = [];
 		components = blocks
 			.map((block) => {
@@ -89,7 +89,14 @@
 	class="limerge merge-editor {clazz}"
 	bind:this={container}
 >
-	<View bind:content={lhs} editable side={TwoWaySide.lhs} bind:components bind:elem={lhsViewElem} />
+	<View
+		bind:content={lhs}
+		editable
+		side={TwoWaySide.lhs}
+		bind:components
+		bind:elem={lhsViewElem}
+		lineNumbersSide="right"
+	/>
 	<Connector
 		colors={editorColors}
 		bind:draw={drawLhsConnections}

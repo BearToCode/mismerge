@@ -1,31 +1,32 @@
 import UnchangedBlockComponent from '$lib/components/blocks/UnchangedBlock.svelte';
 import { BlockComponent } from '../component';
-import type { MaybeArray } from '../utils';
-import type { Side } from '../side';
 import type { Line } from '.';
 import { DiffBlock } from '.';
+import type { Side } from '../side';
 
-type UnchangedSideData = {
-	side: Side;
-	lines: Line[];
-};
-
-export class UnchangedBlock extends DiffBlock {
+export class UnchangedBlock<SideType extends Side = Side> extends DiffBlock<SideType> {
 	public type = 'unchanged';
 
-	public readonly sidesData: MaybeArray<UnchangedSideData>;
+	public readonly lines: Line[];
+	public readonly sides: SideType[];
 
-	constructor(params: { id: string; sidesData: MaybeArray<UnchangedSideData> }) {
+	constructor(params: { id: string; lines: Line[]; sides: SideType[] }) {
 		super(params.id);
-		this.sidesData = params.sidesData;
+		this.lines = params.lines;
+		this.sides = params.sides;
+	}
+
+	public linesCount(): number {
+		return this.lines.length;
 	}
 
 	public render() {
-		const components = [this.sidesData].flat().map(
-			({ side, lines }) =>
+		const components = this.sides.map(
+			(side) =>
 				new BlockComponent({
 					component: UnchangedBlockComponent,
-					props: { lines },
+					props: { lines: this.lines },
+					linesCount: this.linesCount(),
 					side,
 					type: this.type
 				})

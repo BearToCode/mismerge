@@ -6,7 +6,7 @@
 	import type { BlockComponent } from '$lib/internal/component';
 	import type { Connection } from '$lib/internal/connection';
 	import { assembleOneWay } from '$lib/internal/one-way-assembler';
-	import { OneWaySide } from '$lib/internal/side';
+	import { OneWaySide, Side } from '$lib/internal/side';
 	import View from './View.svelte';
 	import Connector from './Connector.svelte';
 	import type { LineDiffAlgorithm } from '$lib/internal/line-diff';
@@ -42,7 +42,7 @@
 
 	const colors = joinWithDefault(userColors, DefaultDiffColors);
 
-	let blocks: DiffBlock[] = [];
+	let blocks: DiffBlock<Side>[] = [];
 	let connections: Connection[] = [];
 	let components: BlockComponent[] = [];
 
@@ -51,7 +51,7 @@
 	let rhsViewElem: HTMLDivElement;
 	let drawConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 
-	function renderComponents(blocks: DiffBlock[]) {
+	function renderComponents(blocks: DiffBlock<Side>[]) {
 		connections = [];
 		components = blocks
 			.map((block) => {

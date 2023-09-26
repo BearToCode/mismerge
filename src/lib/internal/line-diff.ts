@@ -1,5 +1,4 @@
 import { diffChars, diffWords, diffWordsWithSpace } from 'diff';
-import { get, writable, type Writable } from 'svelte/store';
 
 export type LineDiffAlgorithm = 'characters' | 'words' | 'words_with_space';
 
@@ -10,7 +9,6 @@ type LinePart = {
 
 export type LineDiff = {
 	parts: LinePart[];
-	number: number;
 };
 
 /**
@@ -34,22 +32,12 @@ export function diff2Sides(
 	rhs: string,
 	options?: {
 		algorithm?: LineDiffAlgorithm;
-		lhsLineNumber?: Writable<number>;
-		rhsLineNumber?: Writable<number>;
 	}
 ) {
-	const lhsLineNumber = options?.lhsLineNumber ?? writable(1);
-	const rhsLineNumber = options?.rhsLineNumber ?? writable(1);
 	const diffAlgorithm = getLineDiffAlgorithm(options?.algorithm ?? 'words_with_space');
 
-	const getAndUpdate = (store: Writable<number>) => {
-		const value = get(store);
-		store.update((value) => value + 1);
-		return value;
-	};
-
-	const lhsLines: LineDiff[] = [{ number: getAndUpdate(lhsLineNumber), parts: [] }];
-	const rhsLines: LineDiff[] = [{ number: getAndUpdate(rhsLineNumber), parts: [] }];
+	const lhsLines: LineDiff[] = [{ parts: [] }];
+	const rhsLines: LineDiff[] = [{ parts: [] }];
 
 	const diff = diffAlgorithm(lhs, rhs)
 		// Split diffs that include newlines into multiple diffs
@@ -75,7 +63,7 @@ export function diff2Sides(
 				overlay: !!change.removed
 			});
 			if (change.value.endsWith('\n')) {
-				lhsLines.push({ number: getAndUpdate(lhsLineNumber), parts: [] });
+				lhsLines.push({ parts: [] });
 			}
 		}
 		if (!change.removed) {
@@ -84,17 +72,15 @@ export function diff2Sides(
 				overlay: !!change.added
 			});
 			if (change.value.endsWith('\n')) {
-				rhsLines.push({ number: getAndUpdate(rhsLineNumber), parts: [] });
+				rhsLines.push({ parts: [] });
 			}
 		}
 	}
 
 	if (lhsLines[lhsLines.length - 1].parts.length == 0) {
-		lhsLineNumber.update((v) => v - 1);
 		lhsLines.pop();
 	}
 	if (rhsLines[rhsLines.length - 1].parts.length == 0) {
-		rhsLineNumber.update((v) => v - 1);
 		rhsLines.pop();
 	}
 
