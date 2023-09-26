@@ -1,3 +1,6 @@
+/**
+ * Colors used by the diff visualizer (one-way).
+ */
 export type DiffColors = {
 	added: `#${string}`;
 	addedOverlay: `#${string}`;
@@ -5,6 +8,9 @@ export type DiffColors = {
 	removedOverlay: `#${string}`;
 };
 
+/**
+ * Colors used by the editor (two-way).
+ */
 export type EditorColors = {
 	added: `#${string}`;
 	removed: `#${string}`;

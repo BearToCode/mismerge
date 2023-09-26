@@ -2,6 +2,9 @@ import type { SvelteComponent } from 'svelte';
 import type { Side } from './side';
 import { nanoid } from 'nanoid';
 
+/**
+ * Data to render a diff block.
+ */
 export class BlockComponent<T extends Record<string, unknown> = Record<string, unknown>> {
 	public readonly id = '@' + nanoid(6);
 	public readonly component: typeof SvelteComponent<{ component: BlockComponent<T> } & T>;

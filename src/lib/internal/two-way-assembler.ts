@@ -13,9 +13,19 @@ export interface TwoWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
 }
 
+/**
+ * Two way diff blocks assembler.
+ */
 class TwoWayAssembler {
 	constructor(private readonly options?: TwoWayAssemblerOptions) {}
 
+	/**
+	 * Assembly two-way diff blocks.
+	 * @param lhs Left hand side content.
+	 * @param ctr Center content.
+	 * @param rhs Right hand side content.
+	 * @returns The assembled diff blocks.
+	 */
 	public assemble(lhs: string, ctr: string, rhs: string): DiffBlock<TwoWaySide>[] {
 		this.lhs = lhs;
 		this.ctr = ctr;
@@ -154,7 +164,7 @@ class TwoWayAssembler {
 					blocks.push(conflictBlocks[0]);
 					conflictBlocks = [];
 				} else if (conflictBlocks.length > 1) {
-					const sidesData: (AddedSideData | RemovedSideData)[] = [];
+					const sidesData: (AddedSideData<TwoWaySide> | RemovedSideData<TwoWaySide>)[] = [];
 					const lhs = TwoWaySide.lhs;
 					const ctr = TwoWaySide.ctr;
 					const rhs = TwoWaySide.rhs;

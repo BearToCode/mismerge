@@ -1,12 +1,20 @@
 import { diffLines } from 'diff';
 import { TwoWaySide } from './side';
 
+/**
+ * A line content along with the lines where it is present.
+ * One-way mode.
+ */
 export type OneWayChange = {
 	content: string;
 	lhs: boolean;
 	rhs: boolean;
 };
 
+/**
+ * A line content along with the lines where it is present.
+ * Two-way mode.
+ */
 export type TwoWayChange = {
 	content: string;
 	lhs: boolean;
@@ -14,6 +22,11 @@ export type TwoWayChange = {
 	rhs: boolean;
 };
 
+/**
+ * Get the sides where the change is present.
+ * @param change The one-way change.
+ * @returns An array of sides that have changed.
+ */
 export function sidesFromOneWayChange(change: OneWayChange): TwoWaySide[] {
 	const sides: TwoWaySide[] = [];
 	if (change.lhs) sides.push(TwoWaySide.lhs);
@@ -21,6 +34,11 @@ export function sidesFromOneWayChange(change: OneWayChange): TwoWaySide[] {
 	return sides;
 }
 
+/**
+ * Get the sides where the change is present.
+ * @param change The two-way change.
+ * @returns An array of sides that have changed.
+ */
 export function sidesFromTwoWayChange(change: TwoWayChange): TwoWaySide[] {
 	const sides: TwoWaySide[] = [];
 	if (change.lhs) sides.push(TwoWaySide.lhs);
@@ -33,6 +51,12 @@ function remapEoF(str: string) {
 	return str.replaceAll('\r\n', '\n').replaceAll('\n', '\r\n') + '\r\n';
 }
 
+/**
+ * Generate lines diff between two strings.
+ * @param lhs Left hand side content.
+ * @param rhs Right hand side content.
+ * @returns Diff between the two strings.
+ */
 export function oneWayDiff(lhs: string, rhs: string): OneWayChange[] {
 	const lhsRemapped = remapEoF(lhs);
 	const rhsRemapped = remapEoF(rhs);
@@ -48,6 +72,13 @@ export function oneWayDiff(lhs: string, rhs: string): OneWayChange[] {
 	return diff;
 }
 
+/**
+ * Generate lines diff between three strings.
+ * @param lhs Left hand side content.
+ * @param ctr Center content.
+ * @param rhs Right hand side content.
+ * @returns Diff between the three strings.
+ */
 export function twoWayDiff(lhs: string, ctr: string, rhs: string): TwoWayChange[] {
 	const lhsBaseDiff = oneWayDiff(lhs, ctr);
 	const rhsBaseDiff = oneWayDiff(ctr, rhs);

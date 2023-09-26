@@ -13,6 +13,9 @@ export interface OneWayAssemblerOptions {
 	direction?: 'left-to-right' | 'right-to-left';
 }
 
+/**
+ * One way diff blocks assembler.
+ */
 class OneWayAssembler {
 	constructor(private readonly options?: OneWayAssemblerOptions) {
 		if ((options?.direction ?? 'left-to-right') == 'left-to-right') {
@@ -24,6 +27,12 @@ class OneWayAssembler {
 		}
 	}
 
+	/**
+	 * Assembly one-way diff blocks.
+	 * @param lhs Left hand side content.
+	 * @param rhs Right hand side content.
+	 * @returns The assembled diff blocks.
+	 */
 	public assemble(lhs: string, rhs: string): DiffBlock<OneWaySide>[] {
 		this.lhs = lhs;
 		this.rhs = rhs;

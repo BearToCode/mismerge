@@ -1,9 +1,15 @@
+/**
+ * Represent one side of the editor.
+ */
 export abstract class Side {
 	public abstract eq(side: typeof this): boolean;
 	public abstract isOnTheRightOf(side: typeof this): boolean;
 	public abstract isOnTheLeftOf(side: typeof this): boolean;
 }
 
+/**
+ * Side of the editor in one-way mode (2 panes).
+ */
 export class OneWaySide extends Side {
 	public static get lhs(): OneWaySide {
 		return new OneWaySide('lhs');
@@ -34,6 +40,9 @@ export class OneWaySide extends Side {
 	}
 }
 
+/**
+ * Side of the editor in two-way mode (3 panes).
+ */
 export class TwoWaySide extends Side {
 	public static get lhs(): TwoWaySide {
 		return new TwoWaySide('lhs');

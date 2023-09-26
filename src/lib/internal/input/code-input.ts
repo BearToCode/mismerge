@@ -1,6 +1,9 @@
 import { eqSet } from '../utils';
 import { InputHistory } from './history';
 
+/**
+ * TextArea wrapper for additional functionality.
+ */
 export class CodeInput {
 	public readonly textarea: HTMLTextAreaElement;
 	public readonly history: InputHistory;

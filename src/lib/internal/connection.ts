@@ -1,6 +1,9 @@
 import type { DiffColors, EditorColors } from './colors';
 import type { BlockComponent } from './component';
 
+/**
+ * A connection between two blocks.
+ */
 export type Connection = {
 	from: BlockComponent;
 	to: BlockComponent;

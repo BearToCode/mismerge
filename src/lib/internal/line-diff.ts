@@ -27,6 +27,14 @@ export function getLineDiffAlgorithm(type: LineDiffAlgorithm) {
 	}
 }
 
+/**
+ * Computes the line diff between two strings.
+ * @param lhs The left-hand side string to compare.
+ * @param rhs The right-hand side string to compare.
+ * @param options Optional configuration for the line diff algorithm.
+ * @param options.algorithm The algorithm to use for the line diff. Defaults to 'words_with_space'.
+ * @returns An object containing the line diff for the left-hand side and right-hand side strings.
+ */
 export function diff2Sides(
 	lhs: string,
 	rhs: string,
