@@ -1,9 +1,14 @@
 .mismerge {
 	width: 100%;
-	border: 1px solid #e1e4e8;
+	border: 1px solid var(--medium-gray);
 	border-radius: 4px;
 	min-height: 600px;
 	font-size: 1rem;
+
+	--light-gray: #fbfcfc;
+	--medium-gray: #ebebeb;
+	--gray: #797b7e;
+	--accent: #a1f0cc;
 }
 
 .mismerge pre,
@@ -14,10 +19,10 @@
 
 .mismerge .msm__connector,
 .mismerge .msm__line-numbers {
-	background-color: #fbfcfc;
+	background-color: var(--light-gray);
 }
 
 .mismerge .msm__line-numbers {
-	color: #797b7e;
+	color: var(--gray);
 	font-weight: 500;
 }

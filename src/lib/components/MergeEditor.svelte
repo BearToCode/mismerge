@@ -10,7 +10,6 @@
 	import { Side, TwoWaySide } from '$lib/internal/side';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 	import type { LineDiffAlgorithm } from '$lib/internal/line-diff';
-	import { Pane, Splitpanes } from 'svelte-splitpanes';
 
 	export let lhs: string;
 	export let ctr: string;
@@ -105,46 +104,38 @@
 	class="mismerge merge-editor {clazz}"
 	bind:this={container}
 >
-	<Splitpanes>
-		<Pane>
-			<View
-				editable={lhsEditable}
-				side={TwoWaySide.lhs}
-				lineNumbersSide="right"
-				bind:content={lhs}
-				bind:components
-				bind:elem={lhsViewElem}
-			/>
-		</Pane>
-		<Pane>
-			<Connector
-				colors={editorColors}
-				bind:draw={drawLhsConnections}
-				bind:lhsViewElem
-				bind:rhsViewElem={ctrViewElem}
-			/>
-			<View
-				editable={ctrEditable}
-				side={TwoWaySide.ctr}
-				bind:content={ctr}
-				bind:components
-				bind:elem={ctrViewElem}
-			/>
-			<Connector
-				colors={editorColors}
-				bind:draw={drawRhsConnections}
-				bind:lhsViewElem={ctrViewElem}
-				bind:rhsViewElem
-			/>
-		</Pane>
-		<Pane>
-			<View
-				editable={rhsEditable}
-				side={TwoWaySide.rhs}
-				bind:content={rhs}
-				bind:components
-				bind:elem={rhsViewElem}
-			/>
-		</Pane>
-	</Splitpanes>
+	<View
+		editable={lhsEditable}
+		side={TwoWaySide.lhs}
+		lineNumbersSide="right"
+		bind:content={lhs}
+		bind:components
+		bind:elem={lhsViewElem}
+	/>
+	<Connector
+		colors={editorColors}
+		bind:draw={drawLhsConnections}
+		bind:lhsViewElem
+		bind:rhsViewElem={ctrViewElem}
+	/>
+	<View
+		editable={ctrEditable}
+		side={TwoWaySide.ctr}
+		bind:content={ctr}
+		bind:components
+		bind:elem={ctrViewElem}
+	/>
+	<Connector
+		colors={editorColors}
+		bind:draw={drawRhsConnections}
+		bind:lhsViewElem={ctrViewElem}
+		bind:rhsViewElem
+	/>
+	<View
+		editable={rhsEditable}
+		side={TwoWaySide.rhs}
+		bind:content={rhs}
+		bind:components
+		bind:elem={rhsViewElem}
+	/>
 </div>

@@ -2,23 +2,13 @@
 	display: flex;
 }
 
-/* Splitpanes */
-
-.mismerge .splitpanes {
-	min-height: inherit;
-}
-
-.mismerge .splitpanes__pane {
-	display: flex;
-	min-height: inherit;
-}
-
 /* View */
 
 .mismerge .msm__view {
 	position: relative;
 	display: flex;
-	flex-grow: 1;
+	flex: 1 0 auto;
+	width: 0;
 	max-width: 100%;
 }
 
