@@ -2,25 +2,40 @@
 	import type { DiffBlock } from '$lib/internal/blocks';
 	import type { BlockComponent } from '$lib/internal/component';
 	import type { Side } from '$lib/internal/side';
+	import { onMount } from 'svelte';
 	import LineNumbers from './LineNumbers.svelte';
+	import { CodeInput } from '$lib/internal/input/code-input';
 
 	export let components: BlockComponent[];
 	export let editable: boolean = false;
 	export let content: string;
 	export let side: Side;
 	export let lineNumbersSide: 'left' | 'right' = 'left';
-	let clazz = '';
 	export { clazz as class };
-
-	let textarea: HTMLTextAreaElement | undefined;
-	let containerElem: HTMLDivElement;
-
 	export { containerElem as elem };
 
+	let clazz = '';
+	let textarea: HTMLTextAreaElement | undefined;
+	let containerElem: HTMLDivElement;
 	let sideComponents: BlockComponent[] = [];
 	let width = 0;
+	let mounted = false;
+	let codeInput: CodeInput | undefined;
+	onMount(() => (mounted = true));
 
 	$: sideComponents = components.filter((component) => component.side.eq(side));
+	$: onTextAreaCreationOrDisposal(textarea);
+
+	function onTextAreaCreationOrDisposal(textarea: HTMLTextAreaElement | undefined) {
+		if (!mounted) return;
+
+		if (!textarea) {
+			if (codeInput) codeInput.dispose();
+			return;
+		}
+
+		codeInput = new CodeInput(textarea);
+	}
 </script>
 
 <div bind:this={containerElem} class="view {editable ? 'editable' : ''} {clazz}">

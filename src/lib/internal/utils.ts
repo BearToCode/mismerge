@@ -15,3 +15,12 @@ export type ArrayElement<ArrayType extends readonly unknown[]> =
 	ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
 export type MaybeArray<T> = T | T[];
+
+/**
+ * Get whether the two sets contain the same elements.
+ * @param a First set.
+ * @param b Second set.
+ * @returns Whether the two sets are equal.
+ */
+export const eqSet = <T>(a: Set<T>, b: Set<T>) =>
+	a.size === b.size && [...a].every((x) => b.has(x));
