@@ -26,6 +26,12 @@
 	const redraw = () => savedConnections && savedContainer && draw(savedContainer, savedConnections);
 
 	$: {
+		lhsViewElem;
+		rhsViewElem;
+		redraw();
+	}
+
+	$: {
 		width;
 		height;
 		if (canvas) {

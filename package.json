@@ -53,6 +53,7 @@
 	"type": "module",
 	"dependencies": {
 		"diff": "^5.1.0",
-		"nanoid": "^5.0.1"
+		"nanoid": "^5.0.1",
+		"svelte-splitpanes": "^0.8.0"
 	}
 }

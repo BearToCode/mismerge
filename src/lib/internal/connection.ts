@@ -63,6 +63,9 @@ export function drawConnections(
 			!(toElem instanceof HTMLDivElement)
 		)
 			continue;
+
+		console.log(fromElem, toElem);
+
 		const fromOffsetTop =
 			fromElem.getBoundingClientRect().top - lhsViewElem.getBoundingClientRect().top;
 		const toOffsetTop =

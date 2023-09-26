@@ -2,9 +2,24 @@
 	display: flex;
 }
 
+/* Splitpanes */
+
+.limerge .splitpanes {
+	min-height: inherit;
+}
+
+.limerge .splitpanes__pane {
+	display: flex;
+	min-height: inherit;
+}
+
+/* View */
+
 .limerge .view {
 	position: relative;
 	display: flex;
+	flex-grow: 1;
+	max-width: 100%;
 }
 
 .limerge .view .view-content {
@@ -18,14 +33,6 @@
 .limerge .view .view-content .wrapper {
 	width: fit-content;
 	min-width: 100%;
-}
-
-.limerge.diff-visualizer .view {
-	width: calc(50% - 1.25rem);
-}
-
-.limerge.merge-editor .view {
-	width: calc(33.333% - 1.666rem);
 }
 
 .limerge .view textarea {
@@ -57,6 +64,7 @@
 .limerge .connector {
 	width: 2.5rem;
 	position: relative;
+	flex-shrink: 0;
 }
 
 .limerge .connector canvas {
