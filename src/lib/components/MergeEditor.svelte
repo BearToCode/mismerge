@@ -102,7 +102,7 @@
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"
-	class="limerge merge-editor {clazz}"
+	class="mismerge merge-editor {clazz}"
 	bind:this={container}
 >
 	<Splitpanes>

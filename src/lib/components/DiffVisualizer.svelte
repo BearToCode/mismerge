@@ -87,7 +87,7 @@
 		--added-overlay: {colors.addedOverlay};
 		--removed-overlay: {colors.removedOverlay};
 	"
-	class="limerge diff-visualizer {clazz}"
+	class="mismerge diff-visualizer {clazz}"
 	bind:this={container}
 >
 	<View

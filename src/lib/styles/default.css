@@ -1,4 +1,4 @@
-.limerge {
+.mismerge {
 	width: 100%;
 	border: 1px solid #e1e4e8;
 	border-radius: 4px;
@@ -6,18 +6,18 @@
 	font-size: 1rem;
 }
 
-.limerge pre,
-.limerge textarea {
+.mismerge pre,
+.mismerge textarea {
 	font-family: 'Fira Code', monospace;
 	font-variant-ligatures: normal;
 }
 
-.limerge .connector,
-.limerge .line-numbers {
+.mismerge .connector,
+.mismerge .line-numbers {
 	background-color: #fbfcfc;
 }
 
-.limerge .line-numbers {
+.mismerge .line-numbers {
 	color: #797b7e;
 	font-weight: 500;
 }

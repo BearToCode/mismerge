@@ -1,28 +1,28 @@
-.limerge {
+.mismerge {
 	display: flex;
 }
 
 /* Splitpanes */
 
-.limerge .splitpanes {
+.mismerge .splitpanes {
 	min-height: inherit;
 }
 
-.limerge .splitpanes__pane {
+.mismerge .splitpanes__pane {
 	display: flex;
 	min-height: inherit;
 }
 
 /* View */
 
-.limerge .view {
+.mismerge .view {
 	position: relative;
 	display: flex;
 	flex-grow: 1;
 	max-width: 100%;
 }
 
-.limerge .view .view-content {
+.mismerge .view .view-content {
 	width: fit-content;
 	min-width: calc(100% - 4rem);
 	position: relative;
@@ -30,12 +30,12 @@
 	overflow-y: hidden;
 }
 
-.limerge .view .view-content .wrapper {
+.mismerge .view .view-content .wrapper {
 	width: fit-content;
 	min-width: 100%;
 }
 
-.limerge .view textarea {
+.mismerge .view textarea {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -61,13 +61,13 @@
 
 /* Connector */
 
-.limerge .connector {
+.mismerge .connector {
 	width: 2.5rem;
 	position: relative;
 	flex-shrink: 0;
 }
 
-.limerge .connector canvas {
+.mismerge .connector canvas {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -78,131 +78,131 @@
 
 /* View */
 
-.limerge .view pre {
+.mismerge .view pre {
 	margin: 0;
 	white-space: pre;
 	tab-size: 4;
 }
 
-.limerge .view.editable .view-content .line pre {
+.mismerge .view.editable .view-content .line pre {
 	color: transparent;
 }
 
-.limerge .view .view-content .line pre {
+.mismerge .view .view-content .line pre {
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 	tab-size: 2rem;
 }
 
-.limerge .view .line {
+.mismerge .view .line {
 	display: flex;
 	min-height: fit-content;
 }
 
 /* Line numbers */
 
-.limerge .view .line-number {
+.mismerge .view .line-number {
 	width: 4rem;
 	text-align: right;
 	flex-shrink: 0;
 }
 
-.limerge .view .left .line-number pre {
+.mismerge .view .left .line-number pre {
 	text-align: left;
 	padding-left: 1rem;
 }
 
-.limerge .view .right .line-number pre {
+.mismerge .view .right .line-number pre {
 	text-align: right;
 	padding-right: 1rem;
 }
 
 /* Blocks */
 
-.limerge .block {
+.mismerge .block {
 	width: 100%;
 }
 
-.limerge .block.partially_added pre,
-.limerge .block.partially_removed pre,
-.limerge .block.modified pre {
+.mismerge .block.partially_added pre,
+.mismerge .block.partially_removed pre,
+.mismerge .block.modified pre {
 	display: inline;
 }
 
 /* Blocks and line numbers backgrounds */
 
-.limerge .block.added,
-.limerge .line-number.added {
+.mismerge .block.added,
+.mismerge .line-number.added {
 	background-color: var(--added);
 }
 
-.limerge .block.removed,
-.limerge .line-number.removed {
+.mismerge .block.removed,
+.mismerge .line-number.removed {
 	background-color: var(--removed);
 }
 
-.limerge .block.partially_added,
-.limerge .line-number.partially_added {
+.mismerge .block.partially_added,
+.mismerge .line-number.partially_added {
 	background-color: var(--added);
 }
 
-.limerge .block.partially_removed,
-.limerge .line-number.partially_removed {
+.mismerge .block.partially_removed,
+.mismerge .line-number.partially_removed {
 	background-color: var(--removed);
 }
 
-.limerge .block.merge_conflict,
-.limerge .line-number.merge_conflict {
+.mismerge .block.merge_conflict,
+.mismerge .line-number.merge_conflict {
 	background-color: var(--conflict);
 }
 
-.limerge .block.modified,
-.limerge .line-number.modified {
+.mismerge .block.modified,
+.mismerge .line-number.modified {
 	background-color: var(--modified);
 }
 
 /* Overlays */
 
-.limerge .block.partially_added .overlay {
+.mismerge .block.partially_added .overlay {
 	background-color: var(--added-overlay);
 }
 
-.limerge .block.partially_removed .overlay {
+.mismerge .block.partially_removed .overlay {
 	background-color: var(--removed-overlay);
 }
 
-.limerge .block.modified .overlay {
+.mismerge .block.modified .overlay {
 	background-color: var(--modified-overlay);
 }
 
 /* Placeholders */
 
-.limerge .block.added_placeholder,
-.limerge .block.removed_placeholder,
-.limerge .block.merge_conflict_placeholder {
+.mismerge .block.added_placeholder,
+.mismerge .block.removed_placeholder,
+.mismerge .block.merge_conflict_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;
 	height: 2px;
 }
 
-.limerge .line-placeholder.added_placeholder,
-.limerge .line-placeholder.removed_placeholder,
-.limerge .line-placeholder.merge_conflict_placeholder {
+.mismerge .line-placeholder.added_placeholder,
+.mismerge .line-placeholder.removed_placeholder,
+.mismerge .line-placeholder.merge_conflict_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;
 	height: 2px;
 }
 
-.limerge .added_placeholder {
+.mismerge .added_placeholder {
 	background-color: var(--added);
 }
 
-.limerge .removed_placeholder {
+.mismerge .removed_placeholder {
 	background-color: var(--removed);
 }
 
-.limerge .merge_conflict_placeholder {
+.mismerge .merge_conflict_placeholder {
 	background-color: var(--conflict);
 }
