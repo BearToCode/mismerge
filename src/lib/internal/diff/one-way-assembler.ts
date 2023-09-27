@@ -1,12 +1,13 @@
-import type { DiffBlock } from './blocks';
-import { AddedBlock } from './blocks/added';
-import { PartiallyModifiedBlock } from './blocks/partially-modified';
-import { RemovedBlock } from './blocks/removed';
-import { UnchangedBlock } from './blocks/unchanged';
-import { type OneWayChange, oneWayDiff } from './diff';
+import type { DiffBlock } from '../blocks';
+import { AddedBlock } from '../blocks/added';
+import { PartiallyModifiedBlock } from '../blocks/partially-modified';
+import { RemovedBlock } from '../blocks/removed';
+import { UnchangedBlock } from '../blocks/unchanged';
+import { type OneWayChange, oneWayDiff } from './base';
 import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
-import { OneWaySide } from './side';
+import { OneWaySide } from '../editor/side';
 import { nanoid } from 'nanoid';
+import { DEV } from '../utils';
 
 export interface OneWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
@@ -85,7 +86,7 @@ class OneWayAssembler {
 		} else if (change.rhs) {
 			this.assembleChangeBlock(change, OneWaySide.rhs);
 		} else {
-			console.error('Invalid combination of sides in change', change);
+			if (DEV) console.error('Invalid combination of sides in change', change);
 		}
 	}
 

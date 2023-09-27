@@ -2,14 +2,14 @@
 	import { joinWithDefault } from '$lib/internal/utils';
 	import { onDestroy, onMount } from 'svelte';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
-	import { type DiffColors, DefaultDiffColors } from '$lib/internal/colors';
-	import type { BlockComponent } from '$lib/internal/component';
-	import type { Connection } from '$lib/internal/connection';
-	import { assembleOneWay } from '$lib/internal/one-way-assembler';
-	import { OneWaySide, Side } from '$lib/internal/side';
+	import { type DiffColors, DefaultDiffColors } from '$lib/internal/editor/colors';
+	import type { BlockComponent } from '$lib/internal/editor/component';
+	import { drawOnChange, type Connection } from '$lib/internal/editor/connection';
+	import { assembleOneWay } from '$lib/internal/diff/one-way-assembler';
+	import { OneWaySide, Side } from '$lib/internal/editor/side';
 	import View from './View.svelte';
 	import Connector from './Connector.svelte';
-	import type { LineDiffAlgorithm } from '$lib/internal/line-diff';
+	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 
 	/**
 	 * Left hand side content.
@@ -66,18 +66,10 @@
 	$: blocks = assembleOneWay(lhs, rhs, { lineDiffAlgorithm });
 	$: renderComponents(blocks);
 
-	let observer: MutationObserver | undefined;
-	onMount(() => {
-		observer = new MutationObserver(() => drawConnections(container, connections));
-		observer.observe(container, {
-			characterData: false,
-			attributes: false,
-			childList: true,
-			subtree: true
-		});
-	});
-
-	onDestroy(() => observer?.disconnect());
+	drawOnChange(
+		() => container,
+		() => container && drawConnections(container, connections)
+	);
 </script>
 
 <div

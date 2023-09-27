@@ -1,13 +1,14 @@
-import type { DiffBlock } from './blocks';
-import { AddedBlock, type AddedSideData } from './blocks/added';
-import { MergeConflictBlock } from './blocks/merge-conflict';
-import { ModifiedBlock } from './blocks/modified';
-import { RemovedBlock, type RemovedSideData } from './blocks/removed';
-import { UnchangedBlock } from './blocks/unchanged';
-import { twoWayDiff, type TwoWayChange } from './diff';
+import type { DiffBlock } from '../blocks';
+import { AddedBlock, type AddedSideData } from '../blocks/added';
+import { MergeConflictBlock } from '../blocks/merge-conflict';
+import { ModifiedBlock } from '../blocks/modified';
+import { RemovedBlock, type RemovedSideData } from '../blocks/removed';
+import { UnchangedBlock } from '../blocks/unchanged';
+import { twoWayDiff, type TwoWayChange } from './base';
 import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
-import { TwoWaySide } from './side';
+import { TwoWaySide } from '../editor/side';
 import { nanoid } from 'nanoid';
+import { DEV } from '../utils';
 
 export interface TwoWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
@@ -70,7 +71,7 @@ class TwoWayAssembler {
 		} else if (!change.ctr && (change.lhs || change.rhs)) {
 			this.assembleAddedBlock(change);
 		} else {
-			console.error('Invalid combination of sides in change', change);
+			if (DEV) console.error('Invalid combination of sides in change', change);
 		}
 	}
 

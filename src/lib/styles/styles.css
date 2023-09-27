@@ -12,7 +12,7 @@
 	max-width: 100%;
 }
 
-.mismerge .msm__view .msm__view-content {
+.mismerge .msm__view .msm__view_content {
 	width: fit-content;
 	min-width: calc(100% - 4rem);
 	position: relative;
@@ -20,7 +20,7 @@
 	overflow-y: hidden;
 }
 
-.mismerge .msm__view .msm__view-content .msm__wrapper {
+.mismerge .msm__view .msm__view_content .msm__wrapper {
 	width: fit-content;
 	min-width: 100%;
 }
@@ -47,6 +47,7 @@
 	overflow-y: hidden;
 
 	font-size: inherit;
+	tab-size: 2rem;
 }
 
 /* Connector */
@@ -74,11 +75,11 @@
 	tab-size: 4;
 }
 
-.mismerge .msm__view.editable .msm__view-content .line pre {
+.mismerge .msm__view.editable .msm__view_content .line pre {
 	color: transparent;
 }
 
-.mismerge .msm__view .msm__view-content .msm__line pre {
+.mismerge .msm__view .msm__view_content .msm__line pre {
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 	tab-size: 2rem;
@@ -91,20 +92,21 @@
 
 /* Line numbers */
 
-.mismerge .msm__view .msm__line-number {
+.mismerge .msm__view .msm__line_number {
 	width: 4rem;
 	text-align: right;
 	flex-shrink: 0;
+	position: relative;
 }
 
-.mismerge .msm__view .left .msm__line-number pre {
+.mismerge .msm__view .left .msm__line_number pre {
 	text-align: left;
-	padding-left: 1rem;
+	padding-left: 1.5rem;
 }
 
-.mismerge .msm__view .right .msm__line-number pre {
+.mismerge .msm__view .right .msm__line_number pre {
 	text-align: right;
-	padding-right: 1rem;
+	padding-right: 1.5rem;
 }
 
 /* Blocks */
@@ -122,32 +124,32 @@
 /* Blocks and line numbers backgrounds */
 
 .mismerge .msm__block.added,
-.mismerge .msm__line-number.added {
+.mismerge .msm__line_number.added {
 	background-color: var(--added);
 }
 
 .mismerge .msm__block.removed,
-.mismerge .msm__line-number.removed {
+.mismerge .msm__line_number.removed {
 	background-color: var(--removed);
 }
 
 .mismerge .msm__block.partially_added,
-.mismerge .msm__line-number.partially_added {
+.mismerge .msm__line_number.partially_added {
 	background-color: var(--added);
 }
 
 .mismerge .msm__block.partially_removed,
-.mismerge .msm__line-number.partially_removed {
+.mismerge .msm__line_number.partially_removed {
 	background-color: var(--removed);
 }
 
 .mismerge .msm__block.merge_conflict,
-.mismerge .msm__line-number.merge_conflict {
+.mismerge .msm__line_number.merge_conflict {
 	background-color: var(--conflict);
 }
 
 .mismerge .msm__block.modified,
-.mismerge .msm__line-number.modified {
+.mismerge .msm__line_number.modified {
 	background-color: var(--modified);
 }
 
@@ -176,9 +178,9 @@
 	height: 2px;
 }
 
-.mismerge .msm__line-placeholder.added_placeholder,
-.mismerge .msm__line-placeholder.removed_placeholder,
-.mismerge .msm__line-placeholder.merge_conflict_placeholder {
+.mismerge .msm__line_placeholder.added_placeholder,
+.mismerge .msm__line_placeholder.removed_placeholder,
+.mismerge .msm__line_placeholder.merge_conflict_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -195,4 +197,31 @@
 
 .mismerge .merge_conflict_placeholder {
 	background-color: var(--conflict);
+}
+
+/* Block actions */
+
+.mismerge .msm__merge_button {
+	position: absolute;
+	right: 0;
+	top: 48%;
+	cursor: pointer;
+
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: unset;
+}
+
+.mismerge .msm__merge_button.left {
+	right: unset;
+	left: 0;
+}
+
+.mismerge .msm__merge_button.left .msm__arrow_icon {
+	transform: translateY(-50%) scale(0.9) rotate(180deg);
+}
+
+.mismerge .msm__merge_button.right .msm__arrow_icon {
+	transform: translateY(-50%) scale(0.9);
 }

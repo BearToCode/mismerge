@@ -1,7 +1,7 @@
 import { type Line, LinkedComponentsBlock } from '.';
-import type { Side, TwoWaySide } from '../side';
+import type { Side, TwoWaySide } from '../editor/side';
 import type { MaybeArray } from '../utils';
-import { BlockComponent } from '../component';
+import { BlockComponent } from '../editor/component';
 import MergeConflictBlockComponent from '$lib/components/blocks/MergeConflictBlock.svelte';
 import MergeConflictPlaceholderComponent from '$lib/components/blocks/MergeConflictPlaceholder.svelte';
 
@@ -11,7 +11,8 @@ type MergeConflictSideData<SideType extends Side> = {
 };
 
 export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
-	public type = 'merge_conflict';
+	public static readonly type = 'merge_conflict';
+	public type = MergeConflictBlock.type;
 	public placeholderType = 'merge_conflict_placeholder';
 
 	public readonly sidesData: MergeConflictSideData<TwoWaySide>[];
@@ -36,16 +37,19 @@ export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
 			...this.sidesData.map(({ side, lines }) => {
 				return new BlockComponent({
 					component: MergeConflictBlockComponent,
+					blockId: this.id,
 					props: { block: this, lines },
 					linesCount: this.linesCount(side),
 					side,
-					type: this.type
+					type: this.type,
+					mergeActions: true
 				});
 			}),
 			...[this.placeholderSide].flat().map(
 				(side) =>
 					new BlockComponent({
 						component: MergeConflictPlaceholderComponent,
+						blockId: this.id,
 						props: { block: this },
 						linesCount: 0,
 						side,

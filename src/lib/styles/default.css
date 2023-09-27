@@ -18,11 +18,15 @@
 }
 
 .mismerge .msm__connector,
-.mismerge .msm__line-numbers {
+.mismerge .msm__side_panel {
 	background-color: var(--light-gray);
 }
 
-.mismerge .msm__line-numbers {
+.mismerge .msm__side_panel {
 	color: var(--gray);
 	font-weight: 500;
+}
+
+.mismerge .msm__merge_button {
+	color: var(--gray);
 }

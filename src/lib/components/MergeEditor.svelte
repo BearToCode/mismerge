@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type { BlockComponent } from '$lib/internal/component';
-	import type { Connection } from '$lib/internal/connection';
+	import type { BlockComponent } from '$lib/internal/editor/component';
+	import { drawOnChange, type Connection } from '$lib/internal/editor/connection';
 	import { joinWithDefault } from '$lib/internal/utils';
-	import { onMount, onDestroy } from 'svelte';
 	import Connector from './Connector.svelte';
 	import View from './View.svelte';
-	import { assembleTwoWay } from '$lib/internal/two-way-assembler';
-	import { type EditorColors, DefaultEditorColors } from '$lib/internal/colors';
-	import { Side, TwoWaySide } from '$lib/internal/side';
+	import { assembleTwoWay } from '$lib/internal/diff/two-way-assembler';
+	import { type EditorColors, DefaultEditorColors } from '$lib/internal/editor/colors';
+	import { Side, TwoWaySide } from '$lib/internal/editor/side';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
-	import type { LineDiffAlgorithm } from '$lib/internal/line-diff';
+	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
+	import { mergeComponent } from '$lib/internal/editor/merging';
 
 	export let lhs: string;
 	export let ctr: string;
@@ -74,23 +74,23 @@
 	$: blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm });
 	$: renderComponents(blocks);
 
-	let observer: MutationObserver | undefined;
-	onMount(() => {
-		observer = new MutationObserver(() => {
+	drawOnChange(
+		() => container,
+		() => {
+			if (!container) return;
 			drawLhsConnections(container, lhsConnections);
 			drawRhsConnections(container, rhsConnections);
-		});
-		observer.observe(container, {
-			characterData: false,
-			attributes: false,
-			childList: true,
-			subtree: true
-		});
-		drawLhsConnections(container, lhsConnections);
-		drawRhsConnections(container, rhsConnections);
-	});
+		}
+	);
 
-	onDestroy(() => observer?.disconnect());
+	// Returns a function that merges a component from the given side.
+	function mergeComponentHandler(side: TwoWaySide) {
+		return (
+			e: CustomEvent<{
+				component: BlockComponent<Record<string, unknown>>;
+			}>
+		) => mergeComponent({ source: e.detail.component, side, components, container });
+	}
 </script>
 
 <div
@@ -111,6 +111,7 @@
 		bind:content={lhs}
 		bind:components
 		bind:elem={lhsViewElem}
+		on:merge-side={mergeComponentHandler(TwoWaySide.lhs)}
 	/>
 	<Connector
 		colors={editorColors}
@@ -124,6 +125,7 @@
 		bind:content={ctr}
 		bind:components
 		bind:elem={ctrViewElem}
+		on:merge-side={mergeComponentHandler(TwoWaySide.ctr)}
 	/>
 	<Connector
 		colors={editorColors}
@@ -137,5 +139,6 @@
 		bind:content={rhs}
 		bind:components
 		bind:elem={rhsViewElem}
+		on:merge-side={mergeComponentHandler(TwoWaySide.rhs)}
 	/>
 </div>

@@ -1,4 +1,4 @@
-import { TwoWaySide, OneWaySide } from '$lib/internal/side';
+import { TwoWaySide, OneWaySide } from '$lib/internal/editor/side';
 import { test, expect } from 'vitest';
 
 test('one-way-side relative positions', () => {

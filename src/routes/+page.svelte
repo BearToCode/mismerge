@@ -32,6 +32,8 @@
 2
 3
 4"
+		lhsEditable
+		rhsEditable
 	/>
 	<!-- <DiffVisualizer
 		lhs="1

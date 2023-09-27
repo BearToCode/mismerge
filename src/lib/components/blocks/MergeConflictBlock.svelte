@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Line } from '$lib/internal/blocks';
 	import type { PartiallyModifiedBlock } from '$lib/internal/blocks/partially-modified';
-	import type { BlockComponent } from '$lib/internal/component';
+	import type { BlockComponent } from '$lib/internal/editor/component';
 
 	export let block: PartiallyModifiedBlock;
 	export let lines: Line[];
@@ -11,7 +11,7 @@
 <div class="msm__block {block.type}" id={component.id}>
 	{#each lines as line}
 		<div class="msm__line">
-			<div class="content">
+			<div class="msm__content">
 				<pre>{line.content || ' '}</pre>
 			</div>
 		</div>

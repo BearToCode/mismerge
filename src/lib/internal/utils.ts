@@ -24,3 +24,8 @@ export type MaybeArray<T> = T | T[];
  */
 export const eqSet = <T>(a: Set<T>, b: Set<T>) =>
 	a.size === b.size && [...a].every((x) => b.has(x));
+
+/**
+ * Whether the current environment is development.
+ */
+export const DEV = process.env.NODE_ENV !== 'production';

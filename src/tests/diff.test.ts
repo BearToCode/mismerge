@@ -1,4 +1,4 @@
-import { twoWayDiff, oneWayDiff } from '$lib/internal/diff';
+import { twoWayDiff, oneWayDiff } from '$lib/internal/diff/base';
 import { expect, test } from 'vitest';
 import dedent from 'dedent';
 

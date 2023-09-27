@@ -1,14 +1,15 @@
 import { LinkedComponentsBlock, type Line } from '.';
-import { BlockComponent } from '../component';
-import type { LineDiff } from '../line-diff';
-import type { TwoWaySide } from '../side';
+import { BlockComponent } from '../editor/component';
+import type { LineDiff } from '../diff/line-diff';
+import type { TwoWaySide } from '../editor/side';
 import ModifiedBlockComponent from '$lib/components/blocks/ModifiedBlock.svelte';
 import UnchangedBlockComponent from '$lib/components/blocks/UnchangedBlock.svelte';
 import { UnchangedBlock } from './unchanged';
-import type { Connection } from '../connection';
+import type { Connection } from '../editor/connection';
 
 export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
-	public type = 'modified';
+	public static readonly type = 'modified';
+	public type = ModifiedBlock.type;
 
 	public readonly modifiedSidesData: {
 		side: TwoWaySide;
@@ -55,14 +56,17 @@ export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 				(sideData) =>
 					new BlockComponent({
 						component: ModifiedBlockComponent,
+						blockId: this.id,
 						props: { block: this, lines: sideData.lines },
 						linesCount: this.linesCount(sideData.side),
 						side: sideData.side,
-						type: this.type
+						type: this.type,
+						mergeActions: true
 					})
 			),
 			new BlockComponent({
 				component: UnchangedBlockComponent,
+				blockId: this.id,
 				props: { lines: this.unchangedSideData.lines },
 				linesCount: this.linesCount(this.unchangedSideData.side),
 				side: this.unchangedSideData.side,

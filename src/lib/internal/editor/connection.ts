@@ -1,5 +1,7 @@
+import { onDestroy, onMount } from 'svelte';
 import type { DiffColors, EditorColors } from './colors';
 import type { BlockComponent } from './component';
+import { DEV } from '../utils';
 
 /**
  * A connection between two blocks.
@@ -67,8 +69,6 @@ export function drawConnections(
 		)
 			continue;
 
-		console.log(fromElem, toElem);
-
 		const fromOffsetTop =
 			fromElem.getBoundingClientRect().top - lhsViewElem.getBoundingClientRect().top;
 		const toOffsetTop =
@@ -106,4 +106,32 @@ export function drawConnections(
 		ctx.fill();
 		ctx.closePath();
 	}
+}
+
+/**
+ * Draw connections when the DOM changes.
+ * @param getTarget A function that returns the target element to observe. It is a function because the element
+ * 									is defined only after the element is mounted.
+ * @param draw Draw connections function.
+ */
+export function drawOnChange(getTarget: () => HTMLDivElement, draw: () => void) {
+	let observer: MutationObserver | undefined;
+	onMount(() => {
+		observer = new MutationObserver(draw);
+		const target = getTarget();
+		if (!target) {
+			if (DEV) console.error('Cannot listen for changes to draw connections: target is undefined');
+			return;
+		}
+		observer.observe(target, {
+			characterData: false,
+			attributes: false,
+			childList: true,
+			subtree: true
+		});
+
+		draw();
+	});
+
+	onDestroy(() => observer?.disconnect());
 }

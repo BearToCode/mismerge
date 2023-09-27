@@ -1,7 +1,7 @@
 import { type Line, LinkedComponentsBlock } from '.';
-import type { Side } from '../side';
+import type { Side } from '../editor/side';
 import type { MaybeArray } from '../utils';
-import { BlockComponent } from '../component';
+import { BlockComponent } from '../editor/component';
 import RemovedBlockComponent from '$lib/components/blocks/RemovedBlock.svelte';
 import RemovedBlockPlaceholderComponent from '$lib/components/blocks/RemovedBlockPlaceholder.svelte';
 
@@ -11,7 +11,8 @@ export type RemovedSideData<SideType extends Side> = {
 };
 
 export class RemovedBlock<SideType extends Side = Side> extends LinkedComponentsBlock<SideType> {
-	public type = 'removed';
+	public static readonly type = 'removed';
+	public type = RemovedBlock.type;
 	public placeholderType = 'removed_placeholder';
 
 	public readonly sidesData: MaybeArray<RemovedSideData<SideType>>;
@@ -37,6 +38,7 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 				({ side, lines }) =>
 					new BlockComponent({
 						component: RemovedBlockComponent,
+						blockId: this.id,
 						props: { block: this, lines },
 						linesCount: this.linesCount(side),
 						side,
@@ -47,6 +49,7 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 				(side) =>
 					new BlockComponent({
 						component: RemovedBlockPlaceholderComponent,
+						blockId: this.id,
 						props: { block: this },
 						linesCount: 0,
 						side,

@@ -1,7 +1,7 @@
 import { type Line, LinkedComponentsBlock } from '.';
-import type { Side } from '../side';
+import type { Side } from '../editor/side';
 import type { MaybeArray } from '../utils';
-import { BlockComponent } from '../component';
+import { BlockComponent } from '../editor/component';
 import AddedBlockComponent from '$lib/components/blocks/AddedBlock.svelte';
 import AddedBlockPlaceholderComponent from '$lib/components/blocks/AddedBlockPlaceholder.svelte';
 
@@ -11,7 +11,8 @@ export type AddedSideData<SideType extends Side> = {
 };
 
 export class AddedBlock<SideType extends Side = Side> extends LinkedComponentsBlock<SideType> {
-	public type = 'added';
+	public static readonly type = 'added';
+	public type = AddedBlock.type;
 	public placeholderType = 'added_placeholder';
 
 	public readonly sidesData: MaybeArray<AddedSideData<SideType>>;
@@ -38,16 +39,19 @@ export class AddedBlock<SideType extends Side = Side> extends LinkedComponentsBl
 				({ side, lines }) =>
 					new BlockComponent({
 						component: AddedBlockComponent,
+						blockId: this.id,
 						props: { block: this, lines },
 						linesCount: this.linesCount(side),
 						side,
-						type: this.type
+						type: this.type,
+						mergeActions: true
 					})
 			),
 			...[this.placeholderSide].flat().map(
 				(side) =>
 					new BlockComponent({
 						component: AddedBlockPlaceholderComponent,
+						blockId: this.id,
 						props: { block: this },
 						side,
 						linesCount: 0,

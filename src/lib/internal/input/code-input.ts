@@ -72,6 +72,8 @@ export class CodeInput {
 		this.textarea.value = previousState.value;
 		this.textarea.selectionStart = previousState.cursor;
 		this.textarea.selectionEnd = previousState.cursor;
+
+		this.triggerReload();
 	}
 
 	private redo() {
@@ -80,6 +82,8 @@ export class CodeInput {
 		this.textarea.value = nextState.value;
 		this.textarea.selectionStart = nextState.cursor;
 		this.textarea.selectionEnd = nextState.cursor;
+
+		this.triggerReload();
 	}
 
 	private indent() {
@@ -90,6 +94,8 @@ export class CodeInput {
 			this.textarea.value.substring(0, start) + '\t' + this.textarea.value.substring(end);
 
 		this.textarea.selectionStart = this.textarea.selectionEnd = start + 1;
+
+		this.triggerReload();
 	}
 
 	private removeIndentation() {
@@ -111,5 +117,12 @@ export class CodeInput {
 
 		this.textarea.selectionStart = cursor - 1;
 		this.textarea.selectionEnd = cursor - 1;
+
+		this.triggerReload();
+	}
+
+	private triggerReload() {
+		const event = new Event('input', { bubbles: true });
+		this.textarea.dispatchEvent(event);
 	}
 }

@@ -1,7 +1,7 @@
-import { assembleOneWay } from '$lib/internal/one-way-assembler';
+import { assembleOneWay } from '$lib/internal/diff/one-way-assembler';
 import { expect, test } from 'vitest';
 import dedent from 'dedent';
-import { assembleTwoWay } from '$lib/internal/two-way-assembler';
+import { assembleTwoWay } from '$lib/internal/diff/two-way-assembler';
 import { AddedBlock } from '$lib/internal/blocks/added';
 import { PartiallyModifiedBlock } from '$lib/internal/blocks/partially-modified';
 import { RemovedBlock } from '$lib/internal/blocks/removed';

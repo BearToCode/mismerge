@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { DiffBlock } from '$lib/internal/blocks';
-	import type { BlockComponent } from '$lib/internal/component';
-	import type { Side } from '$lib/internal/side';
+	import type { BlockComponent } from '$lib/internal/editor/component';
+	import type { Side } from '$lib/internal/editor/side';
 	import { onMount } from 'svelte';
-	import LineNumbers from './LineNumbers.svelte';
+	import SidePanel from './SidePanel.svelte';
 	import { CodeInput } from '$lib/internal/input/code-input';
 
 	export let components: BlockComponent[];
@@ -40,9 +40,9 @@
 
 <div bind:this={containerElem} class="msm__view {editable ? 'editable' : ''} {clazz}">
 	{#if lineNumbersSide == 'left'}
-		<LineNumbers side={lineNumbersSide} components={sideComponents} />
+		<SidePanel on:merge-side {side} components={sideComponents} />
 	{/if}
-	<div class="msm__view-content">
+	<div class="msm__view_content">
 		<div bind:clientWidth={width} class="msm__wrapper">
 			{#each sideComponents as blockComponent}
 				<svelte:component
@@ -66,6 +66,6 @@
 		{/if}
 	</div>
 	{#if lineNumbersSide == 'right'}
-		<LineNumbers side={lineNumbersSide} components={sideComponents} />
+		<SidePanel on:merge-side {side} components={sideComponents} />
 	{/if}
 </div>

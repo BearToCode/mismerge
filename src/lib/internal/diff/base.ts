@@ -1,5 +1,5 @@
 import { diffLines } from 'diff';
-import { TwoWaySide } from './side';
+import { TwoWaySide } from '../editor/side';
 
 /**
  * A line content along with the lines where it is present.

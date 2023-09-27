@@ -3,5 +3,9 @@
 - Fix exports
 - Improve default styles
 - Create demo
-- Add some docs
+- Create website
 - Investigate component warnings
+- Add slots
+- Add blocks counter
+- Add blocks actions
+- Syntax highlighting

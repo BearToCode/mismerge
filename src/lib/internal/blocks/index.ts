@@ -1,7 +1,7 @@
-import type { BlockComponent } from '../component';
+import type { BlockComponent } from '../editor/component';
 import type { MaybeArray } from '../utils';
-import type { Connection } from '../connection';
-import type { Side } from '../side';
+import type { Connection } from '../editor/connection';
+import type { Side } from '../editor/side';
 
 export type Line = {
 	content: string;

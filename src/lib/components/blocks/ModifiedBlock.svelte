@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ModifiedBlock } from '$lib/internal/blocks/modified';
-	import type { BlockComponent } from '$lib/internal/component';
-	import type { LineDiff } from '$lib/internal/line-diff';
+	import type { BlockComponent } from '$lib/internal/editor/component';
+	import type { LineDiff } from '$lib/internal/diff/line-diff';
 
 	export let block: ModifiedBlock;
 	export let lines: LineDiff[];
@@ -11,7 +11,7 @@
 <div class="msm__block {block.type}" id={component.id}>
 	{#each lines as line}
 		<div class="msm__line">
-			<div class="content">
+			<div class="msm__content">
 				{#each line.parts as part}
 					{#if part.overlay}
 						<pre><span class="overlay">{part.content}</span></pre>

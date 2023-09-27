@@ -1,9 +1,9 @@
 import { LinkedComponentsBlock } from '.';
-import type { Side } from '../side';
-import { BlockComponent } from '../component';
+import type { Side } from '../editor/side';
+import { BlockComponent } from '../editor/component';
 import PartiallyRemovedBlockComponent from '$lib/components/blocks/PartiallyRemovedBlock.svelte';
 import PartiallyAddedBlockComponent from '$lib/components/blocks/PartiallyAddedBlock.svelte';
-import type { LineDiff } from '../line-diff';
+import type { LineDiff } from '../diff/line-diff';
 
 type PartiallyModifiedSideData<SideType extends Side> = {
 	type: 'added' | 'removed';
@@ -14,7 +14,8 @@ type PartiallyModifiedSideData<SideType extends Side> = {
 export class PartiallyModifiedBlock<
 	SideType extends Side = Side
 > extends LinkedComponentsBlock<SideType> {
-	public type = 'partially_modified';
+	public static readonly type = 'partially_modified';
+	public type = PartiallyModifiedBlock.type;
 	public addedType = 'partially_added';
 	public removedType = 'partially_removed';
 
@@ -41,8 +42,10 @@ export class PartiallyModifiedBlock<
 			})();
 			return new BlockComponent({
 				component: SvelteComponent,
+				blockId: this.id,
 				props: { block: this, lines },
 				linesCount: this.linesCount(side),
+				mergeActions: true,
 				side,
 				type: (() => {
 					switch (type) {
