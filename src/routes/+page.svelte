@@ -35,7 +35,7 @@
 		lhsEditable
 		rhsEditable
 	/>
-	<!-- <DiffVisualizer
+	<DiffVisualizer
 		lhs="1
 3
 2
@@ -51,7 +51,7 @@ a
 9
 "
 		rhsEditable
-	/> -->
+	/>
 </main>
 
 <style>

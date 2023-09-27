@@ -39,6 +39,7 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 					new BlockComponent({
 						component: RemovedBlockComponent,
 						blockId: this.id,
+						mergeActions: true,
 						props: { block: this, lines },
 						linesCount: this.linesCount(side),
 						side,

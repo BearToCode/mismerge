@@ -10,6 +10,7 @@
 	import View from './View.svelte';
 	import Connector from './Connector.svelte';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
+	import { mergeComponent } from '$lib/internal/editor/merging';
 
 	/**
 	 * Left hand side content.
@@ -70,6 +71,15 @@
 		() => container,
 		() => container && drawConnections(container, connections)
 	);
+
+	// Returns a function that merges a component from the given side.
+	function mergeComponentHandler(side: OneWaySide) {
+		return (
+			e: CustomEvent<{
+				component: BlockComponent<Record<string, unknown>>;
+			}>
+		) => mergeComponent({ source: e.detail.component, side, components, container });
+	}
 </script>
 
 <div
@@ -88,15 +98,15 @@
 		bind:components
 		bind:content={lhs}
 		bind:elem={lhsViewElem}
+		on:merge-side={mergeComponentHandler(OneWaySide.lhs)}
 	/>
-	{#if container}
-		<Connector {colors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
-	{/if}
+	<Connector {colors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
 	<View
 		editable={rhsEditable}
 		side={OneWaySide.rhs}
 		bind:components
 		bind:content={rhs}
 		bind:elem={rhsViewElem}
+		on:merge-side={mergeComponentHandler(OneWaySide.rhs)}
 	/>
 </div>

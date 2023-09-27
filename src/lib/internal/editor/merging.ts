@@ -76,6 +76,7 @@ export function mergeComponent(data: {
 	}
 
 	const sourceLines = linesFromComponentElem(sourceElem as HTMLDivElement);
+
 	textarea.value = Array.prototype.concat(prevLines, sourceLines, nextLines).join('\n');
 
 	// Trigger update using event
@@ -88,5 +89,5 @@ function linesFromComponentElem(elem: HTMLDivElement): string[] {
 		Array.from(elem.querySelectorAll('.msm__content'))
 			.map((line) => line.textContent)
 			.filter((line) => line) as string[]
-	).map((line) => line.replaceAll('\n', ''));
+	).map((line) => line.replaceAll('\r', '').replaceAll('\n', ''));
 }
