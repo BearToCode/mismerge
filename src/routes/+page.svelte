@@ -34,6 +34,7 @@
 4"
 		lhsEditable
 		rhsEditable
+		wrapLines
 	/>
 	<MisMerge2
 		lhs="1

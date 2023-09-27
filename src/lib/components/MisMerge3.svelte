@@ -45,6 +45,10 @@
 	 * Disable merging actions.
 	 */
 	export let disableMerging = false;
+	/**
+	 * Enables lines wrapping.
+	 */
+	export let wrapLines = false;
 
 	const editorColors = joinWithDefault(userColors, DefaultEditorColors);
 
@@ -75,18 +79,6 @@
 			.flat();
 	}
 
-	$: blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm });
-	$: renderComponents(blocks);
-
-	drawOnChange(
-		() => container,
-		() => {
-			if (!container) return;
-			drawLhsConnections(container, lhsConnections);
-			drawRhsConnections(container, rhsConnections);
-		}
-	);
-
 	// Returns a function that merges a component from the given side.
 	function mergeComponentHandler(side: TwoWaySide) {
 		return (
@@ -95,6 +87,17 @@
 			}>
 		) => mergeComponent({ source: e.detail.component, side, components, container });
 	}
+
+	const redrawConnections = () => {
+		if (!container) return;
+		drawLhsConnections(container, lhsConnections);
+		drawRhsConnections(container, rhsConnections);
+	};
+
+	$: blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm });
+	$: renderComponents(blocks);
+
+	drawOnChange(() => container, redrawConnections);
 </script>
 
 <div
@@ -105,18 +108,19 @@
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"
-	class="mismerge merge-editor {clazz}"
+	class="mismerge {wrapLines ? 'wrap_lines' : ''} {clazz}"
 	bind:this={container}
 >
 	<View
+		{disableMerging}
 		editable={lhsEditable}
 		side={TwoWaySide.lhs}
 		lineNumbersSide="right"
 		bind:content={lhs}
 		bind:components
 		bind:elem={lhsViewElem}
-		{disableMerging}
 		on:merge-side={mergeComponentHandler(TwoWaySide.lhs)}
+		on:newline={redrawConnections}
 	/>
 	<Connector
 		colors={editorColors}
@@ -125,13 +129,14 @@
 		bind:rhsViewElem={ctrViewElem}
 	/>
 	<View
+		{disableMerging}
 		editable={ctrEditable}
 		side={TwoWaySide.ctr}
 		bind:content={ctr}
 		bind:components
 		bind:elem={ctrViewElem}
-		{disableMerging}
 		on:merge-side={mergeComponentHandler(TwoWaySide.ctr)}
+		on:newline={redrawConnections}
 	/>
 	<Connector
 		colors={editorColors}
@@ -140,12 +145,13 @@
 		bind:rhsViewElem
 	/>
 	<View
+		{disableMerging}
 		editable={rhsEditable}
 		side={TwoWaySide.rhs}
 		bind:content={rhs}
 		bind:components
 		bind:elem={rhsViewElem}
-		{disableMerging}
 		on:merge-side={mergeComponentHandler(TwoWaySide.rhs)}
+		on:newline={redrawConnections}
 	/>
 </div>

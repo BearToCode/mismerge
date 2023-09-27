@@ -20,7 +20,7 @@
 	overflow-y: hidden;
 }
 
-.mismerge .msm__view .msm__view_content .msm__wrapper {
+.mismerge .msm__view .msm__wrapper {
 	width: fit-content;
 	min-width: 100%;
 }
@@ -50,6 +50,18 @@
 	tab-size: 2rem;
 }
 
+/* Lines wrapping */
+
+.mismerge.wrap_lines .msm__view .msm__wrapper {
+	width: 100%;
+}
+
+.mismerge.wrap_lines .msm__view.editable .msm__line pre {
+	white-space: pre-wrap;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
 /* Connector */
 
 .mismerge .msm__connector {
@@ -75,11 +87,11 @@
 	tab-size: 4;
 }
 
-.mismerge .msm__view.editable .msm__view_content .line pre {
+.mismerge .msm__view.editable .msm__line pre {
 	color: transparent;
 }
 
-.mismerge .msm__view .msm__view_content .msm__line pre {
+.mismerge .msm__view .msm__line pre {
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 	tab-size: 2rem;

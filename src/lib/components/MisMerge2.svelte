@@ -43,6 +43,10 @@
 	 * Disable merging actions.
 	 */
 	export let disableMerging = false;
+	/**
+	 * Enables lines wrapping.
+	 */
+	export let wrapLines = false;
 
 	const colors = joinWithDefault(userColors, DefaultDiffColors);
 
@@ -67,14 +71,6 @@
 			.flat();
 	}
 
-	$: blocks = assembleOneWay(lhs, rhs, { lineDiffAlgorithm });
-	$: renderComponents(blocks);
-
-	drawOnChange(
-		() => container,
-		() => container && drawConnections(container, connections)
-	);
-
 	// Returns a function that merges a component from the given side.
 	function mergeComponentHandler(side: OneWaySide) {
 		return (
@@ -83,6 +79,16 @@
 			}>
 		) => mergeComponent({ source: e.detail.component, side, components, container });
 	}
+
+	const redrawConnections = () => {
+		if (!container) return;
+		drawConnections(container, connections);
+	};
+
+	$: blocks = assembleOneWay(lhs, rhs, { lineDiffAlgorithm });
+	$: renderComponents(blocks);
+
+	drawOnChange(() => container, redrawConnections);
 </script>
 
 <div
@@ -92,7 +98,7 @@
 		--added-overlay: {colors.addedOverlay};
 		--removed-overlay: {colors.removedOverlay};
 	"
-	class="mismerge diff-visualizer {clazz}"
+	class="mismerge {wrapLines ? 'wrap_lines' : ''} {clazz}"
 	bind:this={container}
 >
 	<View
@@ -103,6 +109,7 @@
 		bind:elem={lhsViewElem}
 		{disableMerging}
 		on:merge-side={mergeComponentHandler(OneWaySide.lhs)}
+		on:newline={redrawConnections}
 	/>
 	<Connector {colors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
 	<View
@@ -113,5 +120,6 @@
 		bind:elem={rhsViewElem}
 		{disableMerging}
 		on:merge-side={mergeComponentHandler(OneWaySide.rhs)}
+		on:newline={redrawConnections}
 	/>
 </div>

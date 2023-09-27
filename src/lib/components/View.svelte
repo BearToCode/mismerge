@@ -2,7 +2,7 @@
 	import type { DiffBlock } from '$lib/internal/blocks';
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import type { Side } from '$lib/internal/editor/side';
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import SidePanel from './SidePanel.svelte';
 	import { CodeInput } from '$lib/internal/input/code-input';
 
@@ -34,14 +34,25 @@
 			if (codeInput) codeInput.dispose();
 			return;
 		}
-
 		codeInput = new CodeInput(textarea);
 	}
+
+	// Events
+	let previousHeight = 0;
+	const dispatch = createEventDispatcher<{
+		newline: {};
+	}>();
 </script>
 
 <div bind:this={containerElem} class="msm__view {editable ? 'editable' : ''} {clazz}">
 	{#if lineNumbersSide == 'left'}
-		<SidePanel {disableMerging} on:merge-side {side} components={sideComponents} />
+		<SidePanel
+			{side}
+			{disableMerging}
+			container={containerElem}
+			components={sideComponents}
+			on:merge-side
+		/>
 	{/if}
 	<div class="msm__view_content">
 		<div bind:clientWidth={width} class="msm__wrapper">
@@ -63,10 +74,29 @@
 				bind:value={content}
 				style="--scroll-width: {width}px;"
 				on:scroll={() => textarea && (textarea.scrollTop = 0)}
+				on:keyup={() => {
+					if (!textarea) return;
+					// Listen for new rows
+					textarea.style.height = '0px';
+					textarea.style.minHeight = '0px';
+					const newHeight = textarea.scrollHeight;
+					textarea.style.height = '';
+					textarea.style.minHeight = '';
+					if (newHeight != previousHeight) {
+						previousHeight = newHeight;
+						dispatch('newline', {});
+					}
+				}}
 			/>
 		{/if}
 	</div>
 	{#if lineNumbersSide == 'right'}
-		<SidePanel {disableMerging} on:merge-side {side} components={sideComponents} />
+		<SidePanel
+			{side}
+			{disableMerging}
+			container={containerElem}
+			components={sideComponents}
+			on:merge-side
+		/>
 	{/if}
 </div>

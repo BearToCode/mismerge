@@ -4,6 +4,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import ArrowIcon from './icons/ArrowIcon.svelte';
 
+	export let container: HTMLDivElement;
 	export let side: Side;
 	export let components: BlockComponent[];
 	export let disableMerging: boolean;
@@ -29,6 +30,15 @@
 		linesComponents = linesComponents;
 	}
 
+	function getLineHeight(componentId: string, idx: number) {
+		if (!container) return null;
+		const componentElem = Array.from(
+			container.querySelectorAll(`[id="${componentId}"] .msm__line`)
+		).at(idx);
+		if (!componentElem) return null;
+		return componentElem.clientHeight;
+	}
+
 	$: generateLines(components);
 
 	// Events
@@ -42,7 +52,11 @@
 			<div class="msm__line_placeholder {component.type}" />
 		{:else}
 			{#each { length: component.linesCount } as _, i}
-				<div class="msm__line_number {component.type}">
+				{@const lineHeight = getLineHeight(component.id, i)}
+				<div
+					style="height: {lineHeight ? lineHeight + 'px' : 'unset'};"
+					class="msm__line_number {component.type}"
+				>
 					{#if i == 0 && addMergeActions && component.mergeActions}
 						<button
 							class="msm__merge_button {direction}"
