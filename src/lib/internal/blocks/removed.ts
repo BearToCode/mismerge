@@ -1,5 +1,5 @@
 import { type Line, LinkedComponentsBlock } from '.';
-import type { Side } from '../editor/side';
+import { type Side, OneWaySide } from '../editor/side';
 import type { MaybeArray } from '../utils';
 import { BlockComponent } from '../editor/component';
 import RemovedBlockComponent from '$lib/components/blocks/RemovedBlock.svelte';
@@ -39,7 +39,7 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 					new BlockComponent({
 						component: RemovedBlockComponent,
 						blockId: this.id,
-						mergeActions: true,
+						mergeActions: side instanceof OneWaySide,
 						props: { block: this, lines },
 						linesCount: this.linesCount(side),
 						side,

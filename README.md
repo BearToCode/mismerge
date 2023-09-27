@@ -9,8 +9,9 @@
 - Add blocks counter
 - Add blocks actions
 - Syntax highlighting
-- Option to disable merging
 - Wrap lines
 - Fix history to work with merges
 
 ## Done
+
+- Option to disable merging
