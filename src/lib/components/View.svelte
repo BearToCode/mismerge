@@ -10,6 +10,7 @@
 	export let editable: boolean = false;
 	export let content: string;
 	export let side: Side;
+	export let disableMerging: boolean;
 	export let lineNumbersSide: 'left' | 'right' = 'left';
 	export { clazz as class };
 	export { containerElem as elem };
@@ -40,7 +41,7 @@
 
 <div bind:this={containerElem} class="msm__view {editable ? 'editable' : ''} {clazz}">
 	{#if lineNumbersSide == 'left'}
-		<SidePanel on:merge-side {side} components={sideComponents} />
+		<SidePanel {disableMerging} on:merge-side {side} components={sideComponents} />
 	{/if}
 	<div class="msm__view_content">
 		<div bind:clientWidth={width} class="msm__wrapper">
@@ -66,6 +67,6 @@
 		{/if}
 	</div>
 	{#if lineNumbersSide == 'right'}
-		<SidePanel on:merge-side {side} components={sideComponents} />
+		<SidePanel {disableMerging} on:merge-side {side} components={sideComponents} />
 	{/if}
 </div>

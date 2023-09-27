@@ -39,6 +39,10 @@
 	export let lineDiffAlgorithm: LineDiffAlgorithm = 'words_with_space';
 	let clazz = '';
 	export { clazz as class };
+	/**
+	 * Disable merging actions.
+	 */
+	export let disableMerging = false;
 
 	const colors = joinWithDefault(userColors, DefaultDiffColors);
 
@@ -97,6 +101,7 @@
 		bind:components
 		bind:content={lhs}
 		bind:elem={lhsViewElem}
+		{disableMerging}
 		on:merge-side={mergeComponentHandler(OneWaySide.lhs)}
 	/>
 	<Connector {colors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
@@ -106,6 +111,7 @@
 		bind:components
 		bind:content={rhs}
 		bind:elem={rhsViewElem}
+		{disableMerging}
 		on:merge-side={mergeComponentHandler(OneWaySide.rhs)}
 	/>
 </div>

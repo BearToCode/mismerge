@@ -12,3 +12,5 @@
 - Option to disable merging
 - Wrap lines
 - Fix history to work with merges
+
+## Done

@@ -6,8 +6,10 @@
 
 	export let side: Side;
 	export let components: BlockComponent[];
+	export let disableMerging: boolean;
 
-	let addMergeActions = !(side instanceof TwoWaySide) || !side.eq(TwoWaySide.ctr);
+	let addMergeActions =
+		!disableMerging && (!(side instanceof TwoWaySide) || !side.eq(TwoWaySide.ctr));
 	let direction: 'right' | 'left' = side.eq(TwoWaySide.lhs) ? 'right' : 'left';
 	let linesComponents: {
 		startingLineNumber: number;

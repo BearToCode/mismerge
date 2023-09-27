@@ -41,6 +41,10 @@
 	 * @default false
 	 */
 	export let rhsEditable = false;
+	/**
+	 * Disable merging actions.
+	 */
+	export let disableMerging = false;
 
 	const editorColors = joinWithDefault(userColors, DefaultEditorColors);
 
@@ -111,6 +115,7 @@
 		bind:content={lhs}
 		bind:components
 		bind:elem={lhsViewElem}
+		{disableMerging}
 		on:merge-side={mergeComponentHandler(TwoWaySide.lhs)}
 	/>
 	<Connector
@@ -125,6 +130,7 @@
 		bind:content={ctr}
 		bind:components
 		bind:elem={ctrViewElem}
+		{disableMerging}
 		on:merge-side={mergeComponentHandler(TwoWaySide.ctr)}
 	/>
 	<Connector
@@ -139,6 +145,7 @@
 		bind:content={rhs}
 		bind:components
 		bind:elem={rhsViewElem}
+		{disableMerging}
 		on:merge-side={mergeComponentHandler(TwoWaySide.rhs)}
 	/>
 </div>
