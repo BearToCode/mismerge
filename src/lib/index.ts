@@ -1,1 +1,1 @@
-export * from './components/MergeEditor.svelte';
+export * from './components/MisMerge3.svelte';

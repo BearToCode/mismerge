@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { joinWithDefault } from '$lib/internal/utils';
-	import { onDestroy, onMount } from 'svelte';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 	import { type DiffColors, DefaultDiffColors } from '$lib/internal/editor/colors';
 	import type { BlockComponent } from '$lib/internal/editor/component';

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import '$lib/styles/styles.css';
 	import '$lib/styles/default.css';
-	import MergeEditor from '$lib/components/MergeEditor.svelte';
-	import DiffVisualizer from '$lib/components/DiffVisualizer.svelte';
+	import MisMerge3 from '$lib/components/MisMerge3.svelte';
+	import MisMerge2 from '$lib/components/MisMerge2.svelte';
 </script>
 
 <svelte:head>
@@ -20,7 +20,7 @@
 </svelte:head>
 
 <main>
-	<MergeEditor
+	<MisMerge3
 		lhs="abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
 1
 2
@@ -35,7 +35,7 @@
 		lhsEditable
 		rhsEditable
 	/>
-	<DiffVisualizer
+	<MisMerge2
 		lhs="1
 3
 2
