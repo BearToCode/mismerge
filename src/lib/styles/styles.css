@@ -126,7 +126,7 @@
 	background-color: var(--added);
 }
 
-.mismerge .block.removed,
+.mismerge .msm__block.removed,
 .mismerge .msm__line-number.removed {
 	background-color: var(--removed);
 }
