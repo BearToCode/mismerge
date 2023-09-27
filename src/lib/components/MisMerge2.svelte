@@ -58,6 +58,8 @@
 	let lhsViewElem: HTMLDivElement;
 	let rhsViewElem: HTMLDivElement;
 	let drawConnections: (container: HTMLDivElement, connections: Connection[]) => void;
+	let saveLhsHistory: () => void;
+	let saveRhsHistory: () => void;
 
 	function renderComponents(blocks: DiffBlock<Side>[]) {
 		connections = [];
@@ -77,7 +79,13 @@
 			e: CustomEvent<{
 				component: BlockComponent<Record<string, unknown>>;
 			}>
-		) => mergeComponent({ source: e.detail.component, side, components, container });
+		) => {
+			mergeComponent({ source: e.detail.component, side, components, container });
+
+			// Save editor history after merging.
+			if (e.detail.component.side.eq(OneWaySide.lhs)) saveRhsHistory();
+			else saveLhsHistory();
+		};
 	}
 
 	const redrawConnections = () => {
@@ -102,24 +110,26 @@
 	bind:this={container}
 >
 	<View
+		{disableMerging}
 		editable={lhsEditable}
 		side={OneWaySide.lhs}
 		bind:components
 		bind:content={lhs}
 		bind:elem={lhsViewElem}
-		{disableMerging}
-		on:merge-side={mergeComponentHandler(OneWaySide.lhs)}
+		bind:saveHistory={saveLhsHistory}
+		on:merge={mergeComponentHandler(OneWaySide.lhs)}
 		on:newline={redrawConnections}
 	/>
 	<Connector {colors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
 	<View
+		{disableMerging}
 		editable={rhsEditable}
 		side={OneWaySide.rhs}
 		bind:components
 		bind:content={rhs}
 		bind:elem={rhsViewElem}
-		{disableMerging}
-		on:merge-side={mergeComponentHandler(OneWaySide.rhs)}
+		bind:saveHistory={saveRhsHistory}
+		on:merge={mergeComponentHandler(OneWaySide.rhs)}
 		on:newline={redrawConnections}
 	/>
 </div>

@@ -63,6 +63,7 @@
 	let rhsViewElem: HTMLDivElement;
 	let drawLhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 	let drawRhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
+	let saveCtrHistory: () => void;
 
 	function renderComponents(blocks: DiffBlock<Side>[]) {
 		lhsConnections = [];
@@ -85,7 +86,10 @@
 			e: CustomEvent<{
 				component: BlockComponent<Record<string, unknown>>;
 			}>
-		) => mergeComponent({ source: e.detail.component, side, components, container });
+		) => {
+			mergeComponent({ source: e.detail.component, side, components, container });
+			saveCtrHistory();
+		};
 	}
 
 	const redrawConnections = () => {
@@ -119,7 +123,7 @@
 		bind:content={lhs}
 		bind:components
 		bind:elem={lhsViewElem}
-		on:merge-side={mergeComponentHandler(TwoWaySide.lhs)}
+		on:merge={mergeComponentHandler(TwoWaySide.lhs)}
 		on:newline={redrawConnections}
 	/>
 	<Connector
@@ -135,7 +139,8 @@
 		bind:content={ctr}
 		bind:components
 		bind:elem={ctrViewElem}
-		on:merge-side={mergeComponentHandler(TwoWaySide.ctr)}
+		bind:saveHistory={saveCtrHistory}
+		on:merge={mergeComponentHandler(TwoWaySide.ctr)}
 		on:newline={redrawConnections}
 	/>
 	<Connector
@@ -151,7 +156,7 @@
 		bind:content={rhs}
 		bind:components
 		bind:elem={rhsViewElem}
-		on:merge-side={mergeComponentHandler(TwoWaySide.rhs)}
+		on:merge={mergeComponentHandler(TwoWaySide.rhs)}
 		on:newline={redrawConnections}
 	/>
 </div>

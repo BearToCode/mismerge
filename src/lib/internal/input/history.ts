@@ -71,7 +71,7 @@ export class InputHistory {
 	 */
 	public saveState(value: string, cursor: number) {
 		const latest = this.states.at(-1);
-		if (latest?.value === value) return;
+		if (latest?.value === value && latest.cursor === cursor) return;
 
 		if (this.currentIndex < -1) {
 			// Remove history

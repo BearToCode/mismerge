@@ -14,6 +14,7 @@
 	export let lineNumbersSide: 'left' | 'right' = 'left';
 	export { clazz as class };
 	export { containerElem as elem };
+	export const saveHistory = () => codeInput?.saveHistoryState();
 
 	let clazz = '';
 	let textarea: HTMLTextAreaElement | undefined;
@@ -51,7 +52,7 @@
 			{disableMerging}
 			container={containerElem}
 			components={sideComponents}
-			on:merge-side
+			on:merge
 		/>
 	{/if}
 	<div class="msm__view_content">
@@ -96,7 +97,7 @@
 			{disableMerging}
 			container={containerElem}
 			components={sideComponents}
-			on:merge-side
+			on:merge
 		/>
 	{/if}
 </div>

@@ -43,7 +43,7 @@
 
 	// Events
 
-	const dispatch = createEventDispatcher<{ 'merge-side': { component: BlockComponent } }>();
+	const dispatch = createEventDispatcher<{ merge: { component: BlockComponent } }>();
 </script>
 
 <div class="msm__side_panel {direction}">
@@ -61,7 +61,7 @@
 						<button
 							class="msm__merge_button {direction}"
 							on:click={() => {
-								dispatch('merge-side', { component });
+								dispatch('merge', { component });
 							}}
 						>
 							<ArrowIcon />

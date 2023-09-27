@@ -29,6 +29,9 @@ export class CodeInput {
 		this.textarea.removeEventListener('focus', this.clearPressedKeys);
 	}
 
+	public saveHistoryState = () =>
+		this.history.saveState(this.textarea.value, this.textarea.selectionStart);
+
 	private clearPressedKeys = () => this.pressedKeys.clear();
 
 	private handleKeyUp(e: KeyboardEvent) {
