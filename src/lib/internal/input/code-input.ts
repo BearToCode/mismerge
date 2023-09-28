@@ -59,11 +59,13 @@ export class CodeInput {
 		}
 
 		if (eqSet(this.pressedKeys, new Set(['tab']))) {
+			if (e.repeat) return;
 			e.preventDefault();
 			return this.indent();
 		}
 
 		if (eqSet(this.pressedKeys, new Set(['shift', 'tab']))) {
+			if (e.repeat) return;
 			e.preventDefault();
 			return this.removeIndentation();
 		}

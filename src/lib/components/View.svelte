@@ -33,6 +33,7 @@
 
 	function handleTextArea(textarea: HTMLTextAreaElement | undefined) {
 		if (!mounted) return;
+		if (textarea && codeInput) return;
 
 		if (!textarea) {
 			if (codeInput) codeInput.dispose();
