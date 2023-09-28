@@ -8,6 +8,7 @@
 	--light-gray: #fbfcfc;
 	--medium-gray: #ebebeb;
 	--gray: #797b7e;
+	--dark-gray: #3a3a3a;
 	--accent: #a1f0cc;
 }
 
@@ -29,4 +30,8 @@
 
 .mismerge .msm__merge_button {
 	color: var(--gray);
+}
+
+.mismerge .msm__merge_button:hover {
+	color: var(--dark-gray);
 }

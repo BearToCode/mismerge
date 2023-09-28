@@ -234,10 +234,10 @@
 	left: 0;
 }
 
-.mismerge .msm__merge_button.left .msm__arrow_icon {
+.mismerge .msm__merge_button.left {
 	transform: translateY(-50%) scale(0.9) rotate(180deg);
 }
 
-.mismerge .msm__merge_button.right .msm__arrow_icon {
+.mismerge .msm__merge_button.right {
 	transform: translateY(-50%) scale(0.9);
 }
