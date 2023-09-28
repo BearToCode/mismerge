@@ -220,7 +220,7 @@
 .mismerge .msm__merge_button {
 	position: absolute;
 	right: 0;
-	top: 48%;
+	top: 10px;
 	cursor: pointer;
 
 	padding: 0;
