@@ -6,6 +6,8 @@
 	import { CodeInput } from '$lib/internal/input/code-input';
 	import { DEV } from '$lib/internal/utils';
 
+	/* Exports */
+
 	export let components: BlockComponent[];
 	export let editable: boolean = false;
 	export let content: string;
@@ -15,6 +17,8 @@
 	export const saveHistory = () => codeInput?.saveHistoryState();
 	export { clazz as class };
 	export { containerElem as elem };
+
+	/* Local variables */
 
 	let clazz = '';
 	let textarea: HTMLTextAreaElement | undefined;
@@ -26,10 +30,9 @@
 	let width = 0;
 	let mounted = false;
 	let codeInput: CodeInput | undefined;
-	onMount(() => (mounted = true));
+	let observer: MutationObserver | undefined;
 
-	$: sideComponents = components.filter((component) => component.side.eq(side));
-	$: handleTextArea(textarea);
+	/* Local functions */
 
 	function handleTextArea(textarea: HTMLTextAreaElement | undefined) {
 		if (!mounted) return;
@@ -42,21 +45,8 @@
 		codeInput = new CodeInput(textarea);
 	}
 
-	const redrawLines = () => (sideComponentElements = sideComponentElements);
-
-	$: {
-		height;
-		redrawLines();
-		dispatch('height-change', {});
-	}
-
-	// Events
-	const dispatch = createEventDispatcher<{
-		'height-change': {};
-	}>();
-
-	// Trigger a reload when all the elements have been mounted
 	const findElements = () => {
+		// Find and invalidated all the elements after they have been mounted in the DOM
 		if (!contentElem) return;
 		const elements = Array.from(contentElem.querySelectorAll('.msm__block'));
 		if (elements.length == sideComponents.length) {
@@ -64,7 +54,27 @@
 		}
 	};
 
-	let observer: MutationObserver | undefined;
+	const redrawLines = () => (sideComponentElements = sideComponentElements);
+
+	/* Reactive statements */
+
+	$: sideComponents = components.filter((component) => component.side.eq(side));
+	$: handleTextArea(textarea);
+	$: {
+		height;
+		redrawLines();
+		dispatch('height-change', {});
+	}
+
+	/* Events */
+
+	const dispatch = createEventDispatcher<{
+		'height-change': {};
+	}>();
+
+	/* Lifecycle hooks */
+
+	onMount(() => (mounted = true));
 	onMount(() => {
 		if (!containerElem) {
 			if (DEV) console.error('containerElem is undefined');
@@ -79,7 +89,6 @@
 		});
 		findElements();
 	});
-
 	onDestroy(() => observer?.disconnect());
 </script>
 

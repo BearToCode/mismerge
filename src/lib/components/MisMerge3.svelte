@@ -11,8 +11,19 @@
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 	import { mergeComponent } from '$lib/internal/editor/merging';
 
+	/* Exports */
+
+	/**
+	 * Left hand side content.
+	 */
 	export let lhs: string;
+	/**
+	 * Center content.
+	 */
 	export let ctr: string;
+	/**
+	 * Right hand side content.
+	 */
 	export let rhs: string;
 	/**
 	 * Line diff algorithm.
@@ -22,9 +33,10 @@
 	/**
 	 * Custom colors to use for the editor.
 	 */
-	let userColors: Partial<EditorColors> = {};
 	export { userColors as colors };
-	let clazz = '';
+	/**
+	 * Editor class.
+	 */
 	export { clazz as class };
 	/**
 	 * Whether the left-hand side content is editable.
@@ -50,9 +62,11 @@
 	 */
 	export let wrapLines = false;
 
-	let editorColors: EditorColors;
-	$: editorColors = joinWithDefault(userColors, DefaultEditorColors);
+	/* Local variables */
 
+	let clazz = '';
+	let userColors: Partial<EditorColors> = {};
+	let editorColors: EditorColors;
 	let blocks: DiffBlock<Side>[] = [];
 	let lhsConnections: Connection[] = [];
 	let rhsConnections: Connection[] = [];
@@ -65,6 +79,8 @@
 	let drawLhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 	let drawRhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 	let saveCtrHistory: () => void;
+
+	/* Local functions */
 
 	function renderComponents(blocks: DiffBlock<Side>[]) {
 		lhsConnections = [];
@@ -99,8 +115,13 @@
 		drawRhsConnections(container, rhsConnections);
 	};
 
+	/* Reactive statements */
+
+	$: editorColors = joinWithDefault(userColors, DefaultEditorColors);
 	$: blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm });
 	$: renderComponents(blocks);
+
+	/* Lifecycle hooks */
 
 	drawOnChange(() => container, redrawConnections);
 </script>

@@ -4,10 +4,14 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import ArrowIcon from './icons/ArrowIcon.svelte';
 
+	/* Exports */
+
 	export let side: Side;
 	export let components: BlockComponent[];
 	export let disableMerging: boolean;
 	export let componentsElements: HTMLDivElement[];
+
+	/* Local variables */
 
 	let addMergeActions =
 		!disableMerging && (!(side instanceof TwoWaySide) || !side.eq(TwoWaySide.ctr));
@@ -16,6 +20,8 @@
 		startingLineNumber: number;
 		component: BlockComponent;
 	}[] = [];
+
+	/* Local functions */
 
 	function generateLines(components: BlockComponent[]) {
 		linesComponents = [];
@@ -38,9 +44,11 @@
 		return `${lineElem.clientHeight}px`;
 	}
 
+	/* Reactive statements */
+
 	$: generateLines(components);
 
-	// Events
+	/* Events */
 
 	const dispatch = createEventDispatcher<{ merge: { component: BlockComponent } }>();
 </script>

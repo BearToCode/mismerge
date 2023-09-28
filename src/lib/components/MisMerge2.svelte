@@ -11,6 +11,8 @@
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 	import { mergeComponent } from '$lib/internal/editor/merging';
 
+	/* Exports */
+
 	/**
 	 * Left hand side content.
 	 */
@@ -22,7 +24,6 @@
 	/**
 	 * Custom colors to use for the editor.
 	 */
-	let userColors: Partial<DiffColors> = {};
 	export { userColors as colors };
 	/**
 	 * Whether the left hand side content is editable.
@@ -37,7 +38,9 @@
 	 * @default "words_with_space"
 	 */
 	export let lineDiffAlgorithm: LineDiffAlgorithm = 'words_with_space';
-	let clazz = '';
+	/**
+	 * Editor class.
+	 */
 	export { clazz as class };
 	/**
 	 * Disable merging actions.
@@ -48,9 +51,11 @@
 	 */
 	export let wrapLines = false;
 
-	let colors: DiffColors;
-	$: colors = joinWithDefault(userColors, DefaultDiffColors);
+	/* Local variables */
 
+	let clazz = '';
+	let userColors: Partial<DiffColors> = {};
+	let editorColors: DiffColors;
 	let blocks: DiffBlock<Side>[] = [];
 	let connections: Connection[] = [];
 	let components: BlockComponent[] = [];
@@ -61,6 +66,8 @@
 	let drawConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 	let saveLhsHistory: () => void;
 	let saveRhsHistory: () => void;
+
+	/* Local functions */
 
 	function renderComponents(blocks: DiffBlock<Side>[]) {
 		connections = [];
@@ -94,18 +101,23 @@
 		drawConnections(container, connections);
 	};
 
+	/* Reactive statements */
+
+	$: editorColors = joinWithDefault(userColors, DefaultDiffColors);
 	$: blocks = assembleOneWay(lhs, rhs, { lineDiffAlgorithm });
 	$: renderComponents(blocks);
+
+	/* Lifecycle hooks */
 
 	drawOnChange(() => container, redrawConnections);
 </script>
 
 <div
 	style="
-		--added: {colors.added};
-		--removed: {colors.removed};
-		--added-overlay: {colors.addedOverlay};
-		--removed-overlay: {colors.removedOverlay};
+		--added: {editorColors.added};
+		--removed: {editorColors.removed};
+		--added-overlay: {editorColors.addedOverlay};
+		--removed-overlay: {editorColors.removedOverlay};
 	"
 	class="mismerge {wrapLines ? 'wrap_lines' : ''} {clazz}"
 	bind:this={container}
@@ -121,7 +133,7 @@
 		on:merge={mergeComponentHandler(OneWaySide.lhs)}
 		on:newline={redrawConnections}
 	/>
-	<Connector {colors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
+	<Connector colors={editorColors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
 	<View
 		{disableMerging}
 		editable={rhsEditable}
