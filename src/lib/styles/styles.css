@@ -97,6 +97,10 @@
 	tab-size: 2rem;
 }
 
+.mismerge .msm__view .msm__content {
+	display: flex;
+}
+
 .mismerge .msm__view .msm__line {
 	display: flex;
 	min-height: fit-content;
