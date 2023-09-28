@@ -1,6 +1,5 @@
 # TODOs
 
-- Fix exports
 - Improve default styles
 - Create demo
 - Create website
@@ -12,6 +11,7 @@
 
 ## Done
 
+- Fix exports
 - Wrap lines
 - Option to disable merging
 - Fix history to work with merges
