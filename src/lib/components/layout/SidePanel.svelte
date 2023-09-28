@@ -2,7 +2,7 @@
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import { TwoWaySide, type Side } from '$lib/internal/editor/side';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import ArrowIcon from './icons/ArrowIcon.svelte';
+	import ArrowIcon from '../icons/ArrowIcon.svelte';
 
 	/* Exports */
 

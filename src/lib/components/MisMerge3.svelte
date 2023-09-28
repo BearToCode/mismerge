@@ -2,8 +2,8 @@
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import { drawOnChange, type Connection } from '$lib/internal/editor/connection';
 	import { joinWithDefault } from '$lib/internal/utils';
-	import Connector from './Connector.svelte';
-	import View from './View.svelte';
+	import Connector from './layout/Connector.svelte';
+	import View from './layout/View.svelte';
 	import { assembleTwoWay } from '$lib/internal/diff/two-way-assembler';
 	import { type EditorColors, DefaultEditorColors } from '$lib/internal/editor/colors';
 	import { Side, TwoWaySide } from '$lib/internal/editor/side';

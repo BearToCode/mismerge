@@ -6,8 +6,8 @@
 	import { drawOnChange, type Connection } from '$lib/internal/editor/connection';
 	import { assembleOneWay } from '$lib/internal/diff/one-way-assembler';
 	import { OneWaySide, Side } from '$lib/internal/editor/side';
-	import View from './View.svelte';
-	import Connector from './Connector.svelte';
+	import View from './layout/View.svelte';
+	import Connector from './layout/Connector.svelte';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 	import { mergeComponent } from '$lib/internal/editor/merging';
 
