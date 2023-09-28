@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { DiffBlock } from '$lib/internal/blocks';
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import type { Side } from '$lib/internal/editor/side';
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import SidePanel from './SidePanel.svelte';
 	import { CodeInput } from '$lib/internal/input/code-input';
+	import { DEV } from '$lib/internal/utils';
 
 	export let components: BlockComponent[];
 	export let editable: boolean = false;
@@ -12,23 +12,26 @@
 	export let side: Side;
 	export let disableMerging: boolean;
 	export let lineNumbersSide: 'left' | 'right' = 'left';
+	export const saveHistory = () => codeInput?.saveHistoryState();
 	export { clazz as class };
 	export { containerElem as elem };
-	export const saveHistory = () => codeInput?.saveHistoryState();
 
 	let clazz = '';
 	let textarea: HTMLTextAreaElement | undefined;
 	let containerElem: HTMLDivElement;
+	let contentElem: HTMLDivElement;
 	let sideComponents: BlockComponent[] = [];
+	let sideComponentElements: HTMLDivElement[] = [];
+	let previousHeight = 0;
 	let width = 0;
 	let mounted = false;
 	let codeInput: CodeInput | undefined;
 	onMount(() => (mounted = true));
 
 	$: sideComponents = components.filter((component) => component.side.eq(side));
-	$: onTextAreaCreationOrDisposal(textarea);
+	$: handleTextArea(textarea);
 
-	function onTextAreaCreationOrDisposal(textarea: HTMLTextAreaElement | undefined) {
+	function handleTextArea(textarea: HTMLTextAreaElement | undefined) {
 		if (!mounted) return;
 
 		if (!textarea) {
@@ -39,10 +42,36 @@
 	}
 
 	// Events
-	let previousHeight = 0;
 	const dispatch = createEventDispatcher<{
 		newline: {};
 	}>();
+
+	// Trigger a reload when all the elements have been mounted
+	const findElements = () => {
+		if (!contentElem) return;
+		const elements = Array.from(contentElem.querySelectorAll('.msm__block'));
+		if (elements.length == sideComponents.length) {
+			sideComponentElements = elements as HTMLDivElement[];
+		}
+	};
+
+	let observer: MutationObserver | undefined;
+	onMount(() => {
+		if (!containerElem) {
+			if (DEV) console.error('containerElem is undefined');
+			return;
+		}
+		observer = new MutationObserver(findElements);
+		observer.observe(contentElem, {
+			characterData: false,
+			attributes: false,
+			childList: true,
+			subtree: true
+		});
+		findElements();
+	});
+
+	onDestroy(() => observer?.disconnect());
 </script>
 
 <div bind:this={containerElem} class="msm__view {editable ? 'editable' : ''} {clazz}">
@@ -50,14 +79,14 @@
 		<SidePanel
 			{side}
 			{disableMerging}
-			container={containerElem}
 			components={sideComponents}
+			componentsElements={sideComponentElements}
 			on:merge
 		/>
 	{/if}
 	<div class="msm__view_content">
-		<div bind:clientWidth={width} class="msm__wrapper">
-			{#each sideComponents as blockComponent}
+		<div bind:this={contentElem} bind:clientWidth={width} class="msm__wrapper">
+			{#each sideComponents as blockComponent, i}
 				<svelte:component
 					this={blockComponent.component}
 					component={blockComponent}
@@ -85,6 +114,7 @@
 					textarea.style.minHeight = '';
 					if (newHeight != previousHeight) {
 						previousHeight = newHeight;
+						sideComponentElements = sideComponentElements;
 						dispatch('newline', {});
 					}
 				}}
@@ -95,8 +125,8 @@
 		<SidePanel
 			{side}
 			{disableMerging}
-			container={containerElem}
 			components={sideComponents}
+			componentsElements={sideComponentElements}
 			on:merge
 		/>
 	{/if}

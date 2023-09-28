@@ -50,7 +50,8 @@
 	 */
 	export let wrapLines = false;
 
-	const editorColors = joinWithDefault(userColors, DefaultEditorColors);
+	let editorColors: EditorColors;
+	$: editorColors = joinWithDefault(userColors, DefaultEditorColors);
 
 	let blocks: DiffBlock<Side>[] = [];
 	let lhsConnections: Connection[] = [];

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import { TwoWaySide, type Side } from '$lib/internal/editor/side';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import ArrowIcon from './icons/ArrowIcon.svelte';
 
-	export let container: HTMLDivElement;
 	export let side: Side;
 	export let components: BlockComponent[];
 	export let disableMerging: boolean;
+	export let componentsElements: HTMLDivElement[];
 
 	let addMergeActions =
 		!disableMerging && (!(side instanceof TwoWaySide) || !side.eq(TwoWaySide.ctr));
@@ -30,13 +30,12 @@
 		linesComponents = linesComponents;
 	}
 
-	function getLineHeight(componentId: string, idx: number) {
-		if (!container) return null;
-		const componentElem = Array.from(
-			container.querySelectorAll(`[id="${componentId}"] .msm__line`)
-		).at(idx);
-		if (!componentElem) return null;
-		return componentElem.clientHeight;
+	function getLineHeight(componentIndex: number, lineIndex: number) {
+		const componentElem = componentsElements[componentIndex];
+		if (!componentElem) return '';
+		const lineElem = Array.from(componentElem.querySelectorAll('.msm__line')).at(lineIndex);
+		if (!lineElem) return '';
+		return `${lineElem.clientHeight}px`;
 	}
 
 	$: generateLines(components);
@@ -47,29 +46,28 @@
 </script>
 
 <div class="msm__side_panel {direction}">
-	{#each linesComponents as { startingLineNumber, component }}
+	{#each linesComponents as { startingLineNumber, component }, componentIndex}
 		{#if component.placeholder}
 			<div class="msm__line_placeholder {component.type}" />
 		{:else}
-			{#each { length: component.linesCount } as _, i}
-				{@const lineHeight = getLineHeight(component.id, i)}
-				<div
-					style="height: {lineHeight ? lineHeight + 'px' : 'unset'};"
-					class="msm__line_number {component.type}"
-				>
-					{#if i == 0 && addMergeActions && component.mergeActions}
-						<button
-							class="msm__merge_button {direction}"
-							on:click={() => {
-								dispatch('merge', { component });
-							}}
-						>
-							<ArrowIcon />
-						</button>
-					{/if}
+			{#each { length: component.linesCount } as _, lineIndex}
+				{#key componentsElements[componentIndex]}
+					<div
+						style="height: {getLineHeight(componentIndex, lineIndex)};"
+						class="msm__line_number {component.type}"
+					>
+						{#if lineIndex == 0 && addMergeActions && component.mergeActions}
+							<button
+								class="msm__merge_button {direction}"
+								on:click={() => dispatch('merge', { component })}
+							>
+								<ArrowIcon />
+							</button>
+						{/if}
 
-					<pre>{startingLineNumber + i}</pre>
-				</div>
+						<pre>{startingLineNumber + lineIndex}</pre>
+					</div>
+				{/key}
 			{/each}
 		{/if}
 	{/each}

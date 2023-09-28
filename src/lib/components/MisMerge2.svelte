@@ -48,7 +48,8 @@
 	 */
 	export let wrapLines = false;
 
-	const colors = joinWithDefault(userColors, DefaultDiffColors);
+	let colors: DiffColors;
+	$: colors = joinWithDefault(userColors, DefaultDiffColors);
 
 	let blocks: DiffBlock<Side>[] = [];
 	let connections: Connection[] = [];
