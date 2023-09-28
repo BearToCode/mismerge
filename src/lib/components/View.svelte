@@ -22,7 +22,7 @@
 	let contentElem: HTMLDivElement;
 	let sideComponents: BlockComponent[] = [];
 	let sideComponentElements: HTMLDivElement[] = [];
-	let previousHeight = 0;
+	let height = 0;
 	let width = 0;
 	let mounted = false;
 	let codeInput: CodeInput | undefined;
@@ -42,9 +42,17 @@
 		codeInput = new CodeInput(textarea);
 	}
 
+	const redrawLines = () => (sideComponentElements = sideComponentElements);
+
+	$: {
+		height;
+		redrawLines();
+		dispatch('height-change', {});
+	}
+
 	// Events
 	const dispatch = createEventDispatcher<{
-		newline: {};
+		'height-change': {};
 	}>();
 
 	// Trigger a reload when all the elements have been mounted
@@ -86,7 +94,12 @@
 		/>
 	{/if}
 	<div class="msm__view_content">
-		<div bind:this={contentElem} bind:clientWidth={width} class="msm__wrapper">
+		<div
+			class="msm__wrapper"
+			bind:this={contentElem}
+			bind:clientWidth={width}
+			bind:clientHeight={height}
+		>
 			{#each sideComponents as blockComponent, i}
 				<svelte:component
 					this={blockComponent.component}
@@ -101,24 +114,10 @@
 		{#if editable}
 			<textarea
 				spellcheck="false"
+				style="--scroll-width: {width}px;"
 				bind:this={textarea}
 				bind:value={content}
-				style="--scroll-width: {width}px;"
 				on:scroll={() => textarea && (textarea.scrollTop = 0)}
-				on:keyup={() => {
-					if (!textarea) return;
-					// Listen for new rows
-					textarea.style.height = '0px';
-					textarea.style.minHeight = '0px';
-					const newHeight = textarea.scrollHeight;
-					textarea.style.height = '';
-					textarea.style.minHeight = '';
-					if (newHeight != previousHeight) {
-						previousHeight = newHeight;
-						sideComponentElements = sideComponentElements;
-						dispatch('newline', {});
-					}
-				}}
 			/>
 		{/if}
 	</div>

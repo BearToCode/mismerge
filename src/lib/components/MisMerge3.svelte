@@ -125,7 +125,7 @@
 		bind:components
 		bind:elem={lhsViewElem}
 		on:merge={mergeComponentHandler(TwoWaySide.lhs)}
-		on:newline={redrawConnections}
+		on:height-change={redrawConnections}
 	/>
 	<Connector
 		colors={editorColors}
@@ -142,7 +142,7 @@
 		bind:elem={ctrViewElem}
 		bind:saveHistory={saveCtrHistory}
 		on:merge={mergeComponentHandler(TwoWaySide.ctr)}
-		on:newline={redrawConnections}
+		on:height-change={redrawConnections}
 	/>
 	<Connector
 		colors={editorColors}
@@ -158,6 +158,6 @@
 		bind:components
 		bind:elem={rhsViewElem}
 		on:merge={mergeComponentHandler(TwoWaySide.rhs)}
-		on:newline={redrawConnections}
+		on:height-change={redrawConnections}
 	/>
 </div>
