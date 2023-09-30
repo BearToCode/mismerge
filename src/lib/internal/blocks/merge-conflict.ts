@@ -19,11 +19,10 @@ export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
 	public readonly placeholderSide: MaybeArray<Side>;
 
 	constructor(params: {
-		id: string;
 		sidesData: MergeConflictSideData<TwoWaySide>[];
 		placeholderSide?: MaybeArray<Side>;
 	}) {
-		super(params.id);
+		super();
 		this.sidesData = params.sidesData;
 		this.placeholderSide = params.placeholderSide ?? [];
 	}

@@ -10,6 +10,7 @@
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 	import { mergeComponent } from '$lib/internal/editor/merging';
+	import { BlocksHashTable } from '$lib/internal/storage/table';
 
 	/* Exports */
 
@@ -80,6 +81,8 @@
 	let drawRhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 	let saveCtrHistory: () => void;
 
+	const hashTable = new BlocksHashTable<TwoWaySide>();
+
 	/* Local functions */
 
 	function renderComponents(blocks: DiffBlock<Side>[]) {
@@ -118,7 +121,7 @@
 	/* Reactive statements */
 
 	$: editorColors = joinWithDefault(userColors, DefaultEditorColors);
-	$: blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm });
+	$: blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
 	$: renderComponents(blocks);
 
 	/* Lifecycle hooks */

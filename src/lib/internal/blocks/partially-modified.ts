@@ -21,8 +21,8 @@ export class PartiallyModifiedBlock<
 
 	public readonly sidesData: PartiallyModifiedSideData<SideType>[];
 
-	constructor(params: { id: string; sidesData: PartiallyModifiedSideData<SideType>[] }) {
-		super(params.id);
+	constructor(params: { sidesData: PartiallyModifiedSideData<SideType>[] }) {
+		super();
 		this.sidesData = params.sidesData;
 	}
 

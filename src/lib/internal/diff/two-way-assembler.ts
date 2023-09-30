@@ -7,18 +7,21 @@ import { UnchangedBlock } from '../blocks/unchanged';
 import { twoWayDiff, type TwoWayChange } from './base';
 import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
 import { TwoWaySide } from '../editor/side';
-import { nanoid } from 'nanoid';
 import { DEV } from '../utils';
+import { BlocksHashTable } from '../storage/table';
 
 export interface TwoWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
+	hashTable?: BlocksHashTable<TwoWaySide>;
 }
 
 /**
  * Two way diff blocks assembler.
  */
 class TwoWayAssembler {
-	constructor(private readonly options?: TwoWayAssemblerOptions) {}
+	constructor(private readonly options?: TwoWayAssemblerOptions) {
+		if (this.options?.hashTable) this.hashTable = this.options.hashTable;
+	}
 
 	/**
 	 * Assembly two-way diff blocks.
@@ -28,6 +31,8 @@ class TwoWayAssembler {
 	 * @returns The assembled diff blocks.
 	 */
 	public assemble(lhs: string, ctr: string, rhs: string): DiffBlock<TwoWaySide>[] {
+		this.hashTable.startGeneration();
+
 		this.lhs = lhs;
 		this.ctr = ctr;
 		this.rhs = rhs;
@@ -45,8 +50,12 @@ class TwoWayAssembler {
 		this.generateMergeConflictBlocks();
 		this.generateModifiedBlocks();
 
+		this.hashTable.endGeneration();
+
 		return this.blocks;
 	}
+
+	private hashTable = new BlocksHashTable<TwoWaySide>();
 
 	private lhs = '';
 	private ctr = '';
@@ -56,8 +65,6 @@ class TwoWayAssembler {
 
 	private linesDiff: TwoWayChange[] = [];
 	private currentChange: TwoWayChange | undefined;
-
-	private getId = () => nanoid(6);
 
 	private advance() {
 		return (this.currentChange = this.linesDiff.shift());
@@ -78,8 +85,7 @@ class TwoWayAssembler {
 	private assembleAddedBlock(change: TwoWayChange) {
 		const side = change.lhs ? TwoWaySide.lhs : change.ctr ? TwoWaySide.ctr : TwoWaySide.rhs;
 
-		const block = new AddedBlock({
-			id: this.getId(),
+		const block = this.hashTable.new(AddedBlock, {
 			sidesData: {
 				lines: this.intoLines(change.content),
 				side
@@ -115,8 +121,7 @@ class TwoWayAssembler {
 				side: TwoWaySide.rhs
 			});
 
-		const block = new RemovedBlock({
-			id: this.getId(),
+		const block = this.hashTable.new(RemovedBlock, {
 			sidesData,
 			placeholderSide: side.adjacentSides().filter((side) => {
 				if (side.eq(TwoWaySide.lhs)) return !change.lhs;
@@ -130,8 +135,7 @@ class TwoWayAssembler {
 
 	private assembleUnchangedBlock(change: TwoWayChange) {
 		const sides: TwoWaySide[] = [TwoWaySide.lhs, TwoWaySide.ctr, TwoWaySide.rhs];
-		const block = new UnchangedBlock({
-			id: this.getId(),
+		const block = this.hashTable.new(UnchangedBlock, {
 			lines: this.intoLines(change.content),
 			sides
 		});
@@ -170,14 +174,25 @@ class TwoWayAssembler {
 					const ctr = TwoWaySide.ctr;
 					const rhs = TwoWaySide.rhs;
 					const placeholderSides = new Set<TwoWaySide>([lhs, ctr, rhs]);
+
 					for (const conflictBlock of conflictBlocks) {
 						const blockSides = [conflictBlock.sidesData].flat();
 						for (const blockSide of blockSides) {
 							let currentSide;
+
 							if ((currentSide = sidesData.find(({ side }) => side.eq(blockSide.side)))) {
+								// Add to the current side if it is already present
 								currentSide.lines.push(...blockSide.lines);
 							} else {
-								sidesData.push(blockSide);
+								// Copy the current side if it is not present
+								// We need to clone the side data, not just pass the reference
+								// To do this we need to take care of the side, which is a class
+								const sideClone: typeof blockSide = {
+									side: blockSide.side,
+									lines: []
+								};
+								sideClone.lines.push(...blockSide.lines);
+								sidesData.push(sideClone);
 							}
 						}
 						if (blockSides.find(({ side }) => side.eq(TwoWaySide.lhs)))
@@ -188,8 +203,7 @@ class TwoWayAssembler {
 							placeholderSides.delete(rhs);
 					}
 
-					const conflictBlock = new MergeConflictBlock({
-						id: this.getId(),
+					const conflictBlock = this.hashTable.new(MergeConflictBlock, {
 						sidesData,
 						placeholderSide: Array.from(placeholderSides)
 					});
@@ -226,7 +240,7 @@ class TwoWayAssembler {
 				const diff = diff2Sides(ctrContent, rhsContent, {
 					algorithm: this.options?.lineDiffAlgorithm
 				});
-				const modifiedBlock = new ModifiedBlock({
+				const modifiedBlock = this.hashTable.new(ModifiedBlock, {
 					modifiedSidesData: [
 						{
 							side: TwoWaySide.ctr,
@@ -240,8 +254,7 @@ class TwoWayAssembler {
 					unchangedSideData: {
 						side: TwoWaySide.lhs,
 						lines: block.sidesData.find(({ side }) => side.eq(TwoWaySide.lhs))?.lines ?? []
-					},
-					id: this.getId()
+					}
 				});
 				blocks.push(modifiedBlock);
 				continue;
@@ -251,7 +264,7 @@ class TwoWayAssembler {
 				const diff = diff2Sides(lhsContent, ctrContent, {
 					algorithm: this.options?.lineDiffAlgorithm
 				});
-				const modifiedBlock = new ModifiedBlock({
+				const modifiedBlock = this.hashTable.new(ModifiedBlock, {
 					modifiedSidesData: [
 						{
 							side: TwoWaySide.lhs,
@@ -265,8 +278,7 @@ class TwoWayAssembler {
 					unchangedSideData: {
 						side: TwoWaySide.rhs,
 						lines: block.sidesData.find(({ side }) => side.eq(TwoWaySide.rhs))?.lines ?? []
-					},
-					id: this.getId()
+					}
 				});
 				blocks.push(modifiedBlock);
 				continue;

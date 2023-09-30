@@ -20,11 +20,10 @@ export class AddedBlock<SideType extends Side = Side> extends LinkedComponentsBl
 	public readonly unchangedSide?: Side;
 
 	constructor(params: {
-		id: string;
 		sidesData: MaybeArray<AddedSideData<SideType>>;
 		placeholderSide: MaybeArray<Side>;
 	}) {
-		super(params.id);
+		super();
 		this.sidesData = params.sidesData;
 		this.placeholderSide = params.placeholderSide;
 	}

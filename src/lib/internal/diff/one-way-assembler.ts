@@ -8,9 +8,11 @@ import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
 import { OneWaySide } from '../editor/side';
 import { nanoid } from 'nanoid';
 import { DEV } from '../utils';
+import { BlocksHashTable } from '../storage/table';
 
 export interface OneWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
+	hashTable?: BlocksHashTable<OneWaySide>;
 	direction?: 'left-to-right' | 'right-to-left';
 }
 
@@ -19,6 +21,8 @@ export interface OneWayAssemblerOptions {
  */
 class OneWayAssembler {
 	constructor(private readonly options?: OneWayAssemblerOptions) {
+		if (options?.hashTable) this.hashTable = options.hashTable;
+
 		if ((options?.direction ?? 'left-to-right') == 'left-to-right') {
 			this.removeSide = OneWaySide.lhs;
 			this.addSide = OneWaySide.rhs;
@@ -35,6 +39,8 @@ class OneWayAssembler {
 	 * @returns The assembled diff blocks.
 	 */
 	public assemble(lhs: string, rhs: string): DiffBlock<OneWaySide>[] {
+		this.hashTable.startGeneration();
+
 		this.lhs = lhs;
 		this.rhs = rhs;
 
@@ -48,8 +54,12 @@ class OneWayAssembler {
 			this.advance();
 		}
 
+		this.hashTable.endGeneration();
+
 		return this.blocks;
 	}
+
+	private hashTable: BlocksHashTable<OneWaySide> = new BlocksHashTable();
 
 	private lhs = '';
 	private rhs = '';
@@ -93,8 +103,7 @@ class OneWayAssembler {
 	private assembleChangeBlock(change: OneWayChange, side: OneWaySide) {
 		let block: DiffBlock<OneWaySide>;
 		if (this.addSide.eq(side)) {
-			block = new AddedBlock({
-				id: this.getId(),
+			block = this.hashTable.new(AddedBlock, {
 				sidesData: {
 					lines: this.intoLines(change.content),
 					side
@@ -102,8 +111,7 @@ class OneWayAssembler {
 				placeholderSide: side.opposite()
 			});
 		} else {
-			block = new RemovedBlock({
-				id: this.getId(),
+			block = this.hashTable.new(RemovedBlock, {
 				sidesData: {
 					lines: this.intoLines(change.content),
 					side
@@ -115,8 +123,7 @@ class OneWayAssembler {
 	}
 
 	private assembleUnchangedBlock(change: OneWayChange) {
-		const block = new UnchangedBlock({
-			id: this.getId(),
+		const block = this.hashTable.new(UnchangedBlock, {
 			lines: this.intoLines(change.content),
 			sides: [this.addSide, this.removeSide]
 		});
@@ -128,16 +135,15 @@ class OneWayAssembler {
 			algorithm: this.options?.lineDiffAlgorithm
 		});
 
-		const block = new PartiallyModifiedBlock({
-			id: this.getId(),
+		const block = this.hashTable.new(PartiallyModifiedBlock, {
 			sidesData: [
 				{
-					type: 'added',
+					type: 'added' as const,
 					lines: this.addSide.eq(OneWaySide.lhs) ? diff.lhs : diff.rhs,
 					side: this.addSide
 				},
 				{
-					type: 'removed',
+					type: 'removed' as const,
 					lines: this.addSide.eq(OneWaySide.lhs) ? diff.rhs : diff.lhs,
 					side: this.removeSide
 				}

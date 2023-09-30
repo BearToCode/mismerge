@@ -10,6 +10,7 @@
 	import Connector from './layout/Connector.svelte';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 	import { mergeComponent } from '$lib/internal/editor/merging';
+	import { BlocksHashTable } from '$lib/internal/storage/table';
 
 	/* Exports */
 
@@ -67,6 +68,8 @@
 	let saveLhsHistory: () => void;
 	let saveRhsHistory: () => void;
 
+	const hashTable = new BlocksHashTable();
+
 	/* Local functions */
 
 	function renderComponents(blocks: DiffBlock<Side>[]) {
@@ -104,7 +107,7 @@
 	/* Reactive statements */
 
 	$: editorColors = joinWithDefault(userColors, DefaultDiffColors);
-	$: blocks = assembleOneWay(lhs, rhs, { lineDiffAlgorithm });
+	$: blocks = assembleOneWay(lhs, rhs, { lineDiffAlgorithm, hashTable });
 	$: renderComponents(blocks);
 
 	/* Lifecycle hooks */

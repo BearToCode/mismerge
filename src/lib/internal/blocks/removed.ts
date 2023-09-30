@@ -19,11 +19,10 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 	public readonly placeholderSide: MaybeArray<Side>;
 
 	constructor(params: {
-		id: string;
 		sidesData: MaybeArray<RemovedSideData<SideType>>;
 		placeholderSide: MaybeArray<Side>;
 	}) {
-		super(params.id);
+		super();
 		this.sidesData = params.sidesData;
 		this.placeholderSide = params.placeholderSide;
 	}

@@ -11,8 +11,8 @@ export class UnchangedBlock<SideType extends Side = Side> extends DiffBlock<Side
 	public readonly lines: Line[];
 	public readonly sides: SideType[];
 
-	constructor(params: { id: string; lines: Line[]; sides: SideType[] }) {
-		super(params.id);
+	constructor(params: { lines: Line[]; sides: SideType[] }) {
+		super();
 		this.lines = params.lines;
 		this.sides = params.sides;
 	}

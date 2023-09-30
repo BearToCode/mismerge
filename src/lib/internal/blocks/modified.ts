@@ -18,7 +18,6 @@ export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 	public readonly unchangedSideData: { side: TwoWaySide; lines: Line[] };
 
 	constructor(params: {
-		id: string;
 		modifiedSidesData: {
 			side: TwoWaySide;
 			lines: LineDiff[];
@@ -28,7 +27,7 @@ export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 			lines: Line[];
 		};
 	}) {
-		super(params.id);
+		super();
 		this.modifiedSidesData = params.modifiedSidesData;
 		this.unchangedSideData = params.unchangedSideData;
 	}
