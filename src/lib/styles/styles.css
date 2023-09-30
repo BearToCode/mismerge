@@ -132,6 +132,11 @@
 	width: 100%;
 }
 
+.mismerge .msm__line pre:empty::before {
+	content: '.';
+	visibility: hidden;
+}
+
 .mismerge .msm__block.partially_added pre,
 .mismerge .msm__block.partially_removed pre,
 .mismerge .msm__block.modified pre {

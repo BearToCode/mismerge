@@ -88,6 +88,6 @@ function linesFromComponentElem(elem: HTMLDivElement): string[] {
 	return (
 		Array.from(elem.querySelectorAll('.msm__content'))
 			.map((line) => line.textContent)
-			.filter((line) => line) as string[]
+			.filter((line) => typeof line == 'string') as string[]
 	).map((line) => line.replaceAll('\r', '').replaceAll('\n', ''));
 }

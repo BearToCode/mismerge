@@ -12,7 +12,7 @@
 	{#each lines as line}
 		<div class="msm__line">
 			<div class="msm__content">
-				<pre>{line.content || ' '}</pre>
+				<pre>{line.content}</pre>
 			</div>
 		</div>
 	{/each}
