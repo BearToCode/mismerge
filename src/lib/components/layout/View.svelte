@@ -5,6 +5,7 @@
 	import SidePanel from './SidePanel.svelte';
 	import { CodeInput } from '$lib/internal/input/code-input';
 	import { DEV } from '$lib/internal/utils';
+	import Editor from './Editor.svelte';
 
 	/* Exports */
 
@@ -14,36 +15,22 @@
 	export let side: Side;
 	export let disableMerging: boolean;
 	export let lineNumbersSide: 'left' | 'right' = 'left';
-	export const saveHistory = () => codeInput?.saveHistoryState();
+	export let saveHistory: () => void;
 	export { clazz as class };
 	export { containerElem as elem };
 
 	/* Local variables */
 
 	let clazz = '';
-	let textarea: HTMLTextAreaElement | undefined;
 	let containerElem: HTMLDivElement;
 	let contentElem: HTMLDivElement;
 	let sideComponents: BlockComponent[] = [];
 	let sideComponentElements: HTMLDivElement[] = [];
 	let height = 0;
 	let width = 0;
-	let mounted = false;
-	let codeInput: CodeInput | undefined;
 	let observer: MutationObserver | undefined;
 
 	/* Local functions */
-
-	function handleTextArea(textarea: HTMLTextAreaElement | undefined) {
-		if (!mounted) return;
-		if (textarea && codeInput) return;
-
-		if (!textarea) {
-			if (codeInput) codeInput.dispose();
-			return;
-		}
-		codeInput = new CodeInput(textarea);
-	}
 
 	const findElements = () => {
 		// Find and invalidated all the elements after they have been mounted in the DOM
@@ -59,7 +46,6 @@
 	/* Reactive statements */
 
 	$: sideComponents = components.filter((component) => component.side.eq(side));
-	$: handleTextArea(textarea);
 	$: {
 		height;
 		redrawLines();
@@ -74,7 +60,6 @@
 
 	/* Lifecycle hooks */
 
-	onMount(() => (mounted = true));
 	onMount(() => {
 		if (!containerElem) {
 			if (DEV) console.error('containerElem is undefined');
@@ -121,13 +106,7 @@
 		</div>
 
 		{#if editable}
-			<textarea
-				spellcheck="false"
-				style="--scroll-width: {width}px;"
-				bind:this={textarea}
-				bind:value={content}
-				on:scroll={() => textarea && (textarea.scrollTop = 0)}
-			/>
+			<Editor bind:content bind:width bind:saveHistory />
 		{/if}
 	</div>
 	{#if lineNumbersSide == 'right'}
