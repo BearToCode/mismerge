@@ -6,6 +6,7 @@ import ModifiedBlockComponent from '$lib/components/blocks/ModifiedBlock.svelte'
 import UnchangedBlockComponent from '$lib/components/blocks/UnchangedBlock.svelte';
 import { UnchangedBlock } from './unchanged';
 import type { Connection } from '../editor/connection';
+import MergeChange from '$lib/components/actions/MergeChange.svelte';
 
 export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 	public static readonly type = 'modified';
@@ -60,7 +61,10 @@ export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 						linesCount: this.linesCount(sideData.side),
 						side: sideData.side,
 						type: this.type,
-						mergeActions: true
+						sideAction: {
+							component: MergeChange,
+							props: {}
+						}
 					})
 			),
 			new BlockComponent({

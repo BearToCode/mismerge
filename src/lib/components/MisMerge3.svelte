@@ -134,6 +134,7 @@
 		--added: {editorColors.added};
 		--removed: {editorColors.removed};
     --conflict: {editorColors.conflict};
+		--resolved-conflict: {editorColors.resolvedConflict};
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"
@@ -166,6 +167,9 @@
 		bind:elem={ctrViewElem}
 		bind:saveHistory={saveCtrHistory}
 		on:merge={mergeComponentHandler(TwoWaySide.ctr)}
+		on:resolve={() => {
+			blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
+		}}
 		on:height-change={redrawConnections}
 	/>
 	<Connector

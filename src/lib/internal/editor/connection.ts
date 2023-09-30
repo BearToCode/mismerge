@@ -12,11 +12,11 @@ export type Connection = {
 };
 
 function componentColor(
-	blockComponent: BlockComponent,
+	component: BlockComponent,
 	colors: Partial<EditorColors & DiffColors>
 ): `#${string}` {
 	const defaultColor = '#ffffff';
-	switch (blockComponent.type) {
+	switch (component.type) {
 		case 'added':
 		case 'added_placeholder':
 		case 'partially_added':
@@ -28,6 +28,9 @@ function componentColor(
 		case 'merge_conflict':
 		case 'merge_conflict_placeholder':
 			return colors.conflict ?? defaultColor;
+		case 'resolved_merge_conflict':
+		case 'resolved_merge_conflict_placeholder':
+			return colors.resolvedConflict ?? defaultColor;
 		case 'modified':
 			return colors.modified ?? defaultColor;
 		default:

@@ -128,6 +128,7 @@
 /* Blocks */
 
 .mismerge .msm__block {
+	position: relative;
 	width: 100%;
 }
 
@@ -164,6 +165,11 @@
 	background-color: var(--conflict);
 }
 
+.mismerge .msm__block.resolved_merge_conflict,
+.mismerge .msm__line_number.resolved_merge_conflict {
+	background-color: var(--resolved-conflict);
+}
+
 .mismerge .msm__block.modified,
 .mismerge .msm__line_number.modified {
 	background-color: var(--modified);
@@ -187,7 +193,8 @@
 
 .mismerge .msm__block.added_placeholder,
 .mismerge .msm__block.removed_placeholder,
-.mismerge .msm__block.merge_conflict_placeholder {
+.mismerge .msm__block.merge_conflict_placeholder,
+.mismerge .msm__block.resolved_merge_conflict_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -196,7 +203,8 @@
 
 .mismerge .msm__line_placeholder.added_placeholder,
 .mismerge .msm__line_placeholder.removed_placeholder,
-.mismerge .msm__line_placeholder.merge_conflict_placeholder {
+.mismerge .msm__line_placeholder.merge_conflict_placeholder,
+.mismerge .msm__line_placeholder.resolved_merge_conflict_placeholder {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -215,12 +223,20 @@
 	background-color: var(--conflict);
 }
 
+.mismerge .resolved_merge_conflict_placeholder {
+	background-color: var(--resolved-conflict);
+}
+
 /* Block actions */
 
-.mismerge .msm__merge_button {
+.mismerge .msm__merge_button,
+.mismerge .msm__resolve_button {
+	width: fit-content;
+	height: fit-content;
+
 	position: absolute;
 	right: 0;
-	top: 10px;
+	top: 12px;
 	cursor: pointer;
 
 	padding: 0;
@@ -229,15 +245,20 @@
 	background: unset;
 }
 
-.mismerge .msm__merge_button.left {
+.mismerge .msm__merge_button,
+.mismerge .msm__resolve_button {
 	right: unset;
 	left: 0;
 }
 
-.mismerge .msm__merge_button.left {
-	transform: translateY(-50%) scale(0.9) rotate(180deg);
+.mismerge .left .msm__merge_button {
+	transform: translateY(-50%) scale(0.9) scaleX(-1);
 }
 
-.mismerge .msm__merge_button.right {
+.mismerge .right .msm__merge_button {
 	transform: translateY(-50%) scale(0.9);
+}
+
+.mismerge .msm__resolve_button {
+	transform: translateY(-50%) scale(0.8);
 }

@@ -28,10 +28,12 @@
 	font-weight: 500;
 }
 
-.mismerge .msm__merge_button {
+.mismerge .msm__merge_button,
+.mismerge .msm__resolve_button {
 	color: var(--gray);
 }
 
-.mismerge .msm__merge_button:hover {
+.mismerge .msm__merge_button:hover,
+.mismerge .msm__resolve_button:hover {
 	color: var(--dark-gray);
 }

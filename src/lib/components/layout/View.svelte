@@ -3,7 +3,6 @@
 	import type { Side } from '$lib/internal/editor/side';
 	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 	import SidePanel from './SidePanel.svelte';
-	import { CodeInput } from '$lib/internal/input/code-input';
 	import { DEV } from '$lib/internal/utils';
 	import Editor from './Editor.svelte';
 
@@ -15,9 +14,11 @@
 	export let side: Side;
 	export let disableMerging: boolean;
 	export let lineNumbersSide: 'left' | 'right' = 'left';
-	export let saveHistory: () => void;
 	export { clazz as class };
 	export { containerElem as elem };
+	// This way it is kept as an optional binding
+	const _saveHistory = () => saveHistory();
+	export { _saveHistory as saveHistory };
 
 	/* Local variables */
 
@@ -26,6 +27,7 @@
 	let contentElem: HTMLDivElement;
 	let sideComponents: BlockComponent[] = [];
 	let sideComponentElements: HTMLDivElement[] = [];
+	let saveHistory: () => void;
 	let height = 0;
 	let width = 0;
 	let observer: MutationObserver | undefined;
@@ -85,6 +87,7 @@
 			components={sideComponents}
 			componentsElements={sideComponentElements}
 			on:merge
+			on:resolve
 		/>
 	{/if}
 	<div class="msm__view_content">
@@ -115,6 +118,7 @@
 			{disableMerging}
 			components={sideComponents}
 			componentsElements={sideComponentElements}
+			on:resolve
 			on:merge
 		/>
 	{/if}

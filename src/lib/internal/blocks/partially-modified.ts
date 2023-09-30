@@ -4,6 +4,7 @@ import { BlockComponent } from '../editor/component';
 import PartiallyRemovedBlockComponent from '$lib/components/blocks/PartiallyRemovedBlock.svelte';
 import PartiallyAddedBlockComponent from '$lib/components/blocks/PartiallyAddedBlock.svelte';
 import type { LineDiff } from '../diff/line-diff';
+import MergeChange from '$lib/components/actions/MergeChange.svelte';
 
 type PartiallyModifiedSideData<SideType extends Side> = {
 	type: 'added' | 'removed';
@@ -45,7 +46,10 @@ export class PartiallyModifiedBlock<
 				blockId: this.id,
 				props: { block: this, lines },
 				linesCount: this.linesCount(side),
-				mergeActions: true,
+				sideAction: {
+					component: MergeChange,
+					props: {}
+				},
 				side,
 				type: (() => {
 					switch (type) {

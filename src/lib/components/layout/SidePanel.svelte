@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/editor/component';
+	import type { SidePanelEvents } from '$lib/internal/events';
 	import { TwoWaySide, type Side } from '$lib/internal/editor/side';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import ArrowIcon from '../icons/ArrowIcon.svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	/* Exports */
 
@@ -13,8 +13,6 @@
 
 	/* Local variables */
 
-	let addMergeActions =
-		!disableMerging && (!(side instanceof TwoWaySide) || !side.eq(TwoWaySide.ctr));
 	let direction: 'right' | 'left' = side.eq(TwoWaySide.lhs) ? 'right' : 'left';
 	let linesComponents: {
 		startingLineNumber: number;
@@ -50,7 +48,7 @@
 
 	/* Events */
 
-	const dispatch = createEventDispatcher<{ merge: { component: BlockComponent } }>();
+	const dispatch = createEventDispatcher<SidePanelEvents>();
 </script>
 
 <div class="msm__side_panel {direction}">
@@ -64,13 +62,13 @@
 						style="height: {getLineHeight(componentIndex, lineIndex)};"
 						class="msm__line_number {component.type}"
 					>
-						{#if lineIndex == 0 && addMergeActions && component.mergeActions}
-							<button
-								class="msm__merge_button {direction}"
-								on:click={() => dispatch('merge', { component })}
-							>
-								<ArrowIcon />
-							</button>
+						{#if lineIndex == 0 && !disableMerging && component.sideAction}
+							<svelte:component
+								this={component.sideAction.component}
+								{...component.sideAction.props}
+								{component}
+								{dispatch}
+							/>
 						{/if}
 
 						<pre>{startingLineNumber + lineIndex}</pre>

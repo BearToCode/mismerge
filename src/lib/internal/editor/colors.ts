@@ -15,6 +15,7 @@ export type EditorColors = {
 	added: `#${string}`;
 	removed: `#${string}`;
 	conflict: `#${string}`;
+	resolvedConflict: `#${string}`;
 	modified: `#${string}`;
 	modifiedOverlay: `#${string}`;
 };
@@ -31,5 +32,6 @@ export const DefaultEditorColors: EditorColors = {
 	removed: '#edeceb',
 	conflict: '#fff2f0',
 	modified: '#e4f4f5',
+	resolvedConflict: '#cfdcfa',
 	modifiedOverlay: '#d3f0f2'
 };
