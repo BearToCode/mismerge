@@ -1,7 +1,7 @@
 import { LinkedComponentsBlock, type Line } from '.';
 import { BlockComponent } from '../editor/component';
 import type { LineDiff } from '../diff/line-diff';
-import type { TwoWaySide } from '../editor/side';
+import { TwoWaySide } from '../editor/side';
 import ModifiedBlockComponent from '$lib/components/blocks/ModifiedBlock.svelte';
 import UnchangedBlockComponent from '$lib/components/blocks/UnchangedBlock.svelte';
 import { UnchangedBlock } from './unchanged';
@@ -53,18 +53,21 @@ export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 		// and one unchanged component for the side where the line wasn't.
 		return [
 			...this.modifiedSidesData.map(
-				(sideData) =>
+				({ side, lines }) =>
 					new BlockComponent({
 						component: ModifiedBlockComponent,
 						blockId: this.id,
-						props: { block: this, lines: sideData.lines },
-						linesCount: this.linesCount(sideData.side),
-						side: sideData.side,
+						props: { block: this, lines },
+						linesCount: this.linesCount(side),
+						side: side,
 						type: this.type,
-						sideAction: {
-							component: MergeChange,
-							props: {}
-						}
+						sideAction:
+							side instanceof TwoWaySide && side.eq(TwoWaySide.ctr)
+								? undefined
+								: {
+										component: MergeChange,
+										props: {}
+								  }
 					})
 			),
 			new BlockComponent({
