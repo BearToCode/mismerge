@@ -12,7 +12,9 @@
 		"demo": "cd demo && npm run dev",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"check": "npx lerna run check"
+		"check": "npx lerna run check",
+		"test": "npx lerna run test",
+		"prepare": "husky install"
 	},
 	"devDependencies": {
 		"@types/node": "^18.16.3",
@@ -28,7 +30,9 @@
 	},
 	"lint-staged": {
 		"*.{js,ts,svelte}": "eslint --cache --fix",
-		"*.{js,ts,css,md,svelte,html,yml,json,cjs}": "prettier --write"
+		"*.{js,ts,css,md,svelte,html,yml,json,cjs}": "prettier --write",
+		"*.{js,ts}": "eslint --cache --fix",
+		"*.{js,ts,css,md}": "prettier --write"
 	},
 	"dependencies": {}
 }
