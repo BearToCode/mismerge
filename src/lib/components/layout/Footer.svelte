@@ -78,7 +78,7 @@
 				{#if conflicts}
 					<div class="msm__block_counter conflict">
 						<div />
-						<span>{conflicts} conflicts</span>
+						<span>{conflicts} conflict{conflicts == 1 ? '' : 's'}</span>
 					</div>
 				{/if}
 				{#if resolved}
