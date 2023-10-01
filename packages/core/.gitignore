@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /build
+/dist
 /.svelte-kit
 /package
 .env
@@ -8,9 +9,5 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-.eslintcache
-.pnpm-debug.log
-
-**/dist
-**/tsconfig.tsbuildinfo
-**/.rollup.cache
+.vscode
+.idea
