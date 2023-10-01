@@ -5,7 +5,6 @@
 - Investigate component warnings
 - Add slots
 - Syntax highlighting
-- Remove .left, .right and other common class names
 
 ## Done
 
