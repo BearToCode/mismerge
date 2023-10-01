@@ -1,17 +1,18 @@
 # TODOs
 
-- Improve default styles
 - Create demo
 - Create website
 - Investigate component warnings
 - Add slots
-- Add blocks counter
-- Add blocks actions
 - Syntax highlighting
+- Remove .left, .right and other common class names
 
 ## Done
 
+- Improve default styles
+- Add blocks counter
 - Fix exports
 - Wrap lines
 - Option to disable merging
 - Fix history to work with merges
+- Add blocks actions

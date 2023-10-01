@@ -11,6 +11,8 @@
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 	import { mergeComponent } from '$lib/internal/editor/merging';
 	import { BlocksHashTable } from '$lib/internal/storage/table';
+	import { countWords, countChars } from '$lib/internal/editor/counters';
+	import Footer from './layout/Footer.svelte';
 
 	/* Exports */
 
@@ -51,6 +53,22 @@
 	 * Enables lines wrapping.
 	 */
 	export let wrapLines = false;
+	/**
+	 * Disable footer.
+	 */
+	export let disableFooter = false;
+	/**
+	 * Disable the footer words counter.
+	 */
+	export let disableWordsCounter = false;
+	/**
+	 * Disable the footer chars counter.
+	 */
+	export let disableCharsCounter = false;
+	/**
+	 * Disable the footer blocks counters.
+	 */
+	export let disableBlocksCounters = false;
 
 	/* Local variables */
 
@@ -125,27 +143,44 @@
 	class="mismerge {wrapLines ? 'wrap_lines' : ''} {clazz}"
 	bind:this={container}
 >
-	<View
-		{disableMerging}
-		editable={lhsEditable}
-		side={OneWaySide.lhs}
-		bind:components
-		bind:content={lhs}
-		bind:elem={lhsViewElem}
-		bind:saveHistory={saveLhsHistory}
-		on:merge={mergeComponentHandler(OneWaySide.lhs)}
-		on:newline={redrawConnections}
-	/>
-	<Connector colors={editorColors} bind:draw={drawConnections} bind:lhsViewElem bind:rhsViewElem />
-	<View
-		{disableMerging}
-		editable={rhsEditable}
-		side={OneWaySide.rhs}
-		bind:components
-		bind:content={rhs}
-		bind:elem={rhsViewElem}
-		bind:saveHistory={saveRhsHistory}
-		on:merge={mergeComponentHandler(OneWaySide.rhs)}
-		on:newline={redrawConnections}
-	/>
+	<div class="msm__main">
+		<View
+			{disableMerging}
+			editable={lhsEditable}
+			side={OneWaySide.lhs}
+			bind:components
+			bind:content={lhs}
+			bind:elem={lhsViewElem}
+			bind:saveHistory={saveLhsHistory}
+			on:merge={mergeComponentHandler(OneWaySide.lhs)}
+			on:newline={redrawConnections}
+		/>
+		<Connector
+			colors={editorColors}
+			bind:draw={drawConnections}
+			bind:lhsViewElem
+			bind:rhsViewElem
+		/>
+		<View
+			{disableMerging}
+			editable={rhsEditable}
+			side={OneWaySide.rhs}
+			bind:components
+			bind:content={rhs}
+			bind:elem={rhsViewElem}
+			bind:saveHistory={saveRhsHistory}
+			on:merge={mergeComponentHandler(OneWaySide.rhs)}
+			on:newline={redrawConnections}
+		/>
+	</div>
+	{#if !disableFooter}
+		<Footer
+			{blocks}
+			wordsCount={[lhs, rhs].map((s) => countWords(s))}
+			charsCount={[lhs, rhs].map((s) => countChars(s))}
+			{disableWordsCounter}
+			{disableCharsCounter}
+			{disableBlocksCounters}
+		/>
+	{/if}
 </div>

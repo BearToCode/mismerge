@@ -45,7 +45,6 @@ export class BlockComponent<
 		type: string;
 		linesCount: number;
 		placeholder?: boolean;
-		mergeActions?: boolean;
 	}) {
 		this.blockId = params.blockId;
 		this.component = params.component;

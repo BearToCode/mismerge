@@ -2,18 +2,30 @@
 	width: 100%;
 	border: 1px solid var(--medium-gray);
 	border-radius: 4px;
-	min-height: 600px;
+	height: 600px;
 	font-size: 1rem;
+
+	--white: #ffffff;
 
 	--light-gray: #fbfcfc;
 	--medium-gray: #ebebeb;
-	--gray: #797b7e;
 	--dark-gray: #3a3a3a;
+
+	--gray: #797b7e;
+
 	--accent: #a1f0cc;
 }
 
-.mismerge pre,
-.mismerge textarea {
+.mismerge .msm__footer {
+	background-color: var(--white);
+	border-top: var(--medium-gray) 1px solid;
+}
+
+.mismerge .msm__footer_content span {
+	color: var(--gray);
+}
+
+.mismerge {
 	font-family: 'Fira Code', monospace;
 	font-variant-ligatures: normal;
 }

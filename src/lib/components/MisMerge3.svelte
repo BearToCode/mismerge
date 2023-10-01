@@ -11,6 +11,8 @@
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 	import { mergeComponent } from '$lib/internal/editor/merging';
 	import { BlocksHashTable } from '$lib/internal/storage/table';
+	import Footer from './layout/Footer.svelte';
+	import { countChars, countWords } from '$lib/internal/editor/counters';
 
 	/* Exports */
 
@@ -62,6 +64,22 @@
 	 * Enables lines wrapping.
 	 */
 	export let wrapLines = false;
+	/**
+	 * Disable footer.
+	 */
+	export let disableFooter = false;
+	/**
+	 * Disable the footer words counter.
+	 */
+	export let disableWordsCounter = false;
+	/**
+	 * Disable the footer chars counter.
+	 */
+	export let disableCharsCounter = false;
+	/**
+	 * Disable the footer blocks counters.
+	 */
+	export let disableBlocksCounters = false;
 
 	/* Local variables */
 
@@ -141,51 +159,63 @@
 	class="mismerge {wrapLines ? 'wrap_lines' : ''} {clazz}"
 	bind:this={container}
 >
-	<View
-		{disableMerging}
-		editable={lhsEditable}
-		side={TwoWaySide.lhs}
-		lineNumbersSide="right"
-		bind:content={lhs}
-		bind:components
-		bind:elem={lhsViewElem}
-		on:merge={mergeComponentHandler(TwoWaySide.lhs)}
-		on:height-change={redrawConnections}
-	/>
-	<Connector
-		colors={editorColors}
-		bind:draw={drawLhsConnections}
-		bind:lhsViewElem
-		bind:rhsViewElem={ctrViewElem}
-	/>
-	<View
-		{disableMerging}
-		editable={ctrEditable}
-		side={TwoWaySide.ctr}
-		bind:content={ctr}
-		bind:components
-		bind:elem={ctrViewElem}
-		bind:saveHistory={saveCtrHistory}
-		on:merge={mergeComponentHandler(TwoWaySide.ctr)}
-		on:resolve={() => {
-			blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
-		}}
-		on:height-change={redrawConnections}
-	/>
-	<Connector
-		colors={editorColors}
-		bind:draw={drawRhsConnections}
-		bind:lhsViewElem={ctrViewElem}
-		bind:rhsViewElem
-	/>
-	<View
-		{disableMerging}
-		editable={rhsEditable}
-		side={TwoWaySide.rhs}
-		bind:content={rhs}
-		bind:components
-		bind:elem={rhsViewElem}
-		on:merge={mergeComponentHandler(TwoWaySide.rhs)}
-		on:height-change={redrawConnections}
-	/>
+	<div class="msm__main">
+		<View
+			{disableMerging}
+			editable={lhsEditable}
+			side={TwoWaySide.lhs}
+			lineNumbersSide="right"
+			bind:content={lhs}
+			bind:components
+			bind:elem={lhsViewElem}
+			on:merge={mergeComponentHandler(TwoWaySide.lhs)}
+			on:height-change={redrawConnections}
+		/>
+		<Connector
+			colors={editorColors}
+			bind:draw={drawLhsConnections}
+			bind:lhsViewElem
+			bind:rhsViewElem={ctrViewElem}
+		/>
+		<View
+			{disableMerging}
+			editable={ctrEditable}
+			side={TwoWaySide.ctr}
+			bind:content={ctr}
+			bind:components
+			bind:elem={ctrViewElem}
+			bind:saveHistory={saveCtrHistory}
+			on:merge={mergeComponentHandler(TwoWaySide.ctr)}
+			on:resolve={() => {
+				blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
+			}}
+			on:height-change={redrawConnections}
+		/>
+		<Connector
+			colors={editorColors}
+			bind:draw={drawRhsConnections}
+			bind:lhsViewElem={ctrViewElem}
+			bind:rhsViewElem
+		/>
+		<View
+			{disableMerging}
+			editable={rhsEditable}
+			side={TwoWaySide.rhs}
+			bind:content={rhs}
+			bind:components
+			bind:elem={rhsViewElem}
+			on:merge={mergeComponentHandler(TwoWaySide.rhs)}
+			on:height-change={redrawConnections}
+		/>
+	</div>
+	{#if !disableFooter}
+		<Footer
+			{blocks}
+			wordsCount={[lhs, ctr, rhs].map((s) => countWords(s))}
+			charsCount={[lhs, ctr, rhs].map((s) => countChars(s))}
+			{disableWordsCounter}
+			{disableCharsCounter}
+			{disableBlocksCounters}
+		/>
+	{/if}
 </div>

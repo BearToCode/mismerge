@@ -25,6 +25,9 @@ export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
 	public readonly placeholderSide: MaybeArray<Side>;
 
 	private resolved = false;
+	public get isResolved() {
+		return this.resolved;
+	}
 
 	constructor(params: {
 		sidesData: MergeConflictSideData<TwoWaySide>[];

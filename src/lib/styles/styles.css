@@ -1,5 +1,92 @@
 .mismerge {
+	position: relative;
+}
+
+.mismerge .msm__main {
 	display: flex;
+	height: 100%;
+}
+
+/* Footer */
+
+.mismerge .msm__footer {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 1.5rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.mismerge .msm__footer_content {
+	width: calc(100% - 2rem);
+	display: inline-flex;
+
+	padding-left: 1rem;
+	padding-right: 1rem;
+
+	justify-content: space-between;
+}
+
+.mismerge .msm__footer_content span {
+	font-size: 0.8rem;
+}
+
+.mismerge .msm__footer_content_left,
+.mismerge .msm__footer_content_right {
+	display: inline-flex;
+	align-items: center;
+}
+
+.mismerge .msm__footer_content_left > *,
+.mismerge .msm__footer_content_right > * {
+	margin-right: 1rem;
+}
+
+.mismerge .msm__footer_content_left > *:last-child,
+.mismerge .msm__footer_content_right > *:last-child {
+	margin-right: 0;
+}
+
+.mismerge .msm__block_counter {
+	display: inline-flex;
+}
+
+.mismerge .msm__block_counter > div {
+	width: 1rem;
+	height: 1rem;
+	border-radius: 2px;
+	margin-right: 0.5rem;
+}
+
+/* Blocks counters */
+
+.mismerge .msm__block_counter.added > div {
+	background-color: var(--added);
+}
+
+.mismerge .msm__block_counter.removed > div {
+	background-color: var(--removed);
+}
+
+.mismerge .msm__block_counter.conflict > div {
+	background-color: var(--conflict);
+}
+
+.mismerge .msm__block_counter.resolved > div {
+	background-color: var(--resolved-conflict);
+}
+
+.mismerge .msm__block_counter.modified > div {
+	background-color: var(--modified);
+}
+
+.mismerge .msm__block_counter.partially-modified > div {
+	background-color: var(--removed);
+	background: linear-gradient(135deg, var(--removed) 0%, var(--added) 100%);
 }
 
 /* View */
@@ -50,6 +137,31 @@
 	tab-size: 2rem;
 }
 
+.mismerge .msm__view pre {
+	margin: 0;
+	white-space: pre;
+	tab-size: 4;
+}
+
+.mismerge .msm__view.editable .msm__line pre {
+	color: transparent;
+}
+
+.mismerge .msm__view .msm__line pre {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	tab-size: 2rem;
+}
+
+.mismerge .msm__view .msm__content {
+	display: flex;
+}
+
+.mismerge .msm__view .msm__line {
+	display: flex;
+	min-height: fit-content;
+}
+
 /* Lines wrapping */
 
 .mismerge.wrap_lines .msm__view .msm__wrapper {
@@ -77,33 +189,6 @@
 	top: 0;
 	bottom: 0;
 	image-rendering: crisp-edges;
-}
-
-/* View */
-
-.mismerge .msm__view pre {
-	margin: 0;
-	white-space: pre;
-	tab-size: 4;
-}
-
-.mismerge .msm__view.editable .msm__line pre {
-	color: transparent;
-}
-
-.mismerge .msm__view .msm__line pre {
-	padding-left: 0.5rem;
-	padding-right: 0.5rem;
-	tab-size: 2rem;
-}
-
-.mismerge .msm__view .msm__content {
-	display: flex;
-}
-
-.mismerge .msm__view .msm__line {
-	display: flex;
-	min-height: fit-content;
 }
 
 /* Line numbers */
