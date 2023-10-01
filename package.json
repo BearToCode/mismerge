@@ -8,10 +8,11 @@
 	},
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
-		"core": "cd packages/mismerge && npm run dev",
+		"core": "cd core && npm run dev",
 		"demo": "cd demo && npm run dev",
-		"check": "cd packages/carta-md && npm run check",
-		"format": "prettier --plugin-search-dir . --write ."
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write .",
+		"check": "npx lerna run check"
 	},
 	"devDependencies": {
 		"@types/node": "^18.16.3",
@@ -20,12 +21,14 @@
 		"eslint": "^8.39.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"lerna": "^7.3.0",
+		"only-allow": "^1.2.0",
 		"prettier": "^2.8.8",
-		"prettier-plugin-svelte": "^2.10.0",
-		"only-allow": "^1.2.0"
+		"prettier-plugin-svelte": "^2.10.0"
 	},
 	"lint-staged": {
 		"*.{js,ts,svelte}": "eslint --cache --fix",
 		"*.{js,ts,css,md,svelte,html,yml,json,cjs}": "prettier --write"
-	}
+	},
+	"dependencies": {}
 }

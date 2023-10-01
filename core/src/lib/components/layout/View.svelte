@@ -9,7 +9,7 @@
 	/* Exports */
 
 	export let components: BlockComponent[];
-	export let editable: boolean = false;
+	export let editable = false;
 	export let content: string;
 	export let side: Side;
 	export let disableMerging: boolean;
@@ -57,7 +57,7 @@
 	/* Events */
 
 	const dispatch = createEventDispatcher<{
-		'height-change': {};
+		'height-change': Record<string, never>;
 	}>();
 
 	/* Lifecycle hooks */
@@ -97,7 +97,7 @@
 			bind:clientWidth={width}
 			bind:clientHeight={height}
 		>
-			{#each sideComponents as blockComponent, i}
+			{#each sideComponents as blockComponent}
 				<svelte:component
 					this={blockComponent.component}
 					component={blockComponent}

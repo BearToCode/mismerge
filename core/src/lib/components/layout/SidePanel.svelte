@@ -56,6 +56,7 @@
 		{#if component.placeholder}
 			<div class="msm__line-placeholder {component.type}" />
 		{:else}
+			<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 			{#each { length: component.linesCount } as _, lineIndex}
 				{#key componentsElements[componentIndex]}
 					<div
