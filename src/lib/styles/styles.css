@@ -147,7 +147,7 @@
 	color: transparent;
 }
 
-.mismerge .msm__view .msm__line pre {
+.mismerge .msm__view .msm__line {
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 	tab-size: 2rem;

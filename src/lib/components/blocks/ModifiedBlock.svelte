@@ -16,7 +16,7 @@
 					{#if part.overlay}
 						<pre><span class="overlay">{part.content}</span></pre>
 					{:else}
-						<pre><span>{part.content || ' '}</span></pre>
+						<pre><span>{part.content}</span></pre>
 					{/if}
 				{/each}
 			</div>
