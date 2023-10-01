@@ -3,7 +3,6 @@
 	import { AddedBlock } from '$lib/internal/blocks/added';
 	import { MergeConflictBlock } from '$lib/internal/blocks/merge-conflict';
 	import { ModifiedBlock } from '$lib/internal/blocks/modified';
-	import { PartiallyModifiedBlock } from '$lib/internal/blocks/partially-modified';
 	import { RemovedBlock } from '$lib/internal/blocks/removed';
 	import type { Side } from '$lib/internal/editor/side';
 
@@ -17,14 +16,12 @@
 	let added = 0;
 	let removed = 0;
 	let modified = 0;
-	let partiallyModified = 0;
 	let conflicts = 0;
 	let resolved = 0;
 
 	$: added = blocks.filter((b) => b instanceof AddedBlock).length;
 	$: removed = blocks.filter((b) => b instanceof RemovedBlock).length;
 	$: modified = blocks.filter((b) => b instanceof ModifiedBlock).length;
-	$: partiallyModified = blocks.filter((b) => b instanceof PartiallyModifiedBlock).length;
 	$: conflicts = blocks.filter((b) => b instanceof MergeConflictBlock && !b.isResolved).length;
 	$: resolved = blocks.filter((b) => b instanceof MergeConflictBlock && b.isResolved).length;
 </script>
@@ -67,12 +64,6 @@
 					<div class="msm__block_counter modified">
 						<div />
 						<span>{modified} modified</span>
-					</div>
-				{/if}
-				{#if partiallyModified}
-					<div class="msm__block_counter partially-modified">
-						<div />
-						<span>{partiallyModified} modified</span>
 					</div>
 				{/if}
 				{#if conflicts}

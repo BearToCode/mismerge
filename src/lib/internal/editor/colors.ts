@@ -6,6 +6,8 @@ export type DiffColors = {
 	addedOverlay: `#${string}`;
 	removed: `#${string}`;
 	removedOverlay: `#${string}`;
+	modified: `#${string}`;
+	modifiedOverlay: `#${string}`;
 };
 
 /**
@@ -24,7 +26,9 @@ export const DefaultDiffColors: DiffColors = {
 	added: '#d4eed4',
 	addedOverlay: '#bee6bd',
 	removed: '#fff2f0',
-	removedOverlay: '#ffdfd8'
+	removedOverlay: '#ffdfd8',
+	modified: '#e4f4f5',
+	modifiedOverlay: '#d3f0f2'
 };
 
 export const DefaultEditorColors: EditorColors = {

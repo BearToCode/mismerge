@@ -139,6 +139,8 @@
 		--removed: {editorColors.removed};
 		--added-overlay: {editorColors.addedOverlay};
 		--removed-overlay: {editorColors.removedOverlay};
+		--modified: {editorColors.modified};
+		--modified-overlay: {editorColors.modifiedOverlay};
 	"
 	class="mismerge {wrapLines ? 'wrap_lines' : ''} {clazz}"
 	bind:this={container}

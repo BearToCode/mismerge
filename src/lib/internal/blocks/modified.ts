@@ -1,30 +1,30 @@
 import { LinkedComponentsBlock, type Line } from '.';
 import { BlockComponent } from '../editor/component';
 import type { LineDiff } from '../diff/line-diff';
-import { TwoWaySide } from '../editor/side';
+import { Side, TwoWaySide } from '../editor/side';
 import ModifiedBlockComponent from '$lib/components/blocks/ModifiedBlock.svelte';
 import UnchangedBlockComponent from '$lib/components/blocks/UnchangedBlock.svelte';
 import { UnchangedBlock } from './unchanged';
 import type { Connection } from '../editor/connection';
 import MergeChange from '$lib/components/actions/MergeChange.svelte';
 
-export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
+export class ModifiedBlock<SideType extends Side> extends LinkedComponentsBlock<SideType> {
 	public static readonly type = 'modified';
 	public type = ModifiedBlock.type;
 
 	public readonly modifiedSidesData: {
-		side: TwoWaySide;
+		side: SideType;
 		lines: LineDiff[];
 	}[];
-	public readonly unchangedSideData: { side: TwoWaySide; lines: Line[] };
+	public readonly unchangedSideData: { side: SideType; lines: Line[] } | undefined;
 
 	constructor(params: {
 		modifiedSidesData: {
-			side: TwoWaySide;
+			side: SideType;
 			lines: LineDiff[];
 		}[];
-		unchangedSideData: {
-			side: TwoWaySide;
+		unchangedSideData?: {
+			side: SideType;
 			lines: Line[];
 		};
 	}) {
@@ -33,10 +33,11 @@ export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 		this.unchangedSideData = params.unchangedSideData;
 	}
 
-	public linesCount(side: TwoWaySide): number {
+	public linesCount(side: SideType): number {
 		return (
-			[...this.modifiedSidesData, this.unchangedSideData].find((sideData) => sideData.side.eq(side))
-				?.lines.length ?? 0
+			[...this.modifiedSidesData, this.unchangedSideData ?? []]
+				.flat()
+				.find((sideData) => sideData.side.eq(side))?.lines.length ?? 0
 		);
 	}
 
@@ -51,25 +52,26 @@ export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 	public render() {
 		// Return two modified components for the sides where the line was modified
 		// and one unchanged component for the side where the line wasn't.
-		return [
-			...this.modifiedSidesData.map(
-				({ side, lines }) =>
-					new BlockComponent({
-						component: ModifiedBlockComponent,
-						blockId: this.id,
-						props: { block: this, lines },
-						linesCount: this.linesCount(side),
-						side: side,
-						type: this.type,
-						sideAction:
-							side instanceof TwoWaySide && side.eq(TwoWaySide.ctr)
-								? undefined
-								: {
-										component: MergeChange,
-										props: {}
-								  }
-					})
-			),
+		const modifiedComponents = this.modifiedSidesData.map(
+			({ side, lines }) =>
+				new BlockComponent({
+					component: ModifiedBlockComponent,
+					blockId: this.id,
+					props: { block: this, lines },
+					linesCount: this.linesCount(side),
+					side: side,
+					type: this.type,
+					sideAction:
+						side instanceof TwoWaySide && side.eq(TwoWaySide.ctr)
+							? undefined
+							: {
+									component: MergeChange,
+									props: {}
+							  }
+				})
+		);
+		if (!this.unchangedSideData) return modifiedComponents;
+		return Array.prototype.concat(modifiedComponents, [
 			new BlockComponent({
 				component: UnchangedBlockComponent,
 				blockId: this.id,
@@ -78,6 +80,6 @@ export class ModifiedBlock extends LinkedComponentsBlock<TwoWaySide> {
 				side: this.unchangedSideData.side,
 				type: UnchangedBlock.prototype.type
 			})
-		];
+		]);
 	}
 }

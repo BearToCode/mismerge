@@ -3,9 +3,9 @@ import { expect, test } from 'vitest';
 import dedent from 'dedent';
 import { assembleTwoWay } from '$lib/internal/diff/two-way-assembler';
 import { AddedBlock } from '$lib/internal/blocks/added';
-import { PartiallyModifiedBlock } from '$lib/internal/blocks/partially-modified';
 import { RemovedBlock } from '$lib/internal/blocks/removed';
 import { UnchangedBlock } from '$lib/internal/blocks/unchanged';
+import { ModifiedBlock } from '$lib/internal/blocks/modified';
 
 test('assemble-one-way unchanged', () => {
 	const blocks = assembleOneWay(
@@ -81,7 +81,7 @@ test('assemble-one-way modified', () => {
 	);
 
 	expect(blocks).toHaveLength(2);
-	expect(blocks.at(1)).toBeInstanceOf(PartiallyModifiedBlock);
+	expect(blocks.at(1)).toBeInstanceOf(ModifiedBlock);
 });
 
 test('assemble-two-way unchanged', () => {

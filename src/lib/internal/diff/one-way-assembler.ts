@@ -1,6 +1,5 @@
 import type { DiffBlock } from '../blocks';
 import { AddedBlock } from '../blocks/added';
-import { PartiallyModifiedBlock } from '../blocks/partially-modified';
 import { RemovedBlock } from '../blocks/removed';
 import { UnchangedBlock } from '../blocks/unchanged';
 import { type OneWayChange, oneWayDiff } from './base';
@@ -9,6 +8,7 @@ import { OneWaySide } from '../editor/side';
 import { nanoid } from 'nanoid';
 import { DEV } from '../utils';
 import { BlocksHashTable } from '../storage/table';
+import { ModifiedBlock } from '../blocks/modified';
 
 export interface OneWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
@@ -135,15 +135,13 @@ class OneWayAssembler {
 			algorithm: this.options?.lineDiffAlgorithm
 		});
 
-		const block = this.hashTable.new(PartiallyModifiedBlock, {
-			sidesData: [
+		const block = this.hashTable.new(ModifiedBlock, {
+			modifiedSidesData: [
 				{
-					type: 'added' as const,
 					lines: this.addSide.eq(OneWaySide.lhs) ? diff.lhs : diff.rhs,
 					side: this.addSide
 				},
 				{
-					type: 'removed' as const,
 					lines: this.addSide.eq(OneWaySide.lhs) ? diff.rhs : diff.lhs,
 					side: this.removeSide
 				}

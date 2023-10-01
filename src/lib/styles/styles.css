@@ -84,11 +84,6 @@
 	background-color: var(--modified);
 }
 
-.mismerge .msm__block_counter.partially-modified > div {
-	background-color: var(--removed);
-	background: linear-gradient(135deg, var(--removed) 0%, var(--added) 100%);
-}
-
 /* View */
 
 .mismerge .msm__view {
@@ -222,8 +217,6 @@
 	visibility: hidden;
 }
 
-.mismerge .msm__block.partially_added pre,
-.mismerge .msm__block.partially_removed pre,
 .mismerge .msm__block.modified pre {
 	display: inline;
 }
@@ -237,16 +230,6 @@
 
 .mismerge .msm__block.removed,
 .mismerge .msm__line_number.removed {
-	background-color: var(--removed);
-}
-
-.mismerge .msm__block.partially_added,
-.mismerge .msm__line_number.partially_added {
-	background-color: var(--added);
-}
-
-.mismerge .msm__block.partially_removed,
-.mismerge .msm__line_number.partially_removed {
 	background-color: var(--removed);
 }
 
@@ -266,14 +249,6 @@
 }
 
 /* Overlays */
-
-.mismerge .msm__block.partially_added .overlay {
-	background-color: var(--added-overlay);
-}
-
-.mismerge .msm__block.partially_removed .overlay {
-	background-color: var(--removed-overlay);
-}
 
 .mismerge .msm__block.modified .overlay {
 	background-color: var(--modified-overlay);

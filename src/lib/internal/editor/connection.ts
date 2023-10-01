@@ -19,11 +19,9 @@ function componentColor(
 	switch (component.type) {
 		case 'added':
 		case 'added_placeholder':
-		case 'partially_added':
 			return colors.added ?? defaultColor;
 		case 'removed':
 		case 'removed_placeholder':
-		case 'partially_removed':
 			return colors.removed ?? defaultColor;
 		case 'merge_conflict':
 		case 'merge_conflict_placeholder':
