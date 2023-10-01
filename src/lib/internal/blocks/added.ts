@@ -14,7 +14,7 @@ export type AddedSideData<SideType extends Side> = {
 export class AddedBlock<SideType extends Side = Side> extends LinkedComponentsBlock<SideType> {
 	public static readonly type = 'added';
 	public type = AddedBlock.type;
-	public placeholderType = 'added_placeholder';
+	public placeholderType = 'added-placeholder';
 
 	public readonly sidesData: MaybeArray<AddedSideData<SideType>>;
 	public readonly placeholderSide: MaybeArray<Side>;

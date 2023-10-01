@@ -21,7 +21,7 @@
 	border-top: var(--medium-gray) 1px solid;
 }
 
-.mismerge .msm__footer_content span {
+.mismerge .msm__footer-content span {
 	color: var(--gray);
 }
 
@@ -40,12 +40,12 @@
 	font-weight: 500;
 }
 
-.mismerge .msm__merge_button,
-.mismerge .msm__resolve_button {
+.mismerge .msm__merge-button,
+.mismerge .msm__resolve-button {
 	color: var(--gray);
 }
 
-.mismerge .msm__merge_button:hover,
-.mismerge .msm__resolve_button:hover {
+.mismerge .msm__merge-button:hover,
+.mismerge .msm__resolve-button:hover {
 	color: var(--dark-gray);
 }

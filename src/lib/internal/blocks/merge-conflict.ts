@@ -15,11 +15,11 @@ type MergeConflictSideData<SideType extends Side> = {
 };
 
 export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
-	public static readonly type = 'merge_conflict';
+	public static readonly type = 'merge-conflict';
 	public type = MergeConflictBlock.type;
-	public placeholderType = 'merge_conflict_placeholder';
-	public resolvedType = 'resolved_merge_conflict';
-	public resolvedPlaceholderType = 'resolved_merge_conflict_placeholder';
+	public placeholderType = 'merge-conflict-placeholder';
+	public resolvedType = 'resolved-merge-conflict';
+	public resolvedPlaceholderType = 'resolved-merge-conflict-placeholder';
 
 	public readonly sidesData: MergeConflictSideData<TwoWaySide>[];
 	public readonly placeholderSide: MaybeArray<Side>;

@@ -90,7 +90,7 @@
 			on:resolve
 		/>
 	{/if}
-	<div class="msm__view_content">
+	<div class="msm__view-content">
 		<div
 			class="msm__wrapper"
 			bind:this={contentElem}

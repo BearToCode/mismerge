@@ -18,16 +18,16 @@ function componentColor(
 	const defaultColor = '#ffffff';
 	switch (component.type) {
 		case 'added':
-		case 'added_placeholder':
+		case 'added-placeholder':
 			return colors.added ?? defaultColor;
 		case 'removed':
-		case 'removed_placeholder':
+		case 'removed-placeholder':
 			return colors.removed ?? defaultColor;
-		case 'merge_conflict':
-		case 'merge_conflict_placeholder':
+		case 'merge-conflict':
+		case 'merge-conflict-placeholder':
 			return colors.conflict ?? defaultColor;
-		case 'resolved_merge_conflict':
-		case 'resolved_merge_conflict_placeholder':
+		case 'resolved-merge-conflict':
+		case 'resolved-merge-conflict-placeholder':
 			return colors.resolvedConflict ?? defaultColor;
 		case 'modified':
 			return colors.modified ?? defaultColor;

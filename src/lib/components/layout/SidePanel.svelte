@@ -51,16 +51,16 @@
 	const dispatch = createEventDispatcher<SidePanelEvents>();
 </script>
 
-<div class="msm__side_panel {direction}">
+<div class="msm__side_panel msm__{direction}">
 	{#each linesComponents as { startingLineNumber, component }, componentIndex}
 		{#if component.placeholder}
-			<div class="msm__line_placeholder {component.type}" />
+			<div class="msm__line-placeholder {component.type}" />
 		{:else}
 			{#each { length: component.linesCount } as _, lineIndex}
 				{#key componentsElements[componentIndex]}
 					<div
 						style="height: {getLineHeight(componentIndex, lineIndex)};"
-						class="msm__line_number {component.type}"
+						class="msm__line-number {component.type}"
 					>
 						{#if lineIndex == 0 && !disableMerging && component.sideAction}
 							<svelte:component

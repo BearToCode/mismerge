@@ -27,10 +27,10 @@
 </script>
 
 <footer class="msm__footer">
-	<div class="msm__footer_content">
-		<div class="msm__footer_content_left">
+	<div class="msm__footer-content">
+		<div class="msm__footer-content-left">
 			{#if !disableWordsCounter}
-				<div class="msm__words_counter">
+				<div class="msm__words-counter">
 					<span>Words:</span>
 					<span>
 						{wordsCount.map((n) => n.toString()).join('/')}
@@ -38,7 +38,7 @@
 				</div>
 			{/if}
 			{#if !disableCharsCounter}
-				<div class="msm__chars_counter">
+				<div class="msm__chars-counter">
 					<span>Chars:</span>
 					<span>
 						{charsCount.map((n) => n.toString()).join('/')}
@@ -46,34 +46,34 @@
 				</div>
 			{/if}
 		</div>
-		<div class="msm__footer_content_right">
+		<div class="msm__footer-content-right">
 			{#if !disableBlocksCounters}
 				{#if added}
-					<div class="msm__block_counter added">
+					<div class="msm__block-counter added">
 						<div />
 						<span>{added} added</span>
 					</div>
 				{/if}
 				{#if removed}
-					<div class="msm__block_counter removed">
+					<div class="msm__block-counter removed">
 						<div />
 						<span>{removed} removed</span>
 					</div>
 				{/if}
 				{#if modified}
-					<div class="msm__block_counter modified">
+					<div class="msm__block-counter modified">
 						<div />
 						<span>{modified} modified</span>
 					</div>
 				{/if}
 				{#if conflicts}
-					<div class="msm__block_counter conflict">
+					<div class="msm__block-counter conflict">
 						<div />
 						<span>{conflicts} conflict{conflicts == 1 ? '' : 's'}</span>
 					</div>
 				{/if}
 				{#if resolved}
-					<div class="msm__block_counter resolved">
+					<div class="msm__block-counter resolved">
 						<div />
 						<span>{resolved} resolved</span>
 					</div>

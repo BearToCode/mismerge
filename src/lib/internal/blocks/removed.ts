@@ -14,7 +14,7 @@ export type RemovedSideData<SideType extends Side> = {
 export class RemovedBlock<SideType extends Side = Side> extends LinkedComponentsBlock<SideType> {
 	public static readonly type = 'removed';
 	public type = RemovedBlock.type;
-	public placeholderType = 'removed_placeholder';
+	public placeholderType = 'removed-placeholder';
 
 	public readonly sidesData: MaybeArray<RemovedSideData<SideType>>;
 	public readonly placeholderSide: MaybeArray<Side>;

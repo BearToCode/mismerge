@@ -12,7 +12,7 @@
 </script>
 
 <button
-	class="msm__resolve_button"
+	class="msm__resolve-button"
 	on:click={() => {
 		toggleResolved();
 		dispatch('resolve', { component });
