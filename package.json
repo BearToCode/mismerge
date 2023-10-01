@@ -11,7 +11,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"test": "vitest"
+		"test": "vitest",
+		"preinstall": "npx only-allow pnpm"
 	},
 	"exports": {
 		".": {
@@ -41,6 +42,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"only-allow": "^1.2.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
 		"publint": "^0.1.9",
