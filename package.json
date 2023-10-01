@@ -23,6 +23,7 @@
 		"eslint": "^8.39.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"husky": "^8.0.3",
 		"lerna": "^7.3.0",
 		"only-allow": "^1.2.0",
 		"prettier": "^2.8.8",
@@ -33,6 +34,5 @@
 		"*.{js,ts,css,md,svelte,html,yml,json,cjs}": "prettier --write",
 		"*.{js,ts}": "eslint --cache --fix",
 		"*.{js,ts,css,md}": "prettier --write"
-	},
-	"dependencies": {}
+	}
 }

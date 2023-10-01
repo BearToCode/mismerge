@@ -26,6 +26,9 @@ importers:
       eslint-plugin-svelte3:
         specifier: ^4.0.0
         version: 4.0.0(eslint@8.50.0)(svelte@3.59.2)
+      husky:
+        specifier: ^8.0.3
+        version: 8.0.3
       lerna:
         specifier: ^7.3.0
         version: 7.3.0
@@ -90,6 +93,30 @@ importers:
       vitest:
         specifier: ^0.34.5
         version: 0.34.6
+
+  demo:
+    devDependencies:
+      '@sveltejs/adapter-auto':
+        specifier: ^2.0.0
+        version: 2.1.0(@sveltejs/kit@1.25.1)
+      '@sveltejs/kit':
+        specifier: ^1.20.4
+        version: 1.25.1(svelte@4.2.1)(vite@4.4.9)
+      svelte:
+        specifier: ^4.0.5
+        version: 4.2.1
+      svelte-check:
+        specifier: ^3.4.3
+        version: 3.5.2(svelte@4.2.1)
+      tslib:
+        specifier: ^2.4.1
+        version: 2.6.2
+      typescript:
+        specifier: ^5.0.0
+        version: 5.2.2
+      vite:
+        specifier: ^4.4.2
+        version: 4.4.9(@types/node@18.18.1)
 
 packages:
 
@@ -2809,6 +2836,12 @@ packages:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
     dependencies:
       ms: 2.1.2
+    dev: true
+
+  /husky@8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /iconv-lite@0.4.24:
