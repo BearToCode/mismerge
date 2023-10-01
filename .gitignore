@@ -10,6 +10,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .eslintcache
 .pnpm-debug.log
+.idea
 
 **/dist
 **/tsconfig.tsbuildinfo
