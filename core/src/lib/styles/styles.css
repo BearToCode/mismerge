@@ -7,6 +7,12 @@
 	height: 100%;
 }
 
+.mismerge pre,
+.mismerge textarea,
+.mismerge button {
+	font-family: inherit;
+}
+
 /* Footer */
 
 .mismerge .msm__footer {

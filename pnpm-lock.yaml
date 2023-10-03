@@ -95,6 +95,10 @@ importers:
         version: 0.34.6
 
   demo:
+    dependencies:
+      mismerge:
+        specifier: workspace:*
+        version: link:../core
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^2.0.0

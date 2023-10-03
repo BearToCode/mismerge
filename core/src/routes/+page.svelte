@@ -62,13 +62,9 @@ a
 		min-height: 100vh;
 	}
 
-	:global(pre) {
+	:global(.mismerge) {
 		font-family: 'Fira Code', monospace;
 		font-variant-ligatures: normal;
-	}
-
-	:global(input, textarea, button) {
-		font-family: inherit;
 	}
 
 	main {

@@ -39,7 +39,9 @@
 		if (!componentElem) return '';
 		const lineElem = Array.from(componentElem.querySelectorAll('.msm__line')).at(lineIndex);
 		if (!lineElem) return '';
-		return `${lineElem.clientHeight}px`;
+		// Do not use clientHeight as it is rounded to an integer
+		const height = lineElem.getBoundingClientRect().height;
+		return `${height}px`;
 	}
 
 	/* Reactive statements */

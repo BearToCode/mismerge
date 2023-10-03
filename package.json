@@ -14,6 +14,7 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"check": "npx lerna run check",
 		"test": "npx lerna run test",
+		"build": "npx lerna run build",
 		"prepare": "husky install"
 	},
 	"devDependencies": {
