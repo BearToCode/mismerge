@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MisMerge3 } from 'mismerge';
+	import { MisMerge2, MisMerge3 } from 'mismerge';
 	import 'mismerge/styles.css';
 	import 'mismerge/default.css';
 </script>
@@ -19,7 +19,8 @@
 </svelte:head>
 
 <main>
-	<MisMerge3 lhs="" ctr="" rhs="" />
+	<MisMerge3 lhs="" ctr="" rhs="" lhsEditable rhsEditable wrapLines />
+	<MisMerge2 lhs="" rhs="" lhsEditable rhsEditable wrapLines />
 </main>
 
 <style>
