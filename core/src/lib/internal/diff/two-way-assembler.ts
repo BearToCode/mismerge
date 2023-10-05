@@ -9,10 +9,12 @@ import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
 import { TwoWaySide } from '../editor/side';
 import { DEV } from '../utils';
 import { BlocksHashTable } from '../storage/table';
+import type { LinesOptions } from 'diff';
 
 export interface TwoWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
 	hashTable?: BlocksHashTable<TwoWaySide>;
+	diffOpts?: LinesOptions;
 }
 
 /**
@@ -39,7 +41,7 @@ class TwoWayAssembler {
 
 		this.blocks = [];
 
-		this.linesDiff = twoWayDiff(this.lhs, this.ctr, this.rhs);
+		this.linesDiff = twoWayDiff(this.lhs, this.ctr, this.rhs, this.options?.diffOpts);
 
 		this.advance();
 		while (this.currentChange) {

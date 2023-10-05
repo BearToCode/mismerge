@@ -34,6 +34,7 @@
 4"
 		lhsEditable
 		rhsEditable
+		ignoreWhitespace
 	/>
 	<MisMerge2
 		lhs="1

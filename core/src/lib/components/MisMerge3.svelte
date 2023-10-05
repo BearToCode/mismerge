@@ -84,6 +84,16 @@
 	 * Syntax highlighting.
 	 */
 	export let highlight: ((text: string) => string | Promise<string>) | undefined = undefined;
+	/**
+	 * `true` to ignore leading and trailing whitespace.
+	 * @default false
+	 */
+	export let ignoreWhitespace = false;
+	/**
+	 * `true` to ignore casing difference.
+	 * @default false
+	 */
+	export let ignoreCase = false;
 
 	/* Local variables */
 
@@ -143,7 +153,14 @@
 	/* Reactive statements */
 
 	$: editorColors = joinWithDefault(userColors, DefaultEditorColors);
-	$: blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
+	$: blocks = assembleTwoWay(lhs, ctr, rhs, {
+		lineDiffAlgorithm,
+		hashTable,
+		diffOpts: {
+			ignoreCase,
+			ignoreWhitespace
+		}
+	});
 	$: renderComponents(blocks);
 
 	/* Lifecycle hooks */

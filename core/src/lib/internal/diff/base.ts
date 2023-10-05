@@ -1,4 +1,4 @@
-import { diffLines } from 'diff';
+import { diffLines, type LinesOptions } from 'diff';
 import { TwoWaySide } from '../editor/side';
 
 /**
@@ -55,13 +55,14 @@ function remapEoF(str: string) {
  * Generate lines diff between two strings.
  * @param lhs Left hand side content.
  * @param rhs Right hand side content.
+ * @param opts Diff options.
  * @returns Diff between the two strings.
  */
-export function oneWayDiff(lhs: string, rhs: string): OneWayChange[] {
+export function oneWayDiff(lhs: string, rhs: string, opts?: LinesOptions): OneWayChange[] {
 	const lhsRemapped = remapEoF(lhs);
 	const rhsRemapped = remapEoF(rhs);
 
-	const baseDiff = diffLines(lhsRemapped, rhsRemapped);
+	const baseDiff = diffLines(lhsRemapped, rhsRemapped, opts);
 
 	const diff = baseDiff.map((change) => ({
 		content: change.value,
@@ -77,11 +78,17 @@ export function oneWayDiff(lhs: string, rhs: string): OneWayChange[] {
  * @param lhs Left hand side content.
  * @param ctr Center content.
  * @param rhs Right hand side content.
+ * @param opts Diff options.
  * @returns Diff between the three strings.
  */
-export function twoWayDiff(lhs: string, ctr: string, rhs: string): TwoWayChange[] {
-	const lhsBaseDiff = oneWayDiff(lhs, ctr);
-	const rhsBaseDiff = oneWayDiff(ctr, rhs);
+export function twoWayDiff(
+	lhs: string,
+	ctr: string,
+	rhs: string,
+	opts?: LinesOptions
+): TwoWayChange[] {
+	const lhsBaseDiff = oneWayDiff(lhs, ctr, opts);
+	const rhsBaseDiff = oneWayDiff(ctr, rhs, opts);
 
 	const changes: TwoWayChange[] = [];
 

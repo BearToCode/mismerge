@@ -9,11 +9,13 @@ import { nanoid } from 'nanoid';
 import { DEV } from '../utils';
 import { BlocksHashTable } from '../storage/table';
 import { ModifiedBlock } from '../blocks/modified';
+import type { LinesOptions } from 'diff';
 
 export interface OneWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
 	hashTable?: BlocksHashTable<OneWaySide>;
 	direction?: 'left-to-right' | 'right-to-left';
+	diffOpts?: LinesOptions;
 }
 
 /**
@@ -46,7 +48,7 @@ class OneWayAssembler {
 
 		this.blocks = [];
 
-		this.linesDiff = oneWayDiff(this.lhs, this.rhs);
+		this.linesDiff = oneWayDiff(this.lhs, this.rhs, this.options?.diffOpts);
 
 		this.advance();
 		while (this.currentChange) {
