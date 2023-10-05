@@ -1,5 +1,6 @@
 .mismerge {
 	position: relative;
+	tab-size: 2rem;
 }
 
 .mismerge .msm__main {
@@ -120,7 +121,7 @@
 	top: 0;
 	bottom: 0;
 
-	width: calc(var(--scroll-width) - 1rem);
+	width: calc(var(--width) - 1rem);
 	min-height: 100%;
 	overflow-y: hidden;
 
@@ -135,13 +136,11 @@
 	overflow-y: hidden;
 
 	font-size: inherit;
-	tab-size: 2rem;
 }
 
 .mismerge .msm__view pre {
 	margin: 0;
 	white-space: pre;
-	tab-size: 4;
 }
 
 .mismerge .msm__view.editable .msm__line pre {
@@ -151,7 +150,6 @@
 .mismerge .msm__view .msm__line {
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
-	tab-size: 2rem;
 }
 
 .mismerge .msm__view .msm__line {
@@ -161,14 +159,22 @@
 
 /* Lines wrapping */
 
-.mismerge.wrap_lines .msm__view .msm__wrapper {
+.mismerge.wrap-lines .msm__view .msm__wrapper {
 	width: 100%;
 }
 
-.mismerge.wrap_lines .msm__view.editable .msm__line pre {
+.mismerge.wrap-lines .msm__view.editable .msm__line pre {
 	white-space: pre-wrap;
 	word-break: normal;
 	word-wrap: break-word;
+}
+
+.mismerge.wrap-lines .msm__view .msm__line {
+	max-width: 100%;
+}
+
+.mismerge.wrap-lines .msm__view .msm__content {
+	max-width: 100%;
 }
 
 /* Connector */
@@ -185,7 +191,7 @@
 	right: 0;
 	top: 0;
 	bottom: 0;
-	image-rendering: crisp-edges;
+	image-rendering: optimizeQuality;
 }
 
 /* Line numbers */
@@ -328,4 +334,35 @@
 
 .mismerge .msm__resolve-button {
 	transform: translateY(-50%) scale(0.8);
+}
+
+/* Highlight overlay */
+
+.mismerge .msm__view.highlight textarea {
+	color: transparent;
+	caret-color: black;
+}
+
+.mismerge .msm__highlight-overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	width: calc(var(--width) - 1rem);
+	min-height: 100%;
+
+	overflow-y: hidden;
+	padding: 0 0.5rem 0 0.5rem;
+}
+
+.mismerge .msm__highlight-overlay pre {
+	width: 100%;
+}
+
+.mismerge.wrap-lines .msm__highlight-overlay pre {
+	white-space: pre-wrap;
+	word-break: normal;
+	word-wrap: break-word;
 }

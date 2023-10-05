@@ -5,6 +5,7 @@
 	import SidePanel from './SidePanel.svelte';
 	import { DEV } from '$lib/internal/utils';
 	import Editor from './Editor.svelte';
+	import HighlightOverlay from './HighlightOverlay.svelte';
 
 	/* Exports */
 
@@ -14,6 +15,7 @@
 	export let side: Side;
 	export let disableMerging: boolean;
 	export let lineNumbersSide: 'left' | 'right' = 'left';
+	export let highlight: ((text: string) => string | Promise<string>) | undefined;
 	export { clazz as class };
 	export { containerElem as elem };
 	// This way it is kept as an optional binding
@@ -79,7 +81,10 @@
 	onDestroy(() => observer?.disconnect());
 </script>
 
-<div bind:this={containerElem} class="msm__view {editable ? 'editable' : ''} {clazz}">
+<div
+	bind:this={containerElem}
+	class="msm__view {highlight ? 'highlight' : ''} {editable ? 'editable' : ''} {clazz}"
+>
 	{#if lineNumbersSide == 'left'}
 		<SidePanel
 			{side}
@@ -107,6 +112,10 @@
 				<!-- {@const _ = void console.log(blockComponent, blockComponent.props)} -->
 			{/each}
 		</div>
+
+		{#if highlight}
+			<HighlightOverlay bind:content bind:width {highlight} />
+		{/if}
 
 		{#if editable}
 			<Editor bind:content bind:width bind:saveHistory />

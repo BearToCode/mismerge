@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { MisMerge2, MisMerge3 } from 'mismerge';
+	import { highlightText } from '@speed-highlight/core';
+	import { detectLanguage } from '@speed-highlight/core/detect.js';
 	import 'mismerge/styles.css';
 	import 'mismerge/default.css';
+	import '$lib/styles/code-light.css';
+
+	const highlight = async (text: string) =>
+		highlightText(text, await detectLanguage(text), true, { hideLineNumbers: true });
 </script>
 
 <svelte:head>
@@ -19,7 +25,7 @@
 </svelte:head>
 
 <main>
-	<MisMerge3 lhs="" ctr="" rhs="" lhsEditable rhsEditable wrapLines />
+	<MisMerge3 lhs="" ctr="" rhs="" lhsEditable rhsEditable wrapLines {highlight} />
 	<MisMerge2 lhs="" rhs="" lhsEditable rhsEditable wrapLines />
 </main>
 

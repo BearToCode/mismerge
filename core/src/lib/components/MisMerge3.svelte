@@ -80,6 +80,10 @@
 	 * Disable the footer blocks counters.
 	 */
 	export let disableBlocksCounters = false;
+	/**
+	 * Syntax highlighting.
+	 */
+	export let highlight: ((text: string) => string | Promise<string>) | undefined = undefined;
 
 	/* Local variables */
 
@@ -156,11 +160,12 @@
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"
-	class="mismerge {wrapLines ? 'wrap_lines' : ''} {clazz}"
+	class="mismerge {wrapLines ? 'wrap-lines' : ''} {clazz}"
 	bind:this={container}
 >
 	<div class="msm__main">
 		<View
+			{highlight}
 			{disableMerging}
 			editable={lhsEditable}
 			side={TwoWaySide.lhs}
@@ -178,6 +183,7 @@
 			bind:rhsViewElem={ctrViewElem}
 		/>
 		<View
+			{highlight}
 			{disableMerging}
 			editable={ctrEditable}
 			side={TwoWaySide.ctr}
@@ -198,6 +204,7 @@
 			bind:rhsViewElem
 		/>
 		<View
+			{highlight}
 			{disableMerging}
 			editable={rhsEditable}
 			side={TwoWaySide.rhs}

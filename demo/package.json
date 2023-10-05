@@ -16,9 +16,11 @@
 		"svelte-check": "^3.4.3",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
-		"vite": "^4.4.2"
+		"vite": "^4.4.2",
+		"vite-plugin-dynamic-import": "^1.5.0"
 	},
 	"dependencies": {
+		"@speed-highlight/core": "^1.2.4",
 		"mismerge": "workspace:*"
 	},
 	"type": "module"

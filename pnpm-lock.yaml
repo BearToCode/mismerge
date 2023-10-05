@@ -96,6 +96,9 @@ importers:
 
   demo:
     dependencies:
+      '@speed-highlight/core':
+        specifier: ^1.2.4
+        version: 1.2.4
       mismerge:
         specifier: workspace:*
         version: link:../core
@@ -121,6 +124,9 @@ importers:
       vite:
         specifier: ^4.4.2
         version: 4.4.9(@types/node@18.18.1)
+      vite-plugin-dynamic-import:
+        specifier: ^1.5.0
+        version: 1.5.0
 
 packages:
 
@@ -948,6 +954,10 @@ packages:
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
+
+  /@speed-highlight/core@1.2.4:
+    resolution: {integrity: sha512-CSSYmM8qjeDBqoq7wnJGukjpYdy97xG78rrhNSLz/SpSUeiQUOPMbieGYUxZ6e0P8eOcCZr46zFGFeUxaRguEg==}
+    dev: false
 
   /@sveltejs/adapter-auto@2.1.0(@sveltejs/kit@1.25.1):
     resolution: {integrity: sha512-o2pZCfATFtA/Gw/BB0Xm7k4EYaekXxaPGER3xGSY3FvzFJGTlJlZjBseaXwYSM94lZ0HniOjTokN3cWaLX6fow==}
@@ -2158,6 +2168,10 @@ packages:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
     dependencies:
       is-arrayish: 0.2.1
+    dev: true
+
+  /es-module-lexer@1.3.1:
+    resolution: {integrity: sha512-JUFAyicQV9mXc3YRxPnDlrfBKpqt6hUYzz9/boprUJHs4e4KVr3XwOF70doO6gwXUor6EWZJAyWAfKki84t20Q==}
     dev: true
 
   /es6-promise@3.3.1:
@@ -5495,6 +5509,15 @@ packages:
       - sugarss
       - supports-color
       - terser
+    dev: true
+
+  /vite-plugin-dynamic-import@1.5.0:
+    resolution: {integrity: sha512-Qp85c+AVJmLa8MLni74U4BDiWpUeFNx7NJqbGZyR2XJOU7mgW0cb7nwlAMucFyM4arEd92Nfxp4j44xPi6Fu7g==}
+    dependencies:
+      acorn: 8.10.0
+      es-module-lexer: 1.3.1
+      fast-glob: 3.3.1
+      magic-string: 0.30.4
     dev: true
 
   /vite@4.4.9(@types/node@18.18.1):

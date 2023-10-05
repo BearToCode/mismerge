@@ -18,7 +18,7 @@
 
 <textarea
 	spellcheck="false"
-	style="--scroll-width: {width}px;"
+	style="--width: {width}px;"
 	bind:value={content}
 	bind:this={elem}
 	on:scroll={() => (elem.scrollTop = 0)}

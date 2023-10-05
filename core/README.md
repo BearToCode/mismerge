@@ -4,10 +4,10 @@
 - Create website
 - Investigate component warnings
 - Add slots
-- Syntax highlighting
 
 ## Done
 
+- Syntax highlighting
 - Improve default styles
 - Add blocks counter
 - Fix exports

@@ -1,3 +1,6 @@
 {
-	"cSpell.words": ["cyrb", "limerge", "mismerge", "preinstall", "publint"]
+	"cSpell.words": ["cyrb", "limerge", "mismerge", "preinstall", "publint"],
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	}
 }

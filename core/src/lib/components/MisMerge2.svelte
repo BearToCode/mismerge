@@ -31,11 +31,11 @@
 	/**
 	 * Whether the left hand side content is editable.
 	 */
-	export let lhsEditable = false;
+	export let lhsEditable = true;
 	/**
 	 * Whether the right hand side content is editable.
 	 */
-	export let rhsEditable = false;
+	export let rhsEditable = true;
 	/**
 	 * Line diff algorithm.
 	 * @default "words_with_space"
@@ -69,6 +69,10 @@
 	 * Disable the footer blocks counters.
 	 */
 	export let disableBlocksCounters = false;
+	/**
+	 * Syntax highlighting.
+	 */
+	export let highlight: ((text: string) => string | Promise<string>) | undefined = undefined;
 
 	/* Local variables */
 
@@ -142,11 +146,12 @@
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"
-	class="mismerge {wrapLines ? 'wrap_lines' : ''} {clazz}"
+	class="mismerge {wrapLines ? 'wrap-lines' : ''} {clazz}"
 	bind:this={container}
 >
 	<div class="msm__main">
 		<View
+			{highlight}
 			{disableMerging}
 			editable={lhsEditable}
 			side={OneWaySide.lhs}
@@ -164,6 +169,7 @@
 			bind:rhsViewElem
 		/>
 		<View
+			{highlight}
 			{disableMerging}
 			editable={rhsEditable}
 			side={OneWaySide.rhs}
