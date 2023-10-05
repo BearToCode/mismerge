@@ -3,7 +3,7 @@
 	import { highlightText } from '@speed-highlight/core';
 	import { detectLanguage } from '@speed-highlight/core/detect.js';
 	import 'mismerge/styles.css';
-	import 'mismerge/default.css';
+	import 'mismerge/default-light.css';
 	import '$lib/styles/code-light.css';
 
 	const highlight = async (text: string) =>

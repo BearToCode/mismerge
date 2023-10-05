@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '$lib/styles/styles.css';
-	import '$lib/styles/default.css';
+	import '$lib/styles/default-light.css';
 	import MisMerge3 from '$lib/components/MisMerge3.svelte';
 	import MisMerge2 from '$lib/components/MisMerge2.svelte';
 </script>
