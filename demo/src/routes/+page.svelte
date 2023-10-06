@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { DefaultDarkColors, MisMerge2, MisMerge3 } from 'mismerge';
+	import { DefaultDarkColors, MisMerge3 } from 'mismerge';
 	import { highlightText } from '@speed-highlight/core';
 	import { detectLanguage } from '@speed-highlight/core/detect.js';
 	import 'mismerge/styles.css';

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { DiffColors, EditorColors } from '$lib/internal/editor/colors';
+	import type { EditorColors } from '$lib/internal/editor/colors';
 	import { drawConnections, type Connection } from '$lib/internal/editor/connection';
 
 	/* Exports */
 
-	export let colors: EditorColors | DiffColors;
+	export let colors: EditorColors;
 	export let lhsViewElem: HTMLDivElement;
 	export let rhsViewElem: HTMLDivElement;
 
