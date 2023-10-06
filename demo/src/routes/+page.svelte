@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { MisMerge2, MisMerge3 } from 'mismerge';
+	import { DefaultDarkColors, MisMerge2, MisMerge3 } from 'mismerge';
 	import { highlightText } from '@speed-highlight/core';
 	import { detectLanguage } from '@speed-highlight/core/detect.js';
 	import 'mismerge/styles.css';
-	import 'mismerge/default-light.css';
-	import '$lib/styles/code-light.css';
+	import 'mismerge/dark.css';
+	import '$lib/styles/code-dark.css';
 
 	const highlight = async (text: string) =>
 		highlightText(text, await detectLanguage(text), true, { hideLineNumbers: true });
@@ -25,8 +25,25 @@
 </svelte:head>
 
 <main>
-	<MisMerge3 lhs="" ctr="" rhs="" lhsEditable rhsEditable wrapLines {highlight} />
-	<MisMerge2 lhs="" rhs="" lhsEditable rhsEditable wrapLines />
+	<MisMerge3
+		{highlight}
+		lhs=""
+		ctr=""
+		rhs=""
+		lhsEditable
+		rhsEditable
+		wrapLines
+		colors={DefaultDarkColors}
+	/>
+	<!-- <MisMerge2
+		{highlight}
+		lhs=""
+		rhs=""
+		lhsEditable
+		rhsEditable
+		wrapLines
+		colors={DefaultDarkColors}
+	/> -->
 </main>
 
 <style>
@@ -34,6 +51,7 @@
 		margin: 0;
 		font-family: 'Inter var', sans-serif;
 		min-height: 100vh;
+		background: #0e0e0e;
 	}
 
 	:global(.mismerge) {

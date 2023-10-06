@@ -1,0 +1,53 @@
+.mismerge {
+	width: 100%;
+	border: 1px solid var(--primary-200);
+	border-radius: 4px;
+	height: 600px;
+	font-size: 1rem;
+	background: var(--background);
+	color: var(--primary-500);
+
+	--background: #ffffff;
+
+	--primary-100: #fbfcfc;
+	--primary-200: #ebebeb;
+	--primary-300: #797b7e;
+	--primary-400: #3a3a3a;
+	--primary-500: #323232;
+
+	--accent: #a1f0cc;
+}
+
+.mismerge .msm__footer {
+	background-color: var(--background);
+	border-top: var(--primary-200) 1px solid;
+}
+
+.mismerge .msm__footer-content span {
+	color: var(--primary-300);
+}
+
+.mismerge .msm__view-content textarea {
+	color: var(--primary-500);
+	caret-color: var(--primary-400);
+}
+
+.mismerge .msm__connector,
+.mismerge .msm__side_panel {
+	background-color: var(--primary-100);
+}
+
+.mismerge .msm__side_panel {
+	color: var(--primary-300);
+	font-weight: 500;
+}
+
+.mismerge .msm__merge-button,
+.mismerge .msm__resolve-button {
+	color: var(--primary-300);
+}
+
+.mismerge .msm__merge-button:hover,
+.mismerge .msm__resolve-button:hover {
+	color: var(--primary-400);
+}

@@ -1,7 +1,8 @@
 import { onDestroy, onMount } from 'svelte';
-import type { DiffColors, EditorColors } from './colors';
+import type { EditorColors } from './colors';
 import type { BlockComponent } from './component';
 import { DEV } from '../utils';
+import { TwoWaySide } from './side';
 
 /**
  * A connection between two blocks.
@@ -11,10 +12,7 @@ export type Connection = {
 	to: BlockComponent;
 };
 
-function componentColor(
-	component: BlockComponent,
-	colors: Partial<EditorColors & DiffColors>
-): `#${string}` {
+function componentColor(component: BlockComponent, colors: EditorColors): `#${string}` {
 	const defaultColor = '#ffffff';
 	switch (component.type) {
 		case 'added':
@@ -22,7 +20,8 @@ function componentColor(
 			return colors.added ?? defaultColor;
 		case 'removed':
 		case 'removed-placeholder':
-			return colors.removed ?? defaultColor;
+			if (component.side instanceof TwoWaySide) return colors.removedBothSides ?? defaultColor;
+			else return colors.removed ?? defaultColor;
 		case 'merge-conflict':
 		case 'merge-conflict-placeholder':
 			return colors.conflict ?? defaultColor;
@@ -48,7 +47,7 @@ function componentColor(
 export function drawConnections(
 	canvas: HTMLCanvasElement,
 	connections: Connection[],
-	colors: EditorColors | DiffColors,
+	colors: EditorColors,
 	lhsViewElem: HTMLDivElement,
 	rhsViewElem: HTMLDivElement,
 	container: HTMLElement

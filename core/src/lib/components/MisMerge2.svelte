@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { joinWithDefault } from '$lib/internal/utils';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
-	import { type DiffColors, DefaultDiffColors } from '$lib/internal/editor/colors';
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import { drawOnChange, type Connection } from '$lib/internal/editor/connection';
 	import { assembleOneWay } from '$lib/internal/diff/one-way-assembler';
@@ -13,6 +12,7 @@
 	import { BlocksHashTable } from '$lib/internal/storage/table';
 	import { countWords, countChars } from '$lib/internal/editor/counters';
 	import Footer from './layout/Footer.svelte';
+	import { DefaultLightColors, type EditorColors } from '$lib/internal/editor/colors';
 
 	/* Exports */
 
@@ -87,8 +87,8 @@
 	/* Local variables */
 
 	let clazz = '';
-	let userColors: Partial<DiffColors> = {};
-	let editorColors: DiffColors;
+	let userColors: Partial<EditorColors> = {};
+	let editorColors: EditorColors;
 	let blocks: DiffBlock<Side>[] = [];
 	let connections: Connection[] = [];
 	let components: BlockComponent[] = [];
@@ -138,7 +138,7 @@
 
 	/* Reactive statements */
 
-	$: editorColors = joinWithDefault(userColors, DefaultDiffColors);
+	$: editorColors = joinWithDefault(userColors, DefaultLightColors);
 	$: blocks = assembleOneWay(lhs, rhs, {
 		lineDiffAlgorithm,
 		hashTable,
@@ -158,8 +158,8 @@
 	style="
 		--added: {editorColors.added};
 		--removed: {editorColors.removed};
-		--added-overlay: {editorColors.addedOverlay};
-		--removed-overlay: {editorColors.removedOverlay};
+		--conflict: {editorColors.conflict};
+		--resolved-conflict: {editorColors.resolvedConflict};
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"

@@ -1,6 +1,7 @@
 .mismerge {
 	position: relative;
 	tab-size: 2rem;
+	overflow: hidden;
 }
 
 .mismerge .msm__main {
@@ -340,7 +341,6 @@
 
 .mismerge .msm__view.highlight textarea {
 	color: transparent;
-	caret-color: black;
 }
 
 .mismerge .msm__highlight-overlay {

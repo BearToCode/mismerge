@@ -5,7 +5,7 @@
 	import Connector from './layout/Connector.svelte';
 	import View from './layout/View.svelte';
 	import { assembleTwoWay } from '$lib/internal/diff/two-way-assembler';
-	import { type EditorColors, DefaultEditorColors } from '$lib/internal/editor/colors';
+	import { type EditorColors, DefaultLightColors } from '$lib/internal/editor/colors';
 	import { Side, TwoWaySide } from '$lib/internal/editor/side';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
@@ -152,7 +152,7 @@
 
 	/* Reactive statements */
 
-	$: editorColors = joinWithDefault(userColors, DefaultEditorColors);
+	$: editorColors = joinWithDefault(userColors, DefaultLightColors);
 	$: blocks = assembleTwoWay(lhs, ctr, rhs, {
 		lineDiffAlgorithm,
 		hashTable,
@@ -171,7 +171,7 @@
 <div
 	style="
 		--added: {editorColors.added};
-		--removed: {editorColors.removed};
+		--removed: {editorColors.removedBothSides};
     --conflict: {editorColors.conflict};
 		--resolved-conflict: {editorColors.resolvedConflict};
 		--modified: {editorColors.modified};

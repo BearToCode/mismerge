@@ -1,8 +1,9 @@
 <script lang="ts">
 	import '$lib/styles/styles.css';
-	import '$lib/styles/default-light.css';
+	import '$lib/styles/dark.css';
 	import MisMerge3 from '$lib/components/MisMerge3.svelte';
 	import MisMerge2 from '$lib/components/MisMerge2.svelte';
+	import { DefaultDarkColors } from '$lib/internal/editor/colors';
 </script>
 
 <svelte:head>
@@ -34,7 +35,7 @@
 4"
 		lhsEditable
 		rhsEditable
-		ignoreWhitespace
+		colors={DefaultDarkColors}
 	/>
 	<MisMerge2
 		lhs="1
@@ -52,6 +53,7 @@ a
 9
 "
 		rhsEditable
+		colors={DefaultDarkColors}
 	/>
 </main>
 
@@ -60,6 +62,7 @@ a
 		margin: 0;
 		font-family: 'Inter var', sans-serif;
 		min-height: 100vh;
+		background: #0e0e0e;
 	}
 
 	:global(.mismerge) {
@@ -71,6 +74,14 @@ a
 		max-width: 1536px;
 		margin: 0 auto 0 auto;
 		padding: 2rem 0 2rem 0;
+	}
+
+	:global(main > *) {
+		margin-top: 4rem;
+	}
+
+	:global(main > *:first-child) {
+		margin-top: 0;
 	}
 
 	/* Responsive main */
