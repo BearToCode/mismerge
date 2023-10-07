@@ -177,60 +177,62 @@
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"
-	class="mismerge {wrapLines ? 'wrap-lines' : ''} {clazz}"
+	class="mismerge msm__two-way {wrapLines ? 'wrap-lines' : ''} {clazz}"
 	bind:this={container}
 >
-	<div class="msm__main">
-		<View
-			{highlight}
-			{disableMerging}
-			editable={lhsEditable}
-			side={TwoWaySide.lhs}
-			lineNumbersSide="right"
-			bind:content={lhs}
-			bind:components
-			bind:elem={lhsViewElem}
-			on:merge={mergeComponentHandler(TwoWaySide.lhs)}
-			on:height-change={redrawConnections}
-		/>
-		<Connector
-			colors={editorColors}
-			bind:draw={drawLhsConnections}
-			bind:lhsViewElem
-			bind:rhsViewElem={ctrViewElem}
-		/>
-		<View
-			{highlight}
-			{disableMerging}
-			editable={ctrEditable}
-			side={TwoWaySide.ctr}
-			bind:content={ctr}
-			bind:components
-			bind:elem={ctrViewElem}
-			bind:saveHistory={saveCtrHistory}
-			on:merge={mergeComponentHandler(TwoWaySide.ctr)}
-			on:resolve={() => {
-				blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
-			}}
-			on:height-change={redrawConnections}
-		/>
-		<Connector
-			colors={editorColors}
-			bind:draw={drawRhsConnections}
-			bind:lhsViewElem={ctrViewElem}
-			bind:rhsViewElem
-		/>
-		<View
-			{highlight}
-			{disableMerging}
-			editable={rhsEditable}
-			side={TwoWaySide.rhs}
-			bind:content={rhs}
-			bind:components
-			bind:elem={rhsViewElem}
-			on:merge={mergeComponentHandler(TwoWaySide.rhs)}
-			on:height-change={redrawConnections}
-		/>
+	<div>
+		<div class="msm__main">
+			<View
+				{highlight}
+				{disableMerging}
+				editable={lhsEditable}
+				side={TwoWaySide.lhs}
+				lineNumbersSide="right"
+				bind:content={lhs}
+				bind:components
+				bind:elem={lhsViewElem}
+				on:merge={mergeComponentHandler(TwoWaySide.lhs)}
+				on:height-change={redrawConnections}
+			/>
+			<Connector
+				colors={editorColors}
+				bind:draw={drawLhsConnections}
+				bind:lhsViewElem
+				bind:rhsViewElem={ctrViewElem}
+			/>
+			<View
+				{highlight}
+				{disableMerging}
+				editable={ctrEditable}
+				side={TwoWaySide.ctr}
+				bind:content={ctr}
+				bind:components
+				bind:elem={ctrViewElem}
+				bind:saveHistory={saveCtrHistory}
+				on:merge={mergeComponentHandler(TwoWaySide.ctr)}
+				on:resolve={() => {
+					blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
+				}}
+				on:height-change={redrawConnections}
+			/>
+			<Connector
+				colors={editorColors}
+				bind:draw={drawRhsConnections}
+				bind:lhsViewElem={ctrViewElem}
+				bind:rhsViewElem
+			/>
+			<View
+				{highlight}
+				{disableMerging}
+				editable={rhsEditable}
+				side={TwoWaySide.rhs}
+				bind:content={rhs}
+				bind:components
+				bind:elem={rhsViewElem}
+				on:merge={mergeComponentHandler(TwoWaySide.rhs)}
+				on:height-change={redrawConnections}
+			/>
+		</div>
 	</div>
 	{#if !disableFooter}
 		<Footer

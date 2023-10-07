@@ -4,9 +4,14 @@
 	overflow: hidden;
 }
 
+.mismerge > div {
+	max-height: 100%;
+	overflow-y: scroll;
+}
+
 .mismerge .msm__main {
 	display: flex;
-	height: 100%;
+	align-items: stretch;
 }
 
 .mismerge pre,
@@ -104,10 +109,11 @@
 
 .mismerge .msm__view .msm__view-content {
 	width: fit-content;
+	height: fit-content;
+	min-height: 100%;
 	min-width: calc(100% - 4rem);
 	position: relative;
 	overflow-x: auto;
-	overflow-y: hidden;
 }
 
 .mismerge .msm__view .msm__wrapper {

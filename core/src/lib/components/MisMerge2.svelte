@@ -163,7 +163,7 @@
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"
-	class="mismerge {wrapLines ? 'wrap-lines' : ''} {clazz}"
+	class="mismerge msm__one-way {wrapLines ? 'wrap-lines' : ''} {clazz}"
 	bind:this={container}
 >
 	<div class="msm__main">
