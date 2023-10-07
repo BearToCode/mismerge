@@ -1,19 +1,21 @@
 <script lang="ts">
 	import type { EditorColors } from '$lib/internal/editor/colors';
 	import { drawConnections, type Connection } from '$lib/internal/editor/connection';
+	import { debounce } from '$lib/internal/utils';
 
 	/* Exports */
 
 	export let colors: EditorColors;
 	export let lhsViewElem: HTMLDivElement;
 	export let rhsViewElem: HTMLDivElement;
+	export let connectionsDebounceDelay: number;
 
-	export const draw = (container: HTMLDivElement, connections: Connection[]) => {
+	export const draw = debounce((container: HTMLDivElement, connections: Connection[]) => {
 		savedContainer = container;
 		savedConnections = connections;
 		if (lhsViewElem && rhsViewElem)
 			drawConnections(canvas, connections, colors, lhsViewElem, rhsViewElem, container);
-	};
+	}, connectionsDebounceDelay);
 
 	/* Local variables */
 

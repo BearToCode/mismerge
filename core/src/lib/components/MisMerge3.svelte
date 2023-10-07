@@ -94,6 +94,11 @@
 	 * @default false
 	 */
 	export let ignoreCase = false;
+	/**
+	 * Delay in milliseconds to throttle connections drawing.
+	 * @default 10ms
+	 */
+	export let connectionsDebounceDelay = 10;
 
 	/* Local variables */
 
@@ -195,6 +200,7 @@
 				on:height-change={redrawConnections}
 			/>
 			<Connector
+				{connectionsDebounceDelay}
 				colors={editorColors}
 				bind:draw={drawLhsConnections}
 				bind:lhsViewElem
@@ -216,6 +222,7 @@
 				on:height-change={redrawConnections}
 			/>
 			<Connector
+				{connectionsDebounceDelay}
 				colors={editorColors}
 				bind:draw={drawRhsConnections}
 				bind:lhsViewElem={ctrViewElem}
