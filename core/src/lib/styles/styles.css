@@ -1,6 +1,6 @@
 .mismerge {
 	position: relative;
-	tab-size: 2rem;
+	tab-size: 2;
 	overflow: hidden;
 }
 
@@ -114,6 +114,7 @@
 	min-width: calc(100% - 4rem);
 	position: relative;
 	overflow-x: auto;
+	overscroll-behavior-x: none;
 }
 
 .mismerge .msm__view .msm__wrapper {
