@@ -317,11 +317,11 @@
 .mismerge .msm__merge-button,
 .mismerge .msm__resolve-button {
 	width: fit-content;
-	height: fit-content;
+	height: 24px;
 
 	position: absolute;
 	right: 0;
-	top: 12px;
+	top: min(12px, 50%);
 	cursor: pointer;
 
 	padding: 0;
@@ -330,8 +330,8 @@
 	background: unset;
 }
 
-.mismerge .msm__merge-button,
-.mismerge .msm__resolve-button {
+.mismerge .msm__left .msm__merge-button,
+.mismerge .msm__left .msm__resolve-button {
 	right: unset;
 	left: 0;
 }
