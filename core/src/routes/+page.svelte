@@ -62,6 +62,7 @@ abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcab
 2
 3
 4"
+		wrapLines
 		lhsEditable
 		rhsEditable
 		colors={DefaultDarkColors}

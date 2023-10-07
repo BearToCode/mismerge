@@ -34,16 +34,6 @@
 		linesComponents = linesComponents;
 	}
 
-	function getLineHeight(componentIndex: number, lineIndex: number) {
-		const componentElem = componentsElements[componentIndex];
-		if (!componentElem) return '';
-		const lineElem = Array.from(componentElem.querySelectorAll('.msm__line')).at(lineIndex);
-		if (!lineElem) return '';
-		// Do not use clientHeight as it is rounded to an integer
-		const height = lineElem.getBoundingClientRect().height;
-		return `${height}px`;
-	}
-
 	/* Reactive statements */
 
 	$: generateLines(components);
@@ -54,15 +44,45 @@
 </script>
 
 <div class="msm__side_panel msm__{direction}">
-	{#each linesComponents as { startingLineNumber, component }, componentIndex}
+	{#if componentsElements}
+		{#each componentsElements as compElem, compIndex}
+			{@const lineComp = linesComponents[compIndex]}
+			{#if compElem && lineComp}
+				{@const { startingLineNumber, component } = lineComp}
+				{@const lines = compElem.querySelectorAll('.msm__line')}
+
+				{#if lines.length == 0}
+					<div class="msm__line-placeholder {component.type}" />
+				{:else}
+					{#each lines as lineElem, lineIndex}
+						<div
+							style="height: {lineElem.getBoundingClientRect().height}px;"
+							class="msm__line-number {component.type}"
+						>
+							{#if lineIndex == 0 && !disableMerging && component.sideAction}
+								<svelte:component
+									this={component.sideAction.component}
+									{...component.sideAction.props}
+									{component}
+									{dispatch}
+								/>
+							{/if}
+
+							<pre>{startingLineNumber + lineIndex}</pre>
+						</div>
+					{/each}
+				{/if}
+			{/if}
+		{/each}
+	{/if}
+	<!-- {#each linesComponents as { startingLineNumber, component }, componentIndex}
 		{#if component.placeholder}
 			<div class="msm__line-placeholder {component.type}" />
 		{:else}
-			<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 			{#each { length: component.linesCount } as _, lineIndex}
 				{#key componentsElements[componentIndex]}
 					<div
-						style="height: {getLineHeight(componentIndex, lineIndex)};"
+						style="height: {getLineHeight(componentIndex, lineIndex)}px;"
 						class="msm__line-number {component.type}"
 					>
 						{#if lineIndex == 0 && !disableMerging && component.sideAction}
@@ -79,5 +99,5 @@
 				{/key}
 			{/each}
 		{/if}
-	{/each}
+	{/each} -->
 </div>
