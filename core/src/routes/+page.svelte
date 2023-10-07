@@ -4,6 +4,9 @@
 	import MisMerge3 from '$lib/components/MisMerge3.svelte';
 	import MisMerge2 from '$lib/components/MisMerge2.svelte';
 	import { DefaultDarkColors } from '$lib/internal/editor/colors';
+	import LhsPlaceholderText from '$lib/placeholder/lhs-quicksort.c?raw';
+	import CtrPlaceholderText from '$lib/placeholder/ctr-quicksort.c?raw';
+	import RhsPlaceholderText from '$lib/placeholder/rhs-quicksort.c?raw';
 </script>
 
 <svelte:head>
@@ -22,66 +25,17 @@
 
 <main>
 	<MisMerge3
-		lhs="abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
-1
-abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
-1
-2
-3
-abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
-1
-2
-3
-abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
-1
-2
-3
-abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
-1
-2
-3
-abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
-1
-2
-3
-abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
-1
-2
-3
-v
-abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
-1
-2
-3
-2
-3"
-		ctr="1
-2
-3"
-		rhs="1
-2
-3
-4"
+		lhs={LhsPlaceholderText}
+		ctr={CtrPlaceholderText}
+		rhs={RhsPlaceholderText}
 		wrapLines
 		lhsEditable
 		rhsEditable
 		colors={DefaultDarkColors}
 	/>
 	<MisMerge2
-		lhs="1
-3
-2
-3
-9
-5"
-		lhsEditable
-		rhs="1
-a
-2
-3
-5
-9
-"
+		lhs={LhsPlaceholderText}
+		rhs={RhsPlaceholderText}
 		rhsEditable
 		colors={DefaultDarkColors}
 	/>
