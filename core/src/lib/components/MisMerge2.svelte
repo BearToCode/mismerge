@@ -171,38 +171,40 @@
 	class="mismerge msm__one-way {wrapLines ? 'wrap-lines' : ''} {clazz}"
 	bind:this={container}
 >
-	<div class="msm__main">
-		<View
-			{highlight}
-			{disableMerging}
-			editable={lhsEditable}
-			side={OneWaySide.lhs}
-			bind:components
-			bind:content={lhs}
-			bind:elem={lhsViewElem}
-			bind:saveHistory={saveLhsHistory}
-			on:merge={mergeComponentHandler(OneWaySide.lhs)}
-			on:newline={redrawConnections}
-		/>
-		<Connector
-			{connectionsDebounceDelay}
-			colors={editorColors}
-			bind:draw={drawConnections}
-			bind:lhsViewElem
-			bind:rhsViewElem
-		/>
-		<View
-			{highlight}
-			{disableMerging}
-			editable={rhsEditable}
-			side={OneWaySide.rhs}
-			bind:components
-			bind:content={rhs}
-			bind:elem={rhsViewElem}
-			bind:saveHistory={saveRhsHistory}
-			on:merge={mergeComponentHandler(OneWaySide.rhs)}
-			on:newline={redrawConnections}
-		/>
+	<div>
+		<div class="msm__main">
+			<View
+				{highlight}
+				{disableMerging}
+				editable={lhsEditable}
+				side={OneWaySide.lhs}
+				bind:components
+				bind:content={lhs}
+				bind:elem={lhsViewElem}
+				bind:saveHistory={saveLhsHistory}
+				on:merge={mergeComponentHandler(OneWaySide.lhs)}
+				on:newline={redrawConnections}
+			/>
+			<Connector
+				{connectionsDebounceDelay}
+				colors={editorColors}
+				bind:draw={drawConnections}
+				bind:lhsViewElem
+				bind:rhsViewElem
+			/>
+			<View
+				{highlight}
+				{disableMerging}
+				editable={rhsEditable}
+				side={OneWaySide.rhs}
+				bind:components
+				bind:content={rhs}
+				bind:elem={rhsViewElem}
+				bind:saveHistory={saveRhsHistory}
+				on:merge={mergeComponentHandler(OneWaySide.rhs)}
+				on:newline={redrawConnections}
+			/>
+		</div>
 	</div>
 	{#if !disableFooter}
 		<Footer
