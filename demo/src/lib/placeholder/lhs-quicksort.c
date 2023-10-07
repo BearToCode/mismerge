@@ -9,12 +9,12 @@ int partition(int array[], int low, int high) {
   int i = low - 1;
 
   for (int j = low; j < high; j++) {
-    if (array[j] <= pivot) 
+    if (array[j] <= pivot) {
       i++;
       swap(&array[i], &array[j]);
     }
   }
-  swap(&array[i + 1], &array[high]);
+  swap(&array[high], &array[i + 1]);
   
   return i + 1;
 }
