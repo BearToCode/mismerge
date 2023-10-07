@@ -75,29 +75,4 @@
 			{/if}
 		{/each}
 	{/if}
-	<!-- {#each linesComponents as { startingLineNumber, component }, componentIndex}
-		{#if component.placeholder}
-			<div class="msm__line-placeholder {component.type}" />
-		{:else}
-			{#each { length: component.linesCount } as _, lineIndex}
-				{#key componentsElements[componentIndex]}
-					<div
-						style="height: {getLineHeight(componentIndex, lineIndex)}px;"
-						class="msm__line-number {component.type}"
-					>
-						{#if lineIndex == 0 && !disableMerging && component.sideAction}
-							<svelte:component
-								this={component.sideAction.component}
-								{...component.sideAction.props}
-								{component}
-								{dispatch}
-							/>
-						{/if}
-
-						<pre>{startingLineNumber + lineIndex}</pre>
-					</div>
-				{/key}
-			{/each}
-		{/if}
-	{/each} -->
 </div>
