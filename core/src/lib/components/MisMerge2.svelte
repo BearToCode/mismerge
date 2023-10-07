@@ -74,6 +74,11 @@
 	 */
 	export let highlight: ((text: string) => string | Promise<string>) | undefined = undefined;
 	/**
+	 * Syntax highlighting debounce in milliseconds.
+	 * @default 300ms
+	 */
+	export let highlightDebounce = 300;
+	/**
 	 * `true` to ignore leading and trailing whitespace.
 	 * @default false
 	 */
@@ -169,6 +174,7 @@
 	<div class="msm__main">
 		<View
 			{highlight}
+			{highlightDebounce}
 			{disableMerging}
 			editable={lhsEditable}
 			side={OneWaySide.lhs}
@@ -187,6 +193,7 @@
 		/>
 		<View
 			{highlight}
+			{highlightDebounce}
 			{disableMerging}
 			editable={rhsEditable}
 			side={OneWaySide.rhs}

@@ -26,6 +26,19 @@ export const eqSet = <T>(a: Set<T>, b: Set<T>) =>
 	a.size === b.size && [...a].every((x) => b.has(x));
 
 /**
+ * Debounce the provided function.
+ * @param cb Callback function.
+ * @param wait The time to wait in milliseconds.
+ */
+export function debounce<T extends unknown[]>(cb: (...args: T) => unknown, wait = 1000) {
+	let timeout: NodeJS.Timeout;
+	return (...args: T) => {
+		clearTimeout(timeout);
+		timeout = setTimeout(() => cb(...args), wait);
+	};
+}
+
+/**
  * Whether the current environment is development.
  */
 export const DEV = process.env.NODE_ENV !== 'production';

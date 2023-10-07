@@ -16,6 +16,7 @@
 	export let disableMerging: boolean;
 	export let lineNumbersSide: 'left' | 'right' = 'left';
 	export let highlight: ((text: string) => string | Promise<string>) | undefined;
+	export let highlightDebounce: number;
 	export { clazz as class };
 	export { containerElem as elem };
 	// This way it is kept as an optional binding
@@ -114,7 +115,7 @@
 		</div>
 
 		{#if highlight}
-			<HighlightOverlay bind:content bind:width {highlight} />
+			<HighlightOverlay bind:content bind:width {highlight} {highlightDebounce} />
 		{/if}
 
 		{#if editable}

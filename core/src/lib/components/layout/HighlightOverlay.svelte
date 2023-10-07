@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { debounce } from '$lib/internal/utils';
+
 	/* Exports */
 
 	export let content: string;
 	export let highlight: (text: string) => string | Promise<string>;
 	export let width: number;
+	export let highlightDebounce: number;
 
 	/* Local variables */
 
@@ -11,9 +14,9 @@
 
 	/* Local functions */
 
-	const highlightContent = async (text: string) => {
+	const highlightContent = debounce(async (text: string) => {
 		highlighted = await highlight(text);
-	};
+	}, highlightDebounce);
 
 	/* Reactive statements */
 
