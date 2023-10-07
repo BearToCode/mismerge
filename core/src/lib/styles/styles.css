@@ -5,13 +5,15 @@
 }
 
 .mismerge > div {
-	max-height: 100%;
+	height: 100%;
 	overflow-y: scroll;
 }
 
 .mismerge .msm__main {
 	display: flex;
 	align-items: stretch;
+	padding-bottom: 1.5rem;
+	min-height: calc(100% - 1.5rem);
 }
 
 .mismerge pre,
@@ -142,6 +144,7 @@
 
 	resize: none;
 	overflow-y: hidden;
+	white-space: pre;
 
 	font-size: inherit;
 }
@@ -171,7 +174,8 @@
 	width: 100%;
 }
 
-.mismerge.wrap-lines .msm__view.editable .msm__line pre {
+.mismerge.wrap-lines .msm__view.editable .msm__line pre,
+.mismerge.wrap-lines .msm__view textarea {
 	white-space: pre-wrap;
 	word-break: normal;
 	word-wrap: break-word;
@@ -366,6 +370,10 @@
 
 .mismerge .msm__highlight-overlay pre {
 	width: 100%;
+}
+
+.mismerge .msm__highlight-overlay pre {
+	white-space: pre;
 }
 
 .mismerge.wrap-lines .msm__highlight-overlay pre {
