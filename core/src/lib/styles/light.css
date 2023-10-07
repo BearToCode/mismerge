@@ -15,7 +15,7 @@
 	--primary-400: #3a3a3a;
 	--primary-500: #323232;
 
-	--accent: #a1f0cc;
+	--selection: rgba(161, 240, 204, 0.25);
 }
 
 .mismerge .msm__footer {
@@ -33,7 +33,7 @@
 }
 
 .mismerge .msm__view-content textarea::selection {
-	background: var(--accent);
+	background: var(--selection);
 }
 
 .mismerge .msm__connector,
