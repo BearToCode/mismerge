@@ -32,6 +32,10 @@
 	caret-color: var(--primary-400);
 }
 
+.mismerge .msm__view-content textarea::selection {
+	background: var(--accent);
+}
+
 .mismerge .msm__connector,
 .mismerge .msm__side_panel {
 	background-color: var(--primary-100);
