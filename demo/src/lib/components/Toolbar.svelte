@@ -3,17 +3,27 @@
 	import Radio from './Radio.svelte';
 	import {
 		component,
+		ctr,
 		disableFooter,
 		disableMerging,
 		ignoreCase,
 		ignoreWhitespace,
 		language,
+		lhs,
+		rhs,
 		wrapLines
 	} from '$lib/stores';
 </script>
 
 <div class="toolbar">
-	<button class="reset">
+	<button
+		class="reset"
+		on:click={() => {
+			lhs.set('');
+			rhs.set('');
+			ctr.set('');
+		}}
+	>
 		<iconify-icon icon="pajamas:clear-all" />
 	</button>
 

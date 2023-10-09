@@ -2,17 +2,17 @@
 	import { DefaultDarkColors, MisMerge2, MisMerge3 } from 'mismerge';
 	import {
 		component,
+		ctr,
 		disableFooter,
 		disableMerging,
 		ignoreCase,
 		ignoreWhitespace,
 		language,
+		lhs,
+		rhs,
 		wrapLines
 	} from '$lib/stores';
 	import { highlightText } from '@speed-highlight/core';
-	import LhsPlaceholderText from '$lib/placeholder/lhs-quicksort.c?raw';
-	import CtrPlaceholderText from '$lib/placeholder/ctr-quicksort.c?raw';
-	import RhsPlaceholderText from '$lib/placeholder/rhs-quicksort.c?raw';
 	import Toolbar from '$lib/components/Toolbar.svelte';
 	import 'mismerge/styles.css';
 	import 'mismerge/dark.css';
@@ -21,10 +21,6 @@
 
 	const highlight = async (text: string) =>
 		highlightText(text, $language, true, { hideLineNumbers: true });
-
-	let lhs = LhsPlaceholderText;
-	let ctr = CtrPlaceholderText;
-	let rhs = RhsPlaceholderText;
 </script>
 
 <svelte:head>
@@ -49,8 +45,8 @@
 		{#if $component == 'mismerge2'}
 			<MisMerge2
 				{highlight}
-				bind:lhs
-				bind:rhs
+				bind:lhs={$lhs}
+				bind:rhs={$rhs}
 				lhsEditable
 				rhsEditable
 				wrapLines={$wrapLines}
@@ -63,9 +59,9 @@
 		{:else}
 			<MisMerge3
 				{highlight}
-				bind:lhs
-				bind:ctr
-				bind:rhs
+				bind:lhs={$lhs}
+				bind:ctr={$ctr}
+				bind:rhs={$rhs}
 				lhsEditable
 				rhsEditable
 				wrapLines={$wrapLines}
