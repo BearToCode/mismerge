@@ -97,3 +97,7 @@ export function diff2Sides(
 		rhs: rhsLines
 	};
 }
+
+export function equalIgnoringWhitespace(a: string, b: string) {
+	return a.replaceAll(/\s/g, '') == b.replaceAll(/\s/g, '');
+}

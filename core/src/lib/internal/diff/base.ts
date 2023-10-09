@@ -62,7 +62,12 @@ export function oneWayDiff(lhs: string, rhs: string, opts?: LinesOptions): OneWa
 	const lhsRemapped = remapEoF(lhs);
 	const rhsRemapped = remapEoF(rhs);
 
-	const baseDiff = diffLines(lhsRemapped, rhsRemapped, opts);
+	// Using the ignore whitespace option of diff.js just remove the whitespace
+	// from the changes, instead we keep it and ignore modified blocks that
+	// are the same after removing the whitespace.
+	const baseDiff = diffLines(lhsRemapped, rhsRemapped, {
+		ignoreCase: opts?.ignoreCase
+	});
 
 	const diff = baseDiff.map((change) => ({
 		content: change.value,

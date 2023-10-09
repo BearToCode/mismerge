@@ -16,6 +16,10 @@
 	min-height: calc(100% - 1.5rem);
 }
 
+.mismerge.disable-footer .msm__main {
+	min-height: 100%;
+}
+
 .mismerge pre,
 .mismerge textarea,
 .mismerge button {

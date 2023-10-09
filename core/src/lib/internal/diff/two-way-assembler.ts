@@ -5,7 +5,7 @@ import { ModifiedBlock } from '../blocks/modified';
 import { RemovedBlock, type RemovedSideData } from '../blocks/removed';
 import { UnchangedBlock } from '../blocks/unchanged';
 import { twoWayDiff, type TwoWayChange } from './base';
-import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
+import { diff2Sides, equalIgnoringWhitespace, type LineDiffAlgorithm } from './line-diff';
 import { TwoWaySide } from '../editor/side';
 import { DEV } from '../utils';
 import { BlocksHashTable } from '../storage/table';
@@ -136,10 +136,21 @@ class TwoWayAssembler {
 	}
 
 	private assembleUnchangedBlock(change: TwoWayChange) {
-		const sides: TwoWaySide[] = [TwoWaySide.lhs, TwoWaySide.ctr, TwoWaySide.rhs];
 		const block = this.hashTable.new(UnchangedBlock, {
-			lines: this.intoLines(change.content),
-			sides
+			sidesData: [
+				{
+					side: TwoWaySide.lhs,
+					lines: this.intoLines(change.content)
+				},
+				{
+					side: TwoWaySide.ctr,
+					lines: this.intoLines(change.content)
+				},
+				{
+					side: TwoWaySide.rhs,
+					lines: this.intoLines(change.content)
+				}
+			]
 		});
 		this.blocks.push(block);
 	}
@@ -238,7 +249,38 @@ class TwoWayAssembler {
 			const ctrContent = ctrSideData?.lines.map((change) => change.content).join('\n') + '\n';
 			const rhsContent = rhsSideData?.lines.map((change) => change.content).join('\n') + '\n';
 
-			if (lhsContent === ctrContent) {
+			// check for whitespace only changes
+			const ignoreWhitespace = this.options?.diffOpts?.ignoreWhitespace;
+			if (ignoreWhitespace) {
+				if (
+					equalIgnoringWhitespace(lhsContent, ctrContent) &&
+					equalIgnoringWhitespace(ctrContent, rhsContent)
+				) {
+					const unchangedBlock = this.hashTable.new(UnchangedBlock, {
+						sidesData: [
+							{
+								side: TwoWaySide.lhs,
+								lines: block.sidesData.find(({ side }) => side.eq(TwoWaySide.lhs))?.lines ?? []
+							},
+							{
+								side: TwoWaySide.ctr,
+								lines: block.sidesData.find(({ side }) => side.eq(TwoWaySide.ctr))?.lines ?? []
+							},
+							{
+								side: TwoWaySide.rhs,
+								lines: block.sidesData.find(({ side }) => side.eq(TwoWaySide.rhs))?.lines ?? []
+							}
+						]
+					});
+					blocks.push(unchangedBlock);
+					continue;
+				}
+			}
+
+			if (
+				lhsContent === ctrContent ||
+				(ignoreWhitespace && equalIgnoringWhitespace(lhsContent, ctrContent))
+			) {
 				const diff = diff2Sides(ctrContent, rhsContent, {
 					algorithm: this.options?.lineDiffAlgorithm
 				});
@@ -262,7 +304,10 @@ class TwoWayAssembler {
 				continue;
 			}
 
-			if (ctrContent === rhsContent) {
+			if (
+				ctrContent === rhsContent ||
+				(ignoreWhitespace && equalIgnoringWhitespace(ctrContent, rhsContent))
+			) {
 				const diff = diff2Sides(lhsContent, ctrContent, {
 					algorithm: this.options?.lineDiffAlgorithm
 				});

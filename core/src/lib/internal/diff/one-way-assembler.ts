@@ -3,7 +3,7 @@ import { AddedBlock } from '../blocks/added';
 import { RemovedBlock } from '../blocks/removed';
 import { UnchangedBlock } from '../blocks/unchanged';
 import { type OneWayChange, oneWayDiff } from './base';
-import { diff2Sides, type LineDiffAlgorithm } from './line-diff';
+import { diff2Sides, equalIgnoringWhitespace, type LineDiffAlgorithm } from './line-diff';
 import { OneWaySide } from '../editor/side';
 import { nanoid } from 'nanoid';
 import { DEV } from '../utils';
@@ -126,13 +126,40 @@ class OneWayAssembler {
 
 	private assembleUnchangedBlock(change: OneWayChange) {
 		const block = this.hashTable.new(UnchangedBlock, {
-			lines: this.intoLines(change.content),
-			sides: [this.addSide, this.removeSide]
+			sidesData: [
+				{
+					side: this.addSide,
+					lines: this.intoLines(change.content)
+				},
+				{
+					side: this.removeSide,
+					lines: this.intoLines(change.content)
+				}
+			]
 		});
 		this.blocks.push(block);
 	}
 
 	private assemblePartiallyModifiedBlock(lhsChange: OneWayChange, rhsChange: OneWayChange) {
+		if (
+			this.options?.diffOpts?.ignoreWhitespace &&
+			equalIgnoringWhitespace(lhsChange.content, rhsChange.content)
+		) {
+			const block = this.hashTable.new(UnchangedBlock, {
+				sidesData: [
+					{
+						side: OneWaySide.lhs,
+						lines: this.intoLines(lhsChange.content)
+					},
+					{
+						side: OneWaySide.rhs,
+						lines: this.intoLines(lhsChange.content)
+					}
+				]
+			});
+			return this.blocks.push(block);
+		}
+
 		const diff = diff2Sides(lhsChange.content, rhsChange.content, {
 			algorithm: this.options?.lineDiffAlgorithm
 		});

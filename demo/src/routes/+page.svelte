@@ -1,17 +1,30 @@
 <script lang="ts">
-	import { DefaultDarkColors, MisMerge3 } from 'mismerge';
+	import { DefaultDarkColors, MisMerge2, MisMerge3 } from 'mismerge';
+	import {
+		component,
+		disableFooter,
+		disableMerging,
+		ignoreCase,
+		ignoreWhitespace,
+		language,
+		wrapLines
+	} from '$lib/stores';
 	import { highlightText } from '@speed-highlight/core';
-	import { detectLanguage } from '@speed-highlight/core/detect.js';
 	import LhsPlaceholderText from '$lib/placeholder/lhs-quicksort.c?raw';
 	import CtrPlaceholderText from '$lib/placeholder/ctr-quicksort.c?raw';
 	import RhsPlaceholderText from '$lib/placeholder/rhs-quicksort.c?raw';
+	import Toolbar from '$lib/components/Toolbar.svelte';
 	import 'mismerge/styles.css';
 	import 'mismerge/dark.css';
 	import '$lib/styles/code-dark.css';
 	import '$lib/styles/styles.css';
 
 	const highlight = async (text: string) =>
-		highlightText(text, 'c', true, { hideLineNumbers: true });
+		highlightText(text, $language, true, { hideLineNumbers: true });
+
+	let lhs = LhsPlaceholderText;
+	let ctr = CtrPlaceholderText;
+	let rhs = RhsPlaceholderText;
 </script>
 
 <svelte:head>
@@ -26,33 +39,51 @@
 	<!-- Inter -->
 	<link rel="preconnect" href="https://rsms.me/" />
 	<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+
+	<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </svelte:head>
 
 <main>
-	<MisMerge3
-		{highlight}
-		lhs={LhsPlaceholderText}
-		ctr={CtrPlaceholderText}
-		rhs={RhsPlaceholderText}
-		lhsEditable
-		rhsEditable
-		colors={DefaultDarkColors}
-	/>
-	<!-- <MisMerge2
-		{highlight}
-		lhs=""
-		rhs=""
-		lhsEditable
-		rhsEditable
-		wrapLines
-		colors={DefaultDarkColors}
-	/> -->
+	<Toolbar />
+	{#key $language}
+		{#if $component == 'mismerge2'}
+			<MisMerge2
+				{highlight}
+				bind:lhs
+				bind:rhs
+				lhsEditable
+				rhsEditable
+				wrapLines={$wrapLines}
+				disableMerging={$disableMerging}
+				disableFooter={$disableFooter}
+				ignoreWhitespace={$ignoreWhitespace}
+				ignoreCase={$ignoreCase}
+				colors={DefaultDarkColors}
+			/>
+		{:else}
+			<MisMerge3
+				{highlight}
+				bind:lhs
+				bind:ctr
+				bind:rhs
+				lhsEditable
+				rhsEditable
+				wrapLines={$wrapLines}
+				disableMerging={$disableMerging}
+				disableFooter={$disableFooter}
+				ignoreWhitespace={$ignoreWhitespace}
+				ignoreCase={$ignoreCase}
+				colors={DefaultDarkColors}
+			/>
+		{/if}
+	{/key}
 </main>
 
 <style>
 	:global(.mismerge) {
 		font-family: 'Fira Code', monospace;
 		font-variant-ligatures: normal;
-		min-height: 90vh;
+		min-height: 85vh;
+		margin-top: 1rem;
 	}
 </style>

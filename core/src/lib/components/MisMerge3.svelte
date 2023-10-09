@@ -167,6 +167,10 @@
 		}
 	});
 	$: renderComponents(blocks);
+	$: {
+		wrapLines;
+		redrawConnections();
+	}
 
 	/* Lifecycle hooks */
 
@@ -182,7 +186,10 @@
 		--modified: {editorColors.modified};
 		--modified-overlay: {editorColors.modifiedOverlay};
 	"
-	class="mismerge msm__two-way {wrapLines ? 'wrap-lines' : ''} {clazz}"
+	class="mismerge msm__two-way
+		{wrapLines ? 'wrap-lines' : ''} 
+		{disableFooter ? 'disable-footer' : ''} 
+		{clazz}"
 	bind:this={container}
 >
 	<div>

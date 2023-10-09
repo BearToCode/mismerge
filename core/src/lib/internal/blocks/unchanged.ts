@@ -3,32 +3,36 @@ import { BlockComponent } from '../editor/component';
 import type { Line } from '.';
 import { DiffBlock } from '.';
 import type { Side } from '../editor/side';
+import type { MaybeArray } from '../utils';
+
+export type UnchangedSideData<SideType extends Side> = {
+	side: SideType;
+	lines: Line[];
+};
 
 export class UnchangedBlock<SideType extends Side = Side> extends DiffBlock<SideType> {
 	public static readonly type = 'unchanged';
 	public type = UnchangedBlock.type;
 
-	public readonly lines: Line[];
-	public readonly sides: SideType[];
+	public readonly sidesData: MaybeArray<UnchangedSideData<SideType>>;
 
-	constructor(params: { lines: Line[]; sides: SideType[] }) {
+	constructor(params: { sidesData: MaybeArray<UnchangedSideData<SideType>> }) {
 		super();
-		this.lines = params.lines;
-		this.sides = params.sides;
+		this.sidesData = params.sidesData;
 	}
 
-	public linesCount(): number {
-		return this.lines.length;
+	public linesCount(side: SideType): number {
+		return [this.sidesData].flat().find((sideData) => sideData.side.eq(side))?.lines.length ?? 0;
 	}
 
 	public render() {
-		const components = this.sides.map(
-			(side) =>
+		const components = [this.sidesData].flat().map(
+			({ side, lines }) =>
 				new BlockComponent({
 					component: UnchangedBlockComponent,
 					blockId: this.id,
-					props: { lines: this.lines },
-					linesCount: this.linesCount(),
+					props: { lines },
+					linesCount: this.linesCount(side),
 					side,
 					type: this.type
 				})

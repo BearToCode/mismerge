@@ -32,12 +32,14 @@
 		lhsEditable
 		rhsEditable
 		colors={DefaultDarkColors}
+		ignoreWhitespace
 	/>
 	<MisMerge2
 		lhs={LhsPlaceholderText}
 		rhs={RhsPlaceholderText}
 		rhsEditable
 		colors={DefaultDarkColors}
+		ignoreWhitespace
 	/>
 </main>
 

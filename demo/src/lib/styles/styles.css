@@ -3,6 +3,7 @@ body {
 	font-family: 'Inter var', sans-serif;
 	min-height: 100vh;
 
+	color: #e7e7e7;
 	background-color: #0e0e0e;
 	background-size: 40px 40px;
 	background-image: radial-gradient(circle, #2c2a2a 1px, rgba(0, 0, 0, 0) 1px);
@@ -44,4 +45,103 @@ main {
 	main {
 		width: 1280px;
 	}
+}
+
+/* Toolbar */
+
+.toolbar {
+	width: 100%;
+	display: flex;
+}
+
+.toolbar > * {
+	margin-right: 0.75rem;
+	flex-shrink: 0;
+	flex-grow: 1;
+}
+
+.toolbar > *:last-child {
+	margin-right: 0;
+}
+
+/* Buttons */
+
+.toolbar > button,
+.toolbar > .radio {
+	background: #0e0e0e;
+	opacity: 0.8;
+	color: inherit;
+
+	font-family: inherit;
+	font-size: 1rem;
+	cursor: pointer;
+
+	padding: 0.25rem 1rem;
+	border: 1px solid #444344;
+	border-radius: 6px;
+
+	min-width: 10rem;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	transition: all 0.1s ease-in-out;
+}
+
+.toolbar > button:hover,
+.toolbar > .radio:hover {
+	opacity: 1;
+	border-color: #8a5e88;
+}
+
+.toolbar > button > *,
+.toolbar > .radio > button > * {
+	margin-right: 0.5rem;
+}
+
+.toolbar > button > *:last-child,
+.toolbar > .radio > button > *:last-child {
+	margin-right: 0;
+}
+
+/* Dropdown */
+
+.dropdown-list {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0;
+	margin: 0;
+}
+
+.dropdown-list > button {
+	margin-top: 0.25rem;
+	padding: 0.5rem 0.75rem;
+
+	width: 100%;
+	background: none;
+	border: 0;
+	text-align: left;
+
+	font-family: inherit;
+	font-size: 0.9rem;
+	color: inherit;
+}
+
+.dropdown-list > button:first-child {
+	margin-top: 0;
+}
+
+.dropdown-list > button > * {
+	margin-right: 0.5rem;
+}
+
+.dropdown-list > button > *:last-child {
+	margin-right: 0;
+}
+
+.dropdown-list > button iconify-icon {
+	font-size: 1.25rem;
 }
