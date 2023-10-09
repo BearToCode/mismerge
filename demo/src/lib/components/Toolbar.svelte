@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ShjLanguage } from '@speed-highlight/core/index';
 	import CheckBox from './CheckBox.svelte';
 	import Radio from './Radio.svelte';
 	import {
