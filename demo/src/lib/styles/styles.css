@@ -145,3 +145,10 @@ main {
 .dropdown-list > button iconify-icon {
 	font-size: 1.25rem;
 }
+
+/* Radio languages */
+
+.radio-languages {
+	max-height: 24rem;
+	overflow-y: auto;
+}

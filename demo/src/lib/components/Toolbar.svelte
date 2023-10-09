@@ -31,7 +31,7 @@
 		<iconify-icon icon="tabler:code" />
 		<span>Language</span>
 
-		<ul slot="dropdown" let:RadioOption class="dropdown-list">
+		<ul slot="dropdown" let:RadioOption class="dropdown-list radio-languages">
 			<RadioOption bind:selectedValue={$language} value="bash">
 				<iconify-icon icon="codicon:terminal-bash" />
 				<span>Bash</span>
@@ -75,6 +75,11 @@
 			<RadioOption bind:selectedValue={$language} value="perl">
 				<iconify-icon icon="nonicons:perl-16" />
 				<span>Perl</span>
+			</RadioOption>
+
+			<RadioOption bind:selectedValue={$language} value="lua">
+				<iconify-icon icon="nonicons:lua-16" />
+				<span>Lua</span>
 			</RadioOption>
 
 			<RadioOption bind:selectedValue={$language} value="py">
