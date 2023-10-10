@@ -24,7 +24,7 @@
 </svelte:head>
 
 <main>
-	<MisMerge3
+	<!-- <MisMerge3
 		lhs={LhsPlaceholderText}
 		ctr={CtrPlaceholderText}
 		rhs={RhsPlaceholderText}
@@ -33,13 +33,12 @@
 		rhsEditable
 		colors={DefaultDarkColors}
 		ignoreWhitespace
-	/>
+	/> -->
 	<MisMerge2
-		lhs={LhsPlaceholderText}
-		rhs={RhsPlaceholderText}
-		rhsEditable
+		lhs="1
+2"
+		rhs=""
 		colors={DefaultDarkColors}
-		ignoreWhitespace
 	/>
 </main>
 

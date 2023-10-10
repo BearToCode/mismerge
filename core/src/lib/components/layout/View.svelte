@@ -2,8 +2,8 @@
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import type { Side } from '$lib/internal/editor/side';
 	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
-	import SidePanel from './SidePanel.svelte';
 	import { DEV } from '$lib/internal/utils';
+	import SidePanel from './SidePanel.svelte';
 	import Editor from './Editor.svelte';
 	import HighlightOverlay from './HighlightOverlay.svelte';
 
@@ -103,13 +103,13 @@
 			bind:clientHeight={height}
 		>
 			{#each sideComponents as blockComponent}
+				<!-- TODO: find out the origin of unknown props warnings -->
+				{@const _ = void console.log(blockComponent.component, blockComponent.props)}
 				<svelte:component
 					this={blockComponent.component}
 					component={blockComponent}
 					{...blockComponent.props}
 				/>
-				<!-- TODO: find out the origin of unknown props warnings -->
-				<!-- {@const _ = void console.log(blockComponent, blockComponent.props)} -->
 			{/each}
 		</div>
 

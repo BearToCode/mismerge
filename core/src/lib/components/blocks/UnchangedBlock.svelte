@@ -4,6 +4,8 @@
 
 	export let lines: Line[];
 	export let component: BlockComponent;
+
+	console.log($$props);
 </script>
 
 <div class="msm__block {component.type}" id={component.id}>

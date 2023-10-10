@@ -5,6 +5,7 @@
 - Investigate component warnings
 - Add slots
 - Custom scrollbar style
+- Add light theme to demo
 
 ## Done
 
