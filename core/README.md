@@ -4,7 +4,6 @@
 - Create website
 - Investigate component warnings
 - Add slots
-- Do not clear and then draw connections, but replace the old context with one where the connections where already drawn
 - Custom scrollbar style
 - Add binding for when everything has been merged
 
@@ -18,3 +17,4 @@
 - Option to disable merging
 - Fix history to work with merges
 - Add blocks actions
+- Do not clear and then draw connections, but replace the old context with one where the connections where already drawn
