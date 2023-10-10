@@ -42,6 +42,11 @@
 		<span>Language</span>
 
 		<ul slot="dropdown" let:RadioOption class="dropdown-list radio-languages">
+			<RadioOption bind:selectedValue={$language} value="plain">
+				<iconify-icon icon="majesticons:text" />
+				<span>Plain</span>
+			</RadioOption>
+
 			<RadioOption bind:selectedValue={$language} value="bash">
 				<iconify-icon icon="codicon:terminal-bash" />
 				<span>Bash</span>
