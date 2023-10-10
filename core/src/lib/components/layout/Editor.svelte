@@ -22,4 +22,8 @@
 	bind:value={content}
 	bind:this={elem}
 	on:scroll={() => (elem.scrollTop = 0)}
+	on:input
+	on:keydown
+	on:keypress
+	on:keyup
 />

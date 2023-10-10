@@ -118,7 +118,7 @@
 		{/if}
 
 		{#if editable}
-			<Editor bind:content bind:width bind:saveHistory />
+			<Editor bind:content bind:width bind:saveHistory on:input on:keydown on:keypress on:keyup />
 		{/if}
 	</div>
 	{#if lineNumbersSide == 'right'}

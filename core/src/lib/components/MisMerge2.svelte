@@ -186,6 +186,10 @@
 				bind:saveHistory={saveLhsHistory}
 				on:merge={mergeComponentHandler(OneWaySide.lhs)}
 				on:newline={redrawConnections}
+				on:input
+				on:keydown
+				on:keypress
+				on:keyup
 			/>
 			<Connector
 				colors={editorColors}
@@ -204,6 +208,10 @@
 				bind:saveHistory={saveRhsHistory}
 				on:merge={mergeComponentHandler(OneWaySide.rhs)}
 				on:newline={redrawConnections}
+				on:input
+				on:keydown
+				on:keypress
+				on:keyup
 			/>
 		</div>
 	</div>

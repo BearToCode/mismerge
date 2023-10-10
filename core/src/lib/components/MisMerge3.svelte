@@ -200,6 +200,10 @@
 				bind:elem={lhsViewElem}
 				on:merge={mergeComponentHandler(TwoWaySide.lhs)}
 				on:height-change={redrawConnections}
+				on:input
+				on:keydown
+				on:keypress
+				on:keyup
 			/>
 			<Connector
 				colors={editorColors}
@@ -221,6 +225,10 @@
 					blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
 				}}
 				on:height-change={redrawConnections}
+				on:input
+				on:keydown
+				on:keypress
+				on:keyup
 			/>
 			<Connector
 				colors={editorColors}
@@ -238,6 +246,10 @@
 				bind:elem={rhsViewElem}
 				on:merge={mergeComponentHandler(TwoWaySide.rhs)}
 				on:height-change={redrawConnections}
+				on:input
+				on:keydown
+				on:keypress
+				on:keyup
 			/>
 		</div>
 	</div>
