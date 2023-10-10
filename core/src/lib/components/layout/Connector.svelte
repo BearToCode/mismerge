@@ -1,21 +1,20 @@
 <script lang="ts">
 	import type { EditorColors } from '$lib/internal/editor/colors';
 	import { drawConnections, type Connection } from '$lib/internal/editor/connection';
-	import { debounce } from '$lib/internal/utils';
 
 	/* Exports */
 
 	export let colors: EditorColors;
 	export let lhsViewElem: HTMLDivElement;
 	export let rhsViewElem: HTMLDivElement;
-	export let connectionsDebounceDelay: number;
 
-	export const draw = debounce((container: HTMLDivElement, connections: Connection[]) => {
+	export const draw = (container: HTMLDivElement, connections: Connection[]) => {
 		savedContainer = container;
 		savedConnections = connections;
-		if (lhsViewElem && rhsViewElem)
+		if (lhsViewElem && rhsViewElem) {
 			drawConnections(canvas, connections, colors, lhsViewElem, rhsViewElem, container);
-	}, connectionsDebounceDelay);
+		}
+	};
 
 	/* Local variables */
 
@@ -26,12 +25,24 @@
 
 	/* Local functions */
 
-	function setDimensions() {
-		canvas.width = Math.floor(width);
-		canvas.height = Math.floor(height + 2);
+	function resize(width: number, height: number) {
+		if (!canvas) return;
+		if (canvas.width == width && canvas.height == height) return;
+		const ctx = canvas.getContext('2d');
+		if (!ctx) return;
+
+		// Resize the canvas to fit the container
+		// and copy the original data back to the canvas
+		const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		ctx.canvas.width = width;
+		ctx.canvas.height = height;
+		ctx.putImageData(imageData, 0, 0);
 	}
 
-	const redraw = () => savedConnections && savedContainer && draw(savedContainer, savedConnections);
+	const redraw = () => {
+		if (!canvas || !savedContainer || !savedConnections) return;
+		draw(savedContainer, savedConnections);
+	};
 
 	/* Reactive statements */
 
@@ -41,14 +52,7 @@
 		redraw();
 	}
 
-	$: {
-		width;
-		height;
-		if (canvas) {
-			setDimensions();
-			redraw();
-		}
-	}
+	$: resize(width, height);
 </script>
 
 <div class="msm__connector" bind:offsetWidth={width} bind:offsetHeight={height}>
