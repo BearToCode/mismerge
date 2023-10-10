@@ -18,6 +18,7 @@
 
 .mismerge.disable-footer .msm__main {
 	min-height: 100%;
+	padding-bottom: 0;
 }
 
 .mismerge pre,
