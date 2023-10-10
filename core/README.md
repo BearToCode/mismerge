@@ -5,7 +5,6 @@
 - Investigate component warnings
 - Add slots
 - Custom scrollbar style
-- Add binding for when everything has been merged
 
 ## Done
 
@@ -18,3 +17,4 @@
 - Fix history to work with merges
 - Add blocks actions
 - Do not clear and then draw connections, but replace the old context with one where the connections where already drawn
+- Add binding for when everything has been merged

@@ -13,6 +13,7 @@
 	import { BlocksHashTable } from '$lib/internal/storage/table';
 	import Footer from './layout/Footer.svelte';
 	import { countChars, countWords } from '$lib/internal/editor/counters';
+	import { MergeConflictBlock } from '$lib/internal/blocks/merge-conflict';
 
 	/* Exports */
 
@@ -94,6 +95,10 @@
 	 * @default false
 	 */
 	export let ignoreCase = false;
+	/**
+	 * Whether all conflicts have been resolved.
+	 */
+	export let conflictsResolved = false;
 
 	/* Local variables */
 
@@ -166,6 +171,9 @@
 		wrapLines;
 		redrawConnections();
 	}
+	$: conflictsResolved = blocks.every(
+		(block) => !(block instanceof MergeConflictBlock) || block.isResolved
+	);
 
 	/* Lifecycle hooks */
 
