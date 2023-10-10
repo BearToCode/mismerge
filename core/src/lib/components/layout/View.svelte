@@ -103,8 +103,6 @@
 			bind:clientHeight={height}
 		>
 			{#each sideComponents as blockComponent}
-				<!-- TODO: find out the origin of unknown props warnings -->
-				{@const _ = void console.log(blockComponent.component, blockComponent.props)}
 				<svelte:component
 					this={blockComponent.component}
 					component={blockComponent}
