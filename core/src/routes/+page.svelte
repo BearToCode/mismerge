@@ -1,15 +1,16 @@
 <script lang="ts">
 	import '$lib/styles/styles.css';
 	import '$lib/styles/dark.css';
-	import MisMerge3 from '$lib/components/MisMerge3.svelte';
 	import MisMerge2 from '$lib/components/MisMerge2.svelte';
 	import { DefaultDarkColors } from '$lib/internal/editor/colors';
-	import LhsPlaceholderText from '$lib/placeholder/lhs-quicksort.c?raw';
-	import CtrPlaceholderText from '$lib/placeholder/ctr-quicksort.c?raw';
-	import RhsPlaceholderText from '$lib/placeholder/rhs-quicksort.c?raw';
 </script>
 
 <svelte:head>
+	<title>MisMerge</title>
+	<meta name="description" content="A modern merge conflict editor for the web" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta charset="utf-8" />
+
 	<!-- Custom fonts -->
 	<!-- Fira font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
