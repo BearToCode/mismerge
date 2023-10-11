@@ -2,9 +2,7 @@
 
 - Create demo
 - Create website
-- Investigate component warnings
 - Add slots
-- Custom scrollbar style
 - Add light theme to demo
 
 ## Done
@@ -19,3 +17,5 @@
 - Add blocks actions
 - Do not clear and then draw connections, but replace the old context with one where the connections where already drawn
 - Add binding for when everything has been merged
+- Custom scrollbar style
+- Investigate component warnings
