@@ -44,6 +44,7 @@ export class CodeInput {
 	private handleKeyDown(e: KeyboardEvent) {
 		const key = e.key.toLowerCase();
 		this.pressedKeys.add(key);
+		console.log(this.pressedKeys);
 		this.shouldSave = true;
 
 		if (eqSet(this.pressedKeys, new Set(['control', 'z']))) {
@@ -58,7 +59,7 @@ export class CodeInput {
 			return this.redo();
 		}
 
-		if (eqSet(this.pressedKeys, new Set(['tab']))) {
+		if (this.pressedKeys.has('tab')) {
 			if (e.repeat) return;
 			e.preventDefault();
 			return this.indent();
