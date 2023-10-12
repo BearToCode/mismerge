@@ -44,7 +44,6 @@ export class CodeInput {
 	private handleKeyDown(e: KeyboardEvent) {
 		const key = e.key.toLowerCase();
 		this.pressedKeys.add(key);
-		console.log(this.pressedKeys);
 		this.shouldSave = true;
 
 		if (eqSet(this.pressedKeys, new Set(['control', 'z']))) {
