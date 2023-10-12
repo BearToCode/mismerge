@@ -196,6 +196,8 @@
 		{clazz}"
 	bind:this={container}
 >
+	<slot name="header" />
+
 	<div>
 		<div class="msm__main">
 			<View
@@ -260,6 +262,7 @@
 				on:keypress
 				on:keyup
 			/>
+			<slot name="main" />
 		</div>
 	</div>
 	{#if !disableFooter}
@@ -270,6 +273,8 @@
 			{disableWordsCounter}
 			{disableCharsCounter}
 			{disableBlocksCounters}
-		/>
+		>
+			<slot name="footer" />
+		</Footer>
 	{/if}
 </div>

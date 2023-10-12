@@ -81,4 +81,5 @@
 			{/if}
 		</div>
 	</div>
+	<slot />
 </footer>

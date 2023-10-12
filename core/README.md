@@ -2,8 +2,6 @@
 
 - Create demo
 - Create website
-- Add slots
-- Add light theme to demo
 
 ## Done
 
@@ -19,3 +17,5 @@
 - Add binding for when everything has been merged
 - Custom scrollbar style
 - Investigate component warnings
+- Add slots
+- Add light theme to demo
