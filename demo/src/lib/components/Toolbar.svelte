@@ -14,7 +14,6 @@
 		theme,
 		wrapLines
 	} from '$lib/stores';
-	import { invalidateAll } from '$app/navigation';
 </script>
 
 <div class="toolbar">
