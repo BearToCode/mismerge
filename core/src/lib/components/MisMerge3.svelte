@@ -169,6 +169,7 @@
 	$: renderComponents(blocks);
 	$: {
 		wrapLines;
+		editorColors;
 		redrawConnections();
 	}
 	$: conflictsResolved = blocks.every(

@@ -11,8 +11,10 @@
 		language,
 		lhs,
 		rhs,
+		theme,
 		wrapLines
 	} from '$lib/stores';
+	import { invalidateAll } from '$app/navigation';
 </script>
 
 <div class="toolbar">
@@ -25,6 +27,19 @@
 		}}
 	>
 		<iconify-icon icon="pajamas:clear-all" />
+	</button>
+
+	<button
+		class="change-theme"
+		on:click={() => {
+			if ($theme == 'light') {
+				theme.set('dark');
+			} else {
+				theme.set('light');
+			}
+		}}
+	>
+		<iconify-icon icon="mingcute:moon-fill" />
 	</button>
 
 	<Radio bind:value={$component}>
@@ -181,10 +196,15 @@
 </div>
 
 <style>
-	.reset {
+	.reset,
+	.change-theme {
 		width: fit-content;
 		min-width: unset;
 		padding: 0;
-		width: 1.5rem;
+		width: 1.75rem;
+	}
+
+	.change-theme {
+		font-size: 1.5rem;
 	}
 </style>

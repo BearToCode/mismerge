@@ -1,5 +1,11 @@
 <script lang="ts">
-	import { DefaultDarkColors, MisMerge2, MisMerge3 } from 'mismerge';
+	import {
+		DefaultDarkColors,
+		MisMerge2,
+		MisMerge3,
+		type EditorColors,
+		DefaultLightColors
+	} from 'mismerge';
 	import {
 		component,
 		ctr,
@@ -10,17 +16,58 @@
 		language,
 		lhs,
 		rhs,
+		theme,
 		wrapLines
 	} from '$lib/stores';
+	import { loadDynamicStylesheet } from '$lib/dynamic-css';
 	import { highlightText } from '@speed-highlight/core';
+	import { onMount } from 'svelte';
 	import Toolbar from '$lib/components/Toolbar.svelte';
-	import 'mismerge/styles.css';
-	import 'mismerge/dark.css';
-	import '$lib/styles/code-dark.css';
+
 	import '$lib/styles/styles.css';
+	import 'mismerge/styles.css';
+	import mismergeLightStyle from 'mismerge/light.css?raw';
+	import mismergeDarkStyle from 'mismerge/dark.css?raw';
+	import codeLightStyle from '$lib/styles/code-light.css?raw';
+	import codeDarkStyle from '$lib/styles/code-dark.css?raw';
+
+	let mounted = false;
+	let unloadStylesheets: (() => void)[] = [];
+
+	onMount(() => {
+		mounted = true;
+		loadStylesheets($theme);
+	});
+
+	function loadStylesheets(theme: string) {
+		const add = (fn: () => void) => unloadStylesheets.push(fn);
+		switch (theme) {
+			case 'dark':
+				add(loadDynamicStylesheet(mismergeDarkStyle));
+				add(loadDynamicStylesheet(codeDarkStyle));
+				break;
+			case 'light':
+				add(loadDynamicStylesheet(mismergeLightStyle));
+				add(loadDynamicStylesheet(codeLightStyle));
+				break;
+		}
+	}
+
+	theme.subscribe((value) => {
+		if (!mounted) return;
+		unloadStylesheets.forEach((fn) => fn());
+		unloadStylesheets = [];
+		loadStylesheets(value);
+		updateColors(value);
+	});
 
 	const highlight = async (text: string) =>
 		highlightText(text, $language, true, { hideLineNumbers: true });
+
+	let colors: EditorColors;
+	const updateColors = (theme: string) =>
+		(colors = theme == 'light' ? DefaultLightColors : DefaultDarkColors);
+	theme.subscribe(updateColors);
 </script>
 
 <svelte:head>
@@ -49,6 +96,7 @@
 	{#key $language}
 		{#if $component == 'mismerge2'}
 			<MisMerge2
+				{colors}
 				{highlight}
 				bind:lhs={$lhs}
 				bind:rhs={$rhs}
@@ -59,10 +107,10 @@
 				disableFooter={$disableFooter}
 				ignoreWhitespace={$ignoreWhitespace}
 				ignoreCase={$ignoreCase}
-				colors={DefaultDarkColors}
 			/>
 		{:else}
 			<MisMerge3
+				{colors}
 				{highlight}
 				bind:lhs={$lhs}
 				bind:ctr={$ctr}
@@ -74,7 +122,6 @@
 				disableFooter={$disableFooter}
 				ignoreWhitespace={$ignoreWhitespace}
 				ignoreCase={$ignoreCase}
-				colors={DefaultDarkColors}
 			/>
 		{/if}
 	{/key}

@@ -49,6 +49,7 @@
 	$: {
 		lhsViewElem;
 		rhsViewElem;
+		colors;
 		redraw();
 	}
 

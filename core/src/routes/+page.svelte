@@ -3,6 +3,8 @@
 	import '$lib/styles/dark.css';
 	import MisMerge2 from '$lib/components/MisMerge2.svelte';
 	import { DefaultDarkColors } from '$lib/internal/editor/colors';
+
+	let colors = DefaultDarkColors;
 </script>
 
 <svelte:head>
@@ -39,7 +41,7 @@
 		lhs="1
 2"
 		rhs=""
-		colors={DefaultDarkColors}
+		{colors}
 	/>
 </main>
 

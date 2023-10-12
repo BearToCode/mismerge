@@ -5,15 +5,16 @@
 	height: 600px;
 	font-size: 1rem;
 	background: var(--background);
-	color: var(--primary-500);
+	color: var(--primary-600);
 
 	--background: #ffffff;
 
 	--primary-100: #fbfcfc;
 	--primary-200: #ebebeb;
-	--primary-300: #797b7e;
-	--primary-400: #3a3a3a;
-	--primary-500: #323232;
+	--primary-300: #a8abad;
+	--primary-400: #797b7e;
+	--primary-500: #3a3a3a;
+	--primary-600: #323232;
 
 	--selection: rgba(161, 240, 204, 0.25);
 }
@@ -24,12 +25,12 @@
 }
 
 .mismerge .msm__footer-content span {
-	color: var(--primary-300);
+	color: var(--primary-400);
 }
 
 .mismerge .msm__view-content textarea {
-	color: var(--primary-500);
-	caret-color: var(--primary-400);
+	color: var(--primary-600);
+	caret-color: var(--primary-500);
 }
 
 .mismerge .msm__view-content textarea::selection {
@@ -42,18 +43,18 @@
 }
 
 .mismerge .msm__side_panel {
-	color: var(--primary-300);
+	color: var(--primary-400);
 	font-weight: 500;
 }
 
 .mismerge .msm__merge-button,
 .mismerge .msm__resolve-button {
-	color: var(--primary-300);
+	color: var(--primary-400);
 }
 
 .mismerge .msm__merge-button:hover,
 .mismerge .msm__resolve-button:hover {
-	color: var(--primary-400);
+	color: var(--primary-500);
 }
 
 /* Scrollbar for Chromium-based browser */
@@ -72,5 +73,5 @@
 }
 
 .mismerge ::-webkit-scrollbar-thumb:hover {
-	background: var(--primary-300);
+	background: var(--primary-400);
 }
