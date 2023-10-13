@@ -1,6 +1,11 @@
 {
 	"name": "mismerge",
 	"version": "0.0.1",
+	"description": "A modern merge editor for the Web",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/BearToCode/mismerge.git"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
