@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link href="./_app/immutable/assets/2.906f7f01.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.4f53f294.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.cc3b5246.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.6f8f357e.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.72303d17.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.80ad29d6.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/preload-helper.a4192956.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.031db8ef.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.4eb4318e.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/stores.987b4f08.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.4e352da8.js"><title>MisMerge</title><!-- HEAD_svelte-as0srb_START --><meta name="description" content="A modern merge conflict editor for the web"><meta name="viewport" content="width=device-width, initial-scale=1"><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="preconnect" href="https://rsms.me/"><link rel="stylesheet" href="https://rsms.me/inter/inter.css"><script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" data-svelte-h="svelte-jemd3a"></script><!-- HEAD_svelte-as0srb_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">   <main><div class="toolbar"><button class="reset svelte-1tb3pme" data-svelte-h="svelte-107jzw"><iconify-icon icon="pajamas:clear-all"></iconify-icon></button> <button class="change-theme svelte-1tb3pme" data-svelte-h="svelte-3ni5c9"><iconify-icon icon="mingcute:moon-fill"></iconify-icon></button>  <div class="radio "><button><iconify-icon icon="bxs:component"></iconify-icon> <span data-svelte-h="svelte-ffa16r">Component</span> <iconify-icon class="arrow-down" icon="iconamoon:arrow-down-2-bold"></iconify-icon></button> <div class="dropdown"><ul slot="dropdown" class="dropdown-list"><button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> MisMerge2 </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> <iconify-icon class="tick-icon" icon="mdi:tick"></iconify-icon></div> MisMerge3 </button></ul></div></div>  <div class="radio "><button><iconify-icon icon="tabler:code"></iconify-icon> <span data-svelte-h="svelte-14yo44w">Language</span> <iconify-icon class="arrow-down" icon="iconamoon:arrow-down-2-bold"></iconify-icon></button> <div class="dropdown"><ul slot="dropdown" class="dropdown-list radio-languages"><button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="majesticons:text"></iconify-icon> <span data-svelte-h="svelte-rrv7a2">Plain</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="codicon:terminal-bash"></iconify-icon> <span data-svelte-h="svelte-1cir7g">Bash</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="ri:css3-fill"></iconify-icon> <span data-svelte-h="svelte-5adosj">CSS</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="eos-icons:csv-file"></iconify-icon> <span data-svelte-h="svelte-vjruj2">CSV</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="ri:html5-fill"></iconify-icon> <span data-svelte-h="svelte-oj0gjj">HTML</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="ic:twotone-http"></iconify-icon> <span data-svelte-h="svelte-1xakl5u">HTTP</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="bxl:javascript"></iconify-icon> <span data-svelte-h="svelte-a4515h">JavaScript</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="nonicons:json-16"></iconify-icon> <span data-svelte-h="svelte-1jgzc68">JSON</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="pajamas:markdown-mark-solid"></iconify-icon> <span data-svelte-h="svelte-1w77y53">Markdown</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="nonicons:perl-16"></iconify-icon> <span data-svelte-h="svelte-1u3sbhn">Perl</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="nonicons:lua-16"></iconify-icon> <span data-svelte-h="svelte-1xtgg9k">Lua</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="nonicons:python-16"></iconify-icon> <span data-svelte-h="svelte-1x883d4">Python</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="tabler:file-type-sql"></iconify-icon> <span data-svelte-h="svelte-atzmnu">SQL</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="bxl:typescript"></iconify-icon> <span data-svelte-h="svelte-5weutx">TypeScript</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="file-icons:yaml-alt1"></iconify-icon> <span data-svelte-h="svelte-1mafh4p">Yaml</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="fontisto:docker"></iconify-icon> <span data-svelte-h="svelte-lysgk6">Docker</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> <iconify-icon class="tick-icon" icon="mdi:tick"></iconify-icon></div> <iconify-icon icon="devicon-plain:c"></iconify-icon> <span data-svelte-h="svelte-v6vbgh">C</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="carbon:xml"></iconify-icon> <span data-svelte-h="svelte-131aan9">XML</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="nonicons:rust-16"></iconify-icon> <span data-svelte-h="svelte-1x8fzfw">Rust</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="file-icons:go"></iconify-icon> <span data-svelte-h="svelte-126un90">GO</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="nonicons:java-16"></iconify-icon> <span data-svelte-h="svelte-guj2ay">Java</span> </button> <button class="radio-btn checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="heroicons:cpu-chip-20-solid"></iconify-icon> <span data-svelte-h="svelte-bq9cka">Assembly</span> </button></ul></div></div> <button class="checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="uis:wrap-text"></iconify-icon> <span data-svelte-h="svelte-1d8dcet">Wrap lines</span></button> <button class="checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="jam:merge"></iconify-icon> <span data-svelte-h="svelte-3j15w3">Disable merging</span></button> <button class="checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="pixelarticons:layout-footer"></iconify-icon> <span data-svelte-h="svelte-1wwjmch">Disable footer</span></button> <button class="checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="mingcute:space-fill"></iconify-icon> <span data-svelte-h="svelte-1kjnq4v">Ignore whitespace</span></button> <button class="checkbox-btn"><div class="checkbox"><iconify-icon class="checkbox-icon" icon="mdi:checkbox-blank-outline"></iconify-icon> </div> <iconify-icon icon="fluent:text-case-title-16-filled"></iconify-icon> <span data-svelte-h="svelte-10tgp8k">Ignore case</span></button> </div> <div style="--added: #d4eed4; --removed: #fff2f0; --conflict: #fff2f0; --resolved-conflict: #cfdcfa; --modified: #e4f4f5; --modified-overlay: #d3f0f2;" class="mismerge msm__two-way   "> <div><div class="msm__main"><div class="msm__view highlight editable "> <div class="msm__view-content"><div class="msm__wrapper"><div class="msm__block unchanged" id="@7W_noN"><div class="msm__line"><div class="msm__content"><pre>void swap(int *a, int *b) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  int t = *a;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  *a = *b;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  *b = t;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block undefined" id="@ZbgT5T"><div class="msm__line"><div class="msm__content"><pre>int partition(int array[], int low, int high) {</pre></div> </div></div><div class="msm__block unchanged" id="@djXd0q"><div class="msm__line"><div class="msm__content"><pre>  int pivot = array[high];</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  int i = low - 1;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block removed-placeholder" id="@1PSC3E"></div><div class="msm__block unchanged" id="@wo7IvY"><div class="msm__line"><div class="msm__content"><pre>  for (int j = low; j &lt; high; j++) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    if (array[j] &lt;= pivot) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>      i++;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>      swap(&amp;array[i], &amp;array[j]);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    }</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  }</pre></div> </div></div><div class="msm__block merge-conflict" id="@ZGJ_Ad"><div class="msm__line"><div class="msm__content"><pre>  swap(&amp;array[high], &amp;array[i + 1]);</pre></div> </div></div><div class="msm__block unchanged" id="@ZlPeJI"><div class="msm__line"><div class="msm__content"><pre>  </pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  return i + 1;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block added" id="@0C56Ce"><div class="msm__line"><div class="msm__content"><pre>/**</pre></div> </div><div class="msm__line"><div class="msm__content"><pre> * Simple implementation of the Quick Sort algorithm.</pre></div> </div><div class="msm__line"><div class="msm__content"><pre> */</pre></div> </div></div><div class="msm__block unchanged" id="@gd7OzV"><div class="msm__line"><div class="msm__content"><pre>void quick_sort(int array[], int low, int high) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  if (low &lt; high) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    int pi = partition(array, low, high);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>   </pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    quick_sort(array, low, pi - 1);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    quick_sort(array, pi + 1, high);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  }</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div></div></div>  <textarea spellcheck="false" style="--width: 0px;">void swap(int *a, int *b) {
+  int t = *a;
+  *a = *b;
+  *b = t;
+}
+
+int partition(int array[], int low, int high) {
+  int pivot = array[high];
+  int i = low - 1;
+
+  for (int j = low; j &lt; high; j++) {
+    if (array[j] &lt;= pivot) {
+      i++;
+      swap(&amp;array[i], &amp;array[j]);
+    }
+  }
+  swap(&amp;array[high], &amp;array[i + 1]);
+  
+  return i + 1;
+}
+
+/**
+ * Simple implementation of the Quick Sort algorithm.
+ */
+void quick_sort(int array[], int low, int high) {
+  if (low &lt; high) {
+    int pi = partition(array, low, high);
+   
+    quick_sort(array, low, pi - 1);
+    quick_sort(array, pi + 1, high);
+  }
+}</textarea></div> <div class="msm__side_panel msm__right"></div></div> <div class="msm__connector"><canvas></canvas></div> <div class="msm__view highlight editable "><div class="msm__side_panel msm__left"></div> <div class="msm__view-content"><div class="msm__wrapper"><div class="msm__block unchanged" id="@UCbPUS"><div class="msm__line"><div class="msm__content"><pre>void swap(int *a, int *b) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  int t = *a;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  *a = *b;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  *b = t;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block modified" id="@hHWPik"><div class="msm__line"><div class="msm__content"><pre><span>int partition(int </span></pre><pre><span>array</span></pre><pre><span class="overlay">[]</span></pre><pre><span>, int low, int high) {
+</span></pre></div> </div></div><div class="msm__block unchanged" id="@-C2RsW"><div class="msm__line"><div class="msm__content"><pre>  int pivot = array[high];</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  int i = low - 1;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block removed" id="@Hi0q_r"><div class="msm__line"><div class="msm__content"><pre>	// Move all the elements higher than the pivot</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>	// to the left side of the partition</pre></div> </div></div><div class="msm__block unchanged" id="@Jz7iLa"><div class="msm__line"><div class="msm__content"><pre>  for (int j = low; j &lt; high; j++) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    if (array[j] &lt;= pivot) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>      i++;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>      swap(&amp;array[i], &amp;array[j]);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    }</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  }</pre></div> </div></div><div class="msm__block merge-conflict" id="@EVbEGZ"><div class="msm__line"><div class="msm__content"><pre>  swap(&amp;array[i + 1], &amp;array[high]);</pre></div> </div></div><div class="msm__block unchanged" id="@Ngwo9v"><div class="msm__line"><div class="msm__content"><pre>  </pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  return i + 1;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block added-placeholder" id="@wQvdu3"></div><div class="msm__block unchanged" id="@OgH9WV"><div class="msm__line"><div class="msm__content"><pre>void quick_sort(int array[], int low, int high) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  if (low &lt; high) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    int pi = partition(array, low, high);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>   </pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    quick_sort(array, low, pi - 1);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    quick_sort(array, pi + 1, high);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  }</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div></div></div>  <textarea spellcheck="false" style="--width: 0px;">void swap(int *a, int *b) {
+  int t = *a;
+  *a = *b;
+  *b = t;
+}
+
+int partition(int array[], int low, int high) {
+  int pivot = array[high];
+  int i = low - 1;
+
+	// Move all the elements higher than the pivot
+	// to the left side of the partition
+  for (int j = low; j &lt; high; j++) {
+    if (array[j] &lt;= pivot) {
+      i++;
+      swap(&amp;array[i], &amp;array[j]);
+    }
+  }
+  swap(&amp;array[i + 1], &amp;array[high]);
+  
+  return i + 1;
+}
+
+void quick_sort(int array[], int low, int high) {
+  if (low &lt; high) {
+    int pi = partition(array, low, high);
+   
+    quick_sort(array, low, pi - 1);
+    quick_sort(array, pi + 1, high);
+  }
+}</textarea></div> </div> <div class="msm__connector"><canvas></canvas></div> <div class="msm__view highlight editable "><div class="msm__side_panel msm__left"></div> <div class="msm__view-content"><div class="msm__wrapper"><div class="msm__block unchanged" id="@mInV5d"><div class="msm__line"><div class="msm__content"><pre>void swap(int *a, int *b) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  int t = *a;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  *a = *b;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  *b = t;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block modified" id="@RgEbfb"><div class="msm__line"><div class="msm__content"><pre><span>int partition(int </span></pre><pre><span class="overlay">*</span></pre><pre><span>array</span></pre><pre><span>, int low, int high) {
+</span></pre></div> </div></div><div class="msm__block unchanged" id="@mphViz"><div class="msm__line"><div class="msm__content"><pre>  int pivot = array[high];</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  int i = low - 1;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block removed-placeholder" id="@oJydWn"></div><div class="msm__block unchanged" id="@WCRryz"><div class="msm__line"><div class="msm__content"><pre>  for (int j = low; j &lt; high; j++) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    if (array[j] &lt;= pivot) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>      i++;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>      swap(&amp;array[i], &amp;array[j]);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    }</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  }</pre></div> </div></div><div class="msm__block merge-conflict" id="@R5Y7nI"><div class="msm__line"><div class="msm__content"><pre>  swap(</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>		&amp;array[i + 1], </pre></div> </div><div class="msm__line"><div class="msm__content"><pre>		&amp;array[high]</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>	);</pre></div> </div></div><div class="msm__block unchanged" id="@AUHpj_"><div class="msm__line"><div class="msm__content"><pre>  </pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  return i + 1;</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div><div class="msm__line"><div class="msm__content"><pre></pre></div> </div></div><div class="msm__block unchanged" id="@cDxhkY"><div class="msm__line"><div class="msm__content"><pre>void quick_sort(int array[], int low, int high) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  if (low &lt; high) {</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    int pi = partition(array, low, high);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>   </pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    quick_sort(array, low, pi - 1);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>    quick_sort(array, pi + 1, high);</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>  }</pre></div> </div><div class="msm__line"><div class="msm__content"><pre>}</pre></div> </div></div></div>  <textarea spellcheck="false" style="--width: 0px;">void swap(int *a, int *b) {
+  int t = *a;
+  *a = *b;
+  *b = t;
+}
+
+int partition(int *array, int low, int high) {
+  int pivot = array[high];
+  int i = low - 1;
+
+  for (int j = low; j &lt; high; j++) {
+    if (array[j] &lt;= pivot) {
+      i++;
+      swap(&amp;array[i], &amp;array[j]);
+    }
+  }
+  swap(
+		&amp;array[i + 1], 
+		&amp;array[high]
+	);
+  
+  return i + 1;
+}
+
+void quick_sort(int array[], int low, int high) {
+  if (low &lt; high) {
+    int pi = partition(array, low, high);
+   
+    quick_sort(array, low, pi - 1);
+    quick_sort(array, pi + 1, high);
+  }
+}</textarea></div> </div> </div></div> <footer class="msm__footer"><div class="msm__footer-content"><div class="msm__footer-content-left"><div class="msm__words-counter"><span data-svelte-h="svelte-1n7q0pn">Words:</span> <span>105/112/97</span></div> <div class="msm__chars-counter"><span data-svelte-h="svelte-160ln3j">Chars:</span> <span>628/651/573</span></div></div> <div class="msm__footer-content-right"><div class="msm__block-counter added"><div></div> <span>1 added</span></div> <div class="msm__block-counter removed"><div></div> <span>1 removed</span></div> <div class="msm__block-counter modified"><div></div> <span>1 modified</span></div> <div class="msm__block-counter conflict"><div></div> <span>1 conflict</span></div> </div></div> </footer></div> <div class="footer" data-svelte-h="svelte-1u2wnrf"><a href="https://www.npmjs.com/package/@mismerge/svelte"><iconify-icon icon="gg:npm"></iconify-icon></a> <a href="https://github.com/BearToCode/mismerge"><iconify-icon icon="ri:github-fill"></iconify-icon></a></div> </main> 
+			
+			<script>
+				{
+					__sveltekit_1spl2xe = {
+						assets: "/mismerge",
+						base: new URL(".", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.4f53f294.js"),
+						import("./_app/immutable/entry/app.80ad29d6.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
