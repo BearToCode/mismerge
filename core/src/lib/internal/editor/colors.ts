@@ -14,7 +14,7 @@ export type EditorColors = {
 export const DefaultLightColors: EditorColors = {
 	added: '#d4eed4',
 	removed: '#edeceb',
-	removedBothSides: '#fff2f0',
+	removedBothSides: '#eae9e9',
 	conflict: '#fff2f0',
 	modified: '#e4f4f5',
 	resolvedConflict: '#cfdcfa',
