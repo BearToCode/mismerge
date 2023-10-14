@@ -15,7 +15,8 @@
 		"check": "npx lerna run check",
 		"test": "npx lerna run test",
 		"build": "npx lerna run build",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"publish-demo": "cd demo && npm run gh-pages"
 	},
 	"devDependencies": {
 		"@types/node": "^18.16.3",
@@ -23,7 +24,7 @@
 		"@typescript-eslint/parser": "^5.59.1",
 		"eslint": "^8.39.0",
 		"eslint-config-prettier": "^8.8.0",
-		"eslint-plugin-svelte3": "^4.0.0",
+		"eslint-plugin-svelte": "^2.34.0",
 		"husky": "^8.0.3",
 		"lerna": "^7.3.0",
 		"only-allow": "^1.2.0",
