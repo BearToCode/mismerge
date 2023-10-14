@@ -16,7 +16,7 @@
 		"test": "npx lerna run test",
 		"build": "npx lerna run build",
 		"prepare": "husky install",
-		"publish-demo": "cd demo && npm run gh-pages"
+		"publish-demo": "npm run build && cd demo && npm run gh-pages"
 	},
 	"devDependencies": {
 		"@types/node": "^18.16.3",
