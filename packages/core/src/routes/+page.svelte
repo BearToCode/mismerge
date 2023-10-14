@@ -37,12 +37,13 @@
 		colors={DefaultDarkColors}
 		ignoreWhitespace
 	/> -->
-	<MisMerge2
+	<!-- <MisMerge2
 		lhs="1
 2"
 		rhs=""
 		{colors}
-	/>
+	/> -->
+	<mismerge-2 lhs="1" rhs="" {colors} />
 </main>
 
 <style>

@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
-		"core": "cd core && npm run dev",
+		"core": "cd packages/core && npm run dev",
 		"demo": "cd demo && npm run dev",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
