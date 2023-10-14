@@ -274,3 +274,26 @@ main {
 	filter: drop-shadow(-1px -1px 0px #0e0e0e) drop-shadow(1px -1px 0px #0e0e0e)
 		drop-shadow(1px 1px 0px #0e0e0e) drop-shadow(-1px 1px 0px #0e0e0e);
 }
+
+/* Footer */
+
+.footer {
+	margin: 0 auto;
+	margin-top: 1rem;
+	width: fit-content;
+}
+
+.footer > a {
+	font-size: 2.5rem;
+	color: #382b31;
+	opacity: 0.25;
+	transition: opacity 0.2s ease-in-out;
+}
+
+.dark .footer > a {
+	color: #eee2e7;
+}
+
+.footer > a:hover {
+	opacity: 1;
+}

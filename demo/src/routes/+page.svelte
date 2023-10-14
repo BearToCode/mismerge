@@ -30,6 +30,7 @@
 	import mismergeDarkStyle from 'mismerge/dark.css?raw';
 	import codeLightStyle from '$lib/styles/code-light.css?raw';
 	import codeDarkStyle from '$lib/styles/code-dark.css?raw';
+	import Footer from '$lib/components/Footer.svelte';
 
 	let mounted = false;
 	let unloadStylesheets: (() => void)[] = [];
@@ -125,13 +126,15 @@
 			/>
 		{/if}
 	{/key}
+
+	<Footer />
 </main>
 
 <style>
 	:global(.mismerge) {
 		font-family: 'Fira Code', monospace;
 		font-variant-ligatures: normal;
-		min-height: 85vh;
+		min-height: 80vh;
 		margin-top: 1rem;
 	}
 </style>
