@@ -24,8 +24,8 @@
 	},
 	"dependencies": {
 		"@speed-highlight/core": "^1.2.4",
-		"dedent": "^1.5.1",
-		"mismerge": "workspace:*"
+		"@mismerge/core": "workspace:*",
+		"dedent": "^1.5.1"
 	},
 	"type": "module"
 }
