@@ -178,210 +178,210 @@ var Rs=Object.defineProperty;var Bs=(n,e,t)=>e in n?Rs(n,e,{enumerable:!0,config
 .mismerge ::-webkit-scrollbar-thumb:hover {\r
 	background: var(--primary-300);\r
 }\r
-`,Nr=`.shj-inline {\r
-	margin: 0;\r
-	padding: 2px 5px;\r
-	display: inline-table;\r
-	border-radius: 5px;\r
-}\r
-\r
-.shj-numbers {\r
-	padding-left: 5px;\r
-	counter-reset: line;\r
-}\r
-.shj-numbers div {\r
-	padding-right: 5px;\r
-}\r
-.shj-numbers div::before {\r
-	color: #999;\r
-	display: block;\r
-	content: counter(line);\r
-	opacity: 0.5;\r
-	text-align: right;\r
-	margin-right: 5px;\r
-	counter-increment: line;\r
-}\r
-\r
-.shj-syn-cmnt {\r
-	font-style: italic;\r
-}\r
-\r
-.shj-syn-err,\r
-.shj-syn-kwd {\r
-	color: #e16;\r
-}\r
-.shj-syn-num,\r
-.shj-syn-class {\r
-	color: #f60;\r
-}\r
-.shj-numbers,\r
-.shj-syn-cmnt {\r
-	color: #999;\r
-}\r
-.shj-syn-insert,\r
-.shj-syn-str {\r
-	color: #7d8;\r
-}\r
-.shj-syn-bool {\r
-	color: #3bf;\r
-}\r
-.shj-syn-type,\r
-.shj-syn-oper {\r
-	color: #5af;\r
-}\r
-.shj-syn-section,\r
-.shj-syn-func {\r
-	color: #84f;\r
-}\r
-.shj-syn-deleted,\r
-.shj-syn-var {\r
-	color: #f44;\r
-}\r
-\r
-.shj-oneline {\r
-	padding: 12px 10px;\r
-}\r
-.shj-lang-http.shj-oneline .shj-syn-kwd {\r
-	background: #25f;\r
-	color: #fff;\r
-	padding: 5px 7px;\r
-	border-radius: 5px;\r
-}\r
-\r
-.shj-multiline.shj-mode-header {\r
-	padding: 20px;\r
-}\r
-.shj-multiline.shj-mode-header:before {\r
-	content: attr(data-lang);\r
-	color: #58f;\r
-	display: block;\r
-	padding: 10px 20px;\r
-	background: #58f3;\r
-	border-radius: 5px;\r
-	margin-bottom: 20px;\r
-}\r
-`,Ar=`.shj-inline {\r
-	margin: 0;\r
-	padding: 2px 5px;\r
-	display: inline-table;\r
-	border-radius: 5px;\r
-}\r
-\r
-.shj-numbers {\r
-	padding-left: 5px;\r
-	counter-reset: line;\r
-}\r
-.shj-numbers div {\r
-	padding-right: 5px;\r
-}\r
-.shj-numbers div::before {\r
-	color: #999;\r
-	display: block;\r
-	content: counter(line);\r
-	opacity: 0.5;\r
-	text-align: right;\r
-	margin-right: 5px;\r
-	counter-increment: line;\r
-}\r
-\r
-.shj-syn-cmnt {\r
-	font-style: italic;\r
-}\r
-\r
-.shj-syn-err,\r
-.shj-syn-kwd {\r
-	color: #e16;\r
-}\r
-.shj-syn-num,\r
-.shj-syn-class {\r
-	color: #f60;\r
-}\r
-.shj-numbers,\r
-.shj-syn-cmnt {\r
-	color: #999;\r
-}\r
-.shj-syn-insert,\r
-.shj-syn-str {\r
-	color: #7d8;\r
-}\r
-.shj-syn-bool {\r
-	color: #3bf;\r
-}\r
-.shj-syn-type,\r
-.shj-syn-oper {\r
-	color: #5af;\r
-}\r
-.shj-syn-section,\r
-.shj-syn-func {\r
-	color: #84f;\r
-}\r
-.shj-syn-deleted,\r
-.shj-syn-var {\r
-	color: #f44;\r
-}\r
-\r
-.shj-oneline {\r
-	padding: 12px 10px;\r
-}\r
-.shj-lang-http.shj-oneline .shj-syn-kwd {\r
-	background: #25f;\r
-	color: #fff;\r
-	padding: 5px 7px;\r
-	border-radius: 5px;\r
-}\r
-\r
-.shj-multiline.shj-mode-header {\r
-	padding: 20px;\r
-}\r
-.shj-multiline.shj-mode-header:before {\r
-	content: attr(data-lang);\r
-	color: #58f;\r
-	display: block;\r
-	padding: 10px 20px;\r
-	background: #58f3;\r
-	border-radius: 5px;\r
-	margin-bottom: 20px;\r
-}\r
-\r
-/* Dark theme: */\r
-\r
-[class*='shj-lang-'] {\r
-	color: #f8f8f2;\r
-	background: #1a1a1c;\r
-}\r
-[class*='shj-lang-']:before {\r
-	color: #6f9aff;\r
-}\r
-\r
-.shj-syn-deleted,\r
-.shj-syn-err,\r
-.shj-syn-var {\r
-	color: #ff5261;\r
-}\r
-.shj-syn-section,\r
-.shj-syn-kwd {\r
-	color: #ff7cc6;\r
-}\r
-.shj-syn-class {\r
-	color: #eab07c;\r
-}\r
-.shj-numbers,\r
-.shj-syn-cmnt {\r
-	color: #7d828b;\r
-}\r
-.shj-syn-insert,\r
-.shj-syn-type,\r
-.shj-syn-func,\r
-.shj-syn-bool {\r
-	color: #71d58a;\r
-}\r
-.shj-syn-num {\r
-	color: #b581fd;\r
-}\r
-.shj-syn-oper {\r
-	color: #80c6ff;\r
-}\r
-.shj-syn-str {\r
-	color: #4dacfa;\r
-}\r
+`,Nr=`.shj-inline {
+	margin: 0;
+	padding: 2px 5px;
+	display: inline-table;
+	border-radius: 5px;
+}
+
+.shj-numbers {
+	padding-left: 5px;
+	counter-reset: line;
+}
+.shj-numbers div {
+	padding-right: 5px;
+}
+.shj-numbers div::before {
+	color: #999;
+	display: block;
+	content: counter(line);
+	opacity: 0.5;
+	text-align: right;
+	margin-right: 5px;
+	counter-increment: line;
+}
+
+.shj-syn-cmnt {
+	font-style: italic;
+}
+
+.shj-syn-err,
+.shj-syn-kwd {
+	color: #e16;
+}
+.shj-syn-num,
+.shj-syn-class {
+	color: #f60;
+}
+.shj-numbers,
+.shj-syn-cmnt {
+	color: #999;
+}
+.shj-syn-insert,
+.shj-syn-str {
+	color: #7d8;
+}
+.shj-syn-bool {
+	color: #3bf;
+}
+.shj-syn-type,
+.shj-syn-oper {
+	color: #5af;
+}
+.shj-syn-section,
+.shj-syn-func {
+	color: #84f;
+}
+.shj-syn-deleted,
+.shj-syn-var {
+	color: #f44;
+}
+
+.shj-oneline {
+	padding: 12px 10px;
+}
+.shj-lang-http.shj-oneline .shj-syn-kwd {
+	background: #25f;
+	color: #fff;
+	padding: 5px 7px;
+	border-radius: 5px;
+}
+
+.shj-multiline.shj-mode-header {
+	padding: 20px;
+}
+.shj-multiline.shj-mode-header:before {
+	content: attr(data-lang);
+	color: #58f;
+	display: block;
+	padding: 10px 20px;
+	background: #58f3;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+`,Ar=`.shj-inline {
+	margin: 0;
+	padding: 2px 5px;
+	display: inline-table;
+	border-radius: 5px;
+}
+
+.shj-numbers {
+	padding-left: 5px;
+	counter-reset: line;
+}
+.shj-numbers div {
+	padding-right: 5px;
+}
+.shj-numbers div::before {
+	color: #999;
+	display: block;
+	content: counter(line);
+	opacity: 0.5;
+	text-align: right;
+	margin-right: 5px;
+	counter-increment: line;
+}
+
+.shj-syn-cmnt {
+	font-style: italic;
+}
+
+.shj-syn-err,
+.shj-syn-kwd {
+	color: #e16;
+}
+.shj-syn-num,
+.shj-syn-class {
+	color: #f60;
+}
+.shj-numbers,
+.shj-syn-cmnt {
+	color: #999;
+}
+.shj-syn-insert,
+.shj-syn-str {
+	color: #7d8;
+}
+.shj-syn-bool {
+	color: #3bf;
+}
+.shj-syn-type,
+.shj-syn-oper {
+	color: #5af;
+}
+.shj-syn-section,
+.shj-syn-func {
+	color: #84f;
+}
+.shj-syn-deleted,
+.shj-syn-var {
+	color: #f44;
+}
+
+.shj-oneline {
+	padding: 12px 10px;
+}
+.shj-lang-http.shj-oneline .shj-syn-kwd {
+	background: #25f;
+	color: #fff;
+	padding: 5px 7px;
+	border-radius: 5px;
+}
+
+.shj-multiline.shj-mode-header {
+	padding: 20px;
+}
+.shj-multiline.shj-mode-header:before {
+	content: attr(data-lang);
+	color: #58f;
+	display: block;
+	padding: 10px 20px;
+	background: #58f3;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+
+/* Dark theme: */
+
+[class*='shj-lang-'] {
+	color: #f8f8f2;
+	background: #1a1a1c;
+}
+[class*='shj-lang-']:before {
+	color: #6f9aff;
+}
+
+.shj-syn-deleted,
+.shj-syn-err,
+.shj-syn-var {
+	color: #ff5261;
+}
+.shj-syn-section,
+.shj-syn-kwd {
+	color: #ff7cc6;
+}
+.shj-syn-class {
+	color: #eab07c;
+}
+.shj-numbers,
+.shj-syn-cmnt {
+	color: #7d828b;
+}
+.shj-syn-insert,
+.shj-syn-type,
+.shj-syn-func,
+.shj-syn-bool {
+	color: #71d58a;
+}
+.shj-syn-num {
+	color: #b581fd;
+}
+.shj-syn-oper {
+	color: #80c6ff;
+}
+.shj-syn-str {
+	color: #4dacfa;
+}
 `;function Sr(n){let e,t='<a href="https://www.npmjs.com/package/@mismerge/svelte"><iconify-icon icon="gg:npm"></iconify-icon></a> <a href="https://github.com/BearToCode/mismerge"><iconify-icon icon="ri:github-fill"></iconify-icon></a>';return{c(){e=g("div"),e.innerHTML=t,this.h()},l(i){e=v(i,"DIV",{class:!0,"data-svelte-h":!0}),fe(e)!=="svelte-1u2wnrf"&&(e.innerHTML=t),this.h()},h(){E(e,"class","footer")},m(i,l){k(i,e,l)},p:Y,i:Y,o:Y,d(i){i&&f(e)}}}class Tr extends be{constructor(e){super(),ke(this,e,null,Sr,ge,{})}}function Pr(n){let e,t,i,l,s;function o(h){n[14](h)}function a(h){n[15](h)}function r(h){n[16](h)}let c={colors:n[0],highlight:n[11],lhsEditable:!0,rhsEditable:!0,wrapLines:n[5],disableMerging:n[6],disableFooter:n[7],ignoreWhitespace:n[8],ignoreCase:n[9]};return n[3]!==void 0&&(c.lhs=n[3]),n[10]!==void 0&&(c.ctr=n[10]),n[4]!==void 0&&(c.rhs=n[4]),e=new Vo({props:c}),H.push(()=>G(e,"lhs",o)),H.push(()=>G(e,"ctr",a)),H.push(()=>G(e,"rhs",r)),{c(){Z(e.$$.fragment)},l(h){ee(e.$$.fragment,h)},m(h,u){Q(e,h,u),s=!0},p(h,u){const d={};u&1&&(d.colors=h[0]),u&32&&(d.wrapLines=h[5]),u&64&&(d.disableMerging=h[6]),u&128&&(d.disableFooter=h[7]),u&256&&(d.ignoreWhitespace=h[8]),u&512&&(d.ignoreCase=h[9]),!t&&u&8&&(t=!0,d.lhs=h[3],J(()=>t=!1)),!i&&u&1024&&(i=!0,d.ctr=h[10],J(()=>i=!1)),!l&&u&16&&(l=!0,d.rhs=h[4],J(()=>l=!1)),e.$set(d)},i(h){s||(O(e.$$.fragment,h),s=!0)},o(h){T(e.$$.fragment,h),s=!1},d(h){X(e,h)}}}function Mr(n){let e,t,i,l;function s(r){n[12](r)}function o(r){n[13](r)}let a={colors:n[0],highlight:n[11],lhsEditable:!0,rhsEditable:!0,wrapLines:n[5],disableMerging:n[6],disableFooter:n[7],ignoreWhitespace:n[8],ignoreCase:n[9]};return n[3]!==void 0&&(a.lhs=n[3]),n[4]!==void 0&&(a.rhs=n[4]),e=new So({props:a}),H.push(()=>G(e,"lhs",s)),H.push(()=>G(e,"rhs",o)),{c(){Z(e.$$.fragment)},l(r){ee(e.$$.fragment,r)},m(r,c){Q(e,r,c),l=!0},p(r,c){const h={};c&1&&(h.colors=r[0]),c&32&&(h.wrapLines=r[5]),c&64&&(h.disableMerging=r[6]),c&128&&(h.disableFooter=r[7]),c&256&&(h.ignoreWhitespace=r[8]),c&512&&(h.ignoreCase=r[9]),!t&&c&8&&(t=!0,h.lhs=r[3],J(()=>t=!1)),!i&&c&16&&(i=!0,h.rhs=r[4],J(()=>i=!1)),e.$set(h)},i(r){l||(O(e.$$.fragment,r),l=!0)},o(r){T(e.$$.fragment,r),l=!1},d(r){X(e,r)}}}function is(n){let e,t,i,l;const s=[Mr,Pr],o=[];function a(r,c){return r[2]=="mismerge2"?0:1}return e=a(n),t=o[e]=s[e](n),{c(){t.c(),i=Re()},l(r){t.l(r),i=Re()},m(r,c){o[e].m(r,c),k(r,i,c),l=!0},p(r,c){let h=e;e=a(r),e===h?o[e].p(r,c):(We(),T(o[h],1,1,()=>{o[h]=null}),Ye(),t=o[e],t?t.p(r,c):(t=o[e]=s[e](r),t.c()),O(t,1),t.m(i.parentNode,i))},i(r){l||(O(t),l=!0)},o(r){T(t),l=!1},d(r){r&&f(i),o[e].d(r)}}}function Rr(n){let e,t,i,l,s,o,a,r,c,h="",u,d,_,V,p,b=n[1],M,S,R;V=new Or({});let P=is(n);return S=new Tr({}),{c(){e=g("meta"),t=g("meta"),i=g("meta"),l=g("link"),s=g("link"),o=g("link"),a=g("link"),r=g("link"),c=g("script"),c.innerHTML=h,d=N(),_=g("main"),Z(V.$$.fragment),p=N(),P.c(),M=N(),Z(S.$$.fragment),this.h()},l(K){const te=zs("svelte-as0srb",document.head);e=v(te,"META",{name:!0,content:!0}),t=v(te,"META",{name:!0,content:!0}),i=v(te,"META",{charset:!0}),l=v(te,"LINK",{rel:!0,href:!0}),s=v(te,"LINK",{rel:!0,href:!0,crossorigin:!0}),o=v(te,"LINK",{href:!0,rel:!0}),a=v(te,"LINK",{rel:!0,href:!0}),r=v(te,"LINK",{rel:!0,href:!0}),c=v(te,"SCRIPT",{src:!0,"data-svelte-h":!0}),fe(c)!=="svelte-jemd3a"&&(c.innerHTML=h),te.forEach(f),d=A(K),_=v(K,"MAIN",{});var ne=y(_);ee(V.$$.fragment,ne),p=A(ne),P.l(ne),M=A(ne),ee(S.$$.fragment,ne),ne.forEach(f),this.h()},h(){document.title="MisMerge",E(e,"name","description"),E(e,"content","A modern merge conflict editor for the web"),E(t,"name","viewport"),E(t,"content","width=device-width, initial-scale=1"),E(i,"charset","utf-8"),E(l,"rel","preconnect"),E(l,"href","https://fonts.googleapis.com"),E(s,"rel","preconnect"),E(s,"href","https://fonts.gstatic.com"),E(s,"crossorigin","anonymous"),E(o,"href","https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap"),E(o,"rel","stylesheet"),E(a,"rel","preconnect"),E(a,"href","https://rsms.me/"),E(r,"rel","stylesheet"),E(r,"href","https://rsms.me/inter/inter.css"),Ws(c.src,u="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js")||E(c,"src",u)},m(K,te){w(document.head,e),w(document.head,t),w(document.head,i),w(document.head,l),w(document.head,s),w(document.head,o),w(document.head,a),w(document.head,r),w(document.head,c),k(K,d,te),k(K,_,te),Q(V,_,null),w(_,p),P.m(_,null),w(_,M),Q(S,_,null),R=!0},p(K,[te]){te&2&&ge(b,b=K[1])?(We(),T(P,1,1,Y),Ye(),P=is(K),P.c(),O(P,1),P.m(_,M)):P.p(K,te)},i(K){R||(O(V.$$.fragment,K),O(P),O(S.$$.fragment,K),R=!0)},o(K){T(V.$$.fragment,K),T(P),T(S.$$.fragment,K),R=!1},d(K){K&&(f(d),f(_)),f(e),f(t),f(i),f(l),f(s),f(o),f(a),f(r),f(c),X(V),P.d(K),X(S)}}}function Br(n,e,t){let i,l,s,o,a,r,c,h,u,d,_;Fe(n,De,F=>t(1,i=F)),Fe(n,mt,F=>t(19,l=F)),Fe(n,Et,F=>t(2,s=F)),Fe(n,Nt,F=>t(3,o=F)),Fe(n,At,F=>t(4,a=F)),Fe(n,kn,F=>t(5,r=F)),Fe(n,wn,F=>t(6,c=F)),Fe(n,Cn,F=>t(7,h=F)),Fe(n,En,F=>t(8,u=F)),Fe(n,Vn,F=>t(9,d=F)),Fe(n,yn,F=>t(10,_=F));let V=!1,p=[];zt(()=>{V=!0,b(l)});function b(F){const W=we=>p.push(we);switch(F){case"dark":W(Lt(Lr)),W(Lt(Ar));break;case"light":W(Lt(jr)),W(Lt(Nr));break}}mt.subscribe(F=>{V&&(p.forEach(W=>W()),p=[],b(F),R(F))});const M=async F=>Ro(F,i,!0,{hideLineNumbers:!0});let S;const R=F=>t(0,S=F=="light"?Tn:_o);mt.subscribe(R);function P(F){o=F,Nt.set(o)}function K(F){a=F,At.set(a)}function te(F){o=F,Nt.set(o)}function ne(F){_=F,yn.set(_)}function ie(F){a=F,At.set(a)}return[S,i,s,o,a,r,c,h,u,d,_,M,P,K,te,ne,ie]}class Zr extends be{constructor(e){super(),ke(this,e,Br,Rr,ge,{})}}export{Zr as component};
