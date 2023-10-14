@@ -26,6 +26,7 @@
 			"import": "./dist/styles/*.css"
 		}
 	},
+	"main": "./dist/index.js",
 	"files": [
 		"dist",
 		"!dist/**/*.test.*",

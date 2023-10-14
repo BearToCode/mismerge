@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '$lib/styles/styles.css';
 	import '$lib/styles/dark.css';
-	import MisMerge2 from '$lib/components/MisMerge2.svelte';
 	import { DefaultDarkColors } from '$lib/internal/editor/colors';
 
 	let colors = DefaultDarkColors;
