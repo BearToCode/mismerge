@@ -19,7 +19,7 @@
 		"publish-demo": "npm run build && cd demo && npm run gh-pages",
 		"commit": "cz",
 		"semantic-release": "semantic-release",
-		"publish": "lerna exec --concurrency 1 -- npx --no-install semantic-release -e semantic-release-monorepo"
+		"publish": "cd packages/core && npx --no-install semantic-release -e semantic-release-monorepo"
 	},
 	"devDependencies": {
 		"@types/node": "^18.16.3",
