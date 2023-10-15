@@ -211,6 +211,8 @@
 				bind:elem={lhsViewElem}
 				on:merge={mergeComponentHandler(TwoWaySide.lhs)}
 				on:height-change={redrawConnections}
+				on:merge
+				on:resolve
 				on:input
 				on:keydown
 				on:keypress
@@ -235,6 +237,8 @@
 				on:resolve={() => {
 					blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
 				}}
+				on:merge
+				on:resolve
 				on:height-change={redrawConnections}
 				on:input
 				on:keydown
@@ -257,6 +261,8 @@
 				bind:elem={rhsViewElem}
 				on:merge={mergeComponentHandler(TwoWaySide.rhs)}
 				on:height-change={redrawConnections}
+				on:merge
+				on:resolve
 				on:input
 				on:keydown
 				on:keypress

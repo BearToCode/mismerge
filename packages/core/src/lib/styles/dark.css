@@ -38,11 +38,11 @@
 }
 
 .mismerge .msm__connector,
-.mismerge .msm__side_panel {
+.mismerge .msm__side-panel {
 	background-color: var(--primary-100);
 }
 
-.mismerge .msm__side_panel {
+.mismerge .msm__side-panel {
 	color: var(--primary-400);
 	font-weight: 500;
 }

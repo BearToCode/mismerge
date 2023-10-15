@@ -16,12 +16,17 @@
 		"test": "npx lerna run test",
 		"build": "npx lerna run build",
 		"prepare": "husky install",
-		"publish-demo": "npm run build && cd demo && npm run gh-pages"
+		"publish-demo": "npm run build && cd demo && npm run gh-pages",
+		"commit": "cz",
+		"semantic-release": "semantic-release",
+		"publish": "lerna exec --concurrency 1 -- npx --no-install semantic-release -e semantic-release-monorepo"
 	},
 	"devDependencies": {
 		"@types/node": "^18.16.3",
 		"@typescript-eslint/eslint-plugin": "^5.59.1",
 		"@typescript-eslint/parser": "^5.59.1",
+		"commitizen": "^4.3.0",
+		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.39.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-svelte": "^2.34.0",
@@ -29,12 +34,20 @@
 		"lerna": "^7.3.0",
 		"only-allow": "^1.2.0",
 		"prettier": "^2.8.8",
-		"prettier-plugin-svelte": "^2.10.0"
+		"prettier-plugin-svelte": "^2.10.0",
+		"semantic-release": "^22.0.5",
+		"semantic-release-monorepo": "^7.0.5"
 	},
 	"lint-staged": {
 		"*.{js,ts,svelte}": "eslint --cache --fix",
 		"*.{js,ts,css,md,svelte,html,yml,json,cjs}": "prettier --write",
 		"*.{js,ts}": "eslint --cache --fix",
 		"*.{js,ts,css,md}": "prettier --write"
-	}
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"version": "0.0.0-development"
 }

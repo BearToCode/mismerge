@@ -187,7 +187,8 @@
 				bind:elem={lhsViewElem}
 				bind:saveHistory={saveLhsHistory}
 				on:merge={mergeComponentHandler(OneWaySide.lhs)}
-				on:newline={redrawConnections}
+				on:height-change={redrawConnections}
+				on:merge
 				on:input
 				on:keydown
 				on:keypress
@@ -209,7 +210,8 @@
 				bind:elem={rhsViewElem}
 				bind:saveHistory={saveRhsHistory}
 				on:merge={mergeComponentHandler(OneWaySide.rhs)}
-				on:newline={redrawConnections}
+				on:height-change={redrawConnections}
+				on:merge
 				on:input
 				on:keydown
 				on:keypress

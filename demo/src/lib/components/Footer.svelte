@@ -2,7 +2,7 @@
 </script>
 
 <div class="footer">
-	<a href="https://www.npmjs.com/package/@mismerge/svelte">
+	<a href="https://www.npmjs.com/package/@mismerge/core">
 		<iconify-icon icon="gg:npm" />
 	</a>
 
