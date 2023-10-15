@@ -1,9 +1,9 @@
-name: Code quality check
+name: Code lint, check and test
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,38 +21,8 @@ jobs:
       - name: Run lint
         run: pnpm run lint
 
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 6
-
-      - name: Install dependendencies
-        run: pnpm i
-
-      - name: Build project
-        run: pnpm run build
-
-      - name: Run lint
+      - name: Run check
         run: pnpm run check
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 6
-
-      - name: Install dependendencies
-        run: pnpm i
-
-      - name: Build project
-        run: pnpm run build
 
       - name: Run tests
         run: pnpm run test
