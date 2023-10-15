@@ -1,16 +1,17 @@
-<img src="./images/logo.svg" width=128 />
+<img src="./images/logo-light.svg#gh-light-mode-only" alt="logo" width=128 />
+<img src="./images/logo-dark.svg#gh-dark-mode-only" alt="logo" width=128 />
 
 # MisMerge
 
-<a href="https://www.npmjs.com/package/@mismerge/core"><img src="https://img.shields.io/npm/v/@mismerge/core?color=%234f7ce3" alt="npm"></a>
-<a href="https://bundlephobia.com/package/@mismerge/core"><img src="https://img.shields.io/bundlephobia/min/@mismerge/core?color=%235db8fc" alt="bundle"></a>
-<a href="https://github.com/BearToCode/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/BearToCode/mismerge?color=%232cd1da" alt="license"></a>
-<a href="http://beartocode.github.io/mismerge/"><img src="https://img.shields.io/badge/demo-available-16b57c" alt="demo"></a>
+<a href="https://www.npmjs.com/package/@mismerge/core"><img src="https://img.shields.io/npm/v/%40mismerge%2Fcore?color=ffcdb2" alt="npm"></a>
+<a href="https://bundlephobia.com/package/@mismerge/core"><img src="https://img.shields.io/bundlephobia/min/%40mismerge%2Fcore?color=ffb4a2" alt="bundle"></a>
+<a href="https://github.com/BearToCode/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/beartocode/mismerge?color=e5989b" alt="license"></a>
+<a href="http://beartocode.github.io/mismerge/"><img src="https://img.shields.io/badge/demo-available-b5838d" alt="demo"></a>
 
 Mismerge is a modern two-way and one-way merge editor for the web, built with Svelte. You can [visit the demo](https://beartocode.github.io/mismerge/) and start merging now, or use it as a component for you project.
 
-<img src="./images/demo-light.png#gh-light-mode-only" />
-<img src="./images/demo-dark.png#gh-dark-mode-only" />
+<img alt="preview" src="./images/demo-light.png#gh-light-mode-only" />
+<img alt="preview" src="./images/demo-dark.png#gh-dark-mode-only" />
 
 ## Features
 
@@ -86,6 +87,58 @@ You need to provide your own syntax highlighter. Example and demo using [Speed-H
 <MisMerge3 ... colors={DefaultDarkColors} />
 ```
 
+### Styles
+
+If you want to customize the editor styles, you can copy the default [light](https://github.com/BearToCode/mismerge/blob/master/packages/core/src/lib/styles/light.css) or [dark](https://github.com/BearToCode/mismerge/blob/master/packages/core/src/lib/styles/dark.css) theme and adapt it to your need.
+
+Here is a basic explanation of how the the rendered html looks like:
+
+```html
+<div class="mismerge">
+	<div>
+		<!-- Main -->
+		<div class="msm__main">
+			<!-- View -->
+			<div class="msm__view">
+				<!-- Content -->
+				<div class="msm__view-content">
+					<!-- Blocks wrapper -->
+					<div class="msm__wrapper">
+						<!-- Blocks -->
+						<div id="@abcdef" class="msm__block block-type">
+							<!-- Lines -->
+							<div class="msm__line">
+								<!-- ... -->
+							</div>
+							<!-- ... -->
+						</div>
+						<!-- ... -->
+					</div>
+
+					<!-- Highlight overlay -->
+					<div class="msm__highlight-overlay">
+						<!-- ... -->
+					</div>
+
+					<!-- Input -->
+					<textarea />
+				</div>
+
+				<!-- Side panel -->
+				<div class="msm__side-panel">
+					<!-- ... -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<div class="msm__footer">
+		<!-- ... -->
+	</div>
+</div>
+```
+
 ## API
 
 A list of properties for `<MisMerge2>`(2), `<MisMerge3>`(3), or both.
@@ -121,3 +174,39 @@ Events:
 | `on:keydown`  | Default `textarea` event                                      |
 | `on:keypress` | Default `textarea` event                                      |
 | `on:keyup`    | Default `textarea` event                                      |
+
+## Contributing
+
+### Project setup
+
+Clone the repo:
+
+```
+git clone https://github.com/BearToCode/mismerge.git
+cd mismerge
+```
+
+Download dependencies for all packages in the monorepo:
+
+```
+pnpm i
+```
+
+### The core package
+
+The core package is inside `packages/core`. You can run the associated sveltekit app using `npm run core` or `cd packages/core` & `npm run dev`.
+
+### The demo
+
+The demo is inside the `demo` root folder. You can run it from root using `npm run demo` or `cd demo` & `npm run dev`.
+It is automatically deployed to Github Pages with every push to master.
+
+### Committing
+
+This repository uses [commitizen](https://github.com/commitizen/cz-cli) to enforce similar commit messages. Commit using:
+
+```
+npm run commit
+# or
+git cz
+```

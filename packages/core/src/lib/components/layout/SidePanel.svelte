@@ -43,7 +43,7 @@
 	const dispatch = createEventDispatcher<SidePanelEvents>();
 </script>
 
-<div class="msm__side_panel msm__{direction}">
+<div class="msm__side-panel msm__{direction}">
 	{#if componentsElements}
 		{#each componentsElements as compElem, compIndex}
 			{@const lineComp = linesComponents[compIndex]}
