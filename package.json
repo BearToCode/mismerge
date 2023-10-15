@@ -18,7 +18,8 @@
 		"prepare": "husky install",
 		"publish-demo": "npm run build && cd demo && npm run gh-pages",
 		"commit": "cz",
-		"semantic-release": "semantic-release"
+		"semantic-release": "semantic-release",
+		"publish": "lerna exec --concurrency 1 -- npx --no-install semantic-release -e semantic-release-monorepo"
 	},
 	"devDependencies": {
 		"@types/node": "^18.16.3",
@@ -34,7 +35,8 @@
 		"only-allow": "^1.2.0",
 		"prettier": "^2.8.8",
 		"prettier-plugin-svelte": "^2.10.0",
-		"semantic-release": "^22.0.5"
+		"semantic-release": "^22.0.5",
+		"semantic-release-monorepo": "^7.0.5"
 	},
 	"lint-staged": {
 		"*.{js,ts,svelte}": "eslint --cache --fix",
