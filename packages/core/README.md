@@ -1,5 +1,4 @@
 <img src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/logo-light.svg#gh-light-mode-only" alt="logo" width=128 />
-<img src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/logo-dark.svg#gh-dark-mode-only" alt="logo" width=128 />
 
 # MisMerge
 
@@ -11,7 +10,6 @@
 Mismerge is a modern two-way and one-way merge editor for the web, built with Svelte. You can [visit the demo](https://beartocode.github.io/mismerge/) and start merging now, or use it as a component for you project.
 
 <img alt="preview" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/demo-light.png#gh-light-mode-only" />
-<img alt="preview" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/demo-dark.png#gh-dark-mode-only" />
 
 ## Features
 
