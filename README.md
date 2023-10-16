@@ -8,7 +8,7 @@
 <a href="https://github.com/BearToCode/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/beartocode/mismerge?color=e5989b" alt="license"></a>
 <a href="http://beartocode.github.io/mismerge/"><img src="https://img.shields.io/badge/demo-available-b5838d" alt="demo"></a>
 
-Mismerge is a modern two-way and one-way merge editor for the web, built with Svelte. You can [visit the demo](https://beartocode.github.io/mismerge/) and start merging now, or use it as a component for you project.
+Mismerge is a modern two-way and one-way merge editor for the web, built with Svelte. You can [visit the demo](https://beartocode.github.io/mismerge/) and start merging now, or use it as a component for your project.
 
 <img alt="preview" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/demo-light.png#gh-light-mode-only" />
 <img alt="preview" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/demo-dark.png#gh-dark-mode-only" />
