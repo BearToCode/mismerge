@@ -1,15 +1,15 @@
-<img src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/logo-light.svg#gh-light-mode-only" alt="logo" width=128 />
+<div align="right">
+<a href="https://www.npmjs.com/package/@mismerge/core"><img src="https://img.shields.io/npm/v/%40mismerge%2Fcore?color=6a7fec&labelColor=171d27&logo=npm&logoColor=white" alt="npm"></a>
+<a href="https://bundlephobia.com/package/@mismerge/core"><img src="https://img.shields.io/bundlephobia/min/%40mismerge%2Fcore?color=6a7fec&labelColor=171d27&logo=javascript&logoColor=white" alt="bundle"></a>
+<a href="https://github.com/BearToCode/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/beartocode/mismerge?color=6a7fec&labelColor=171d27&logo=git&logoColor=white" alt="license"></a>
+<a href="http://beartocode.github.io/mismerge/"><img src="https://img.shields.io/badge/available-red?label=demo&color=6a7fec&labelColor=171d27&logo=svelte&logoColor=white" alt="demo"></a>
+</div>
 
-# MisMerge
+<img alt="banner" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/banner-light.png" />
 
-<a href="https://www.npmjs.com/package/@mismerge/core"><img src="https://img.shields.io/npm/v/%40mismerge%2Fcore?color=ffcdb2" alt="npm"></a>
-<a href="https://bundlephobia.com/package/@mismerge/core"><img src="https://img.shields.io/bundlephobia/min/%40mismerge%2Fcore?color=ffb4a2" alt="bundle"></a>
-<a href="https://github.com/BearToCode/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/beartocode/mismerge?color=e5989b" alt="license"></a>
-<a href="http://beartocode.github.io/mismerge/"><img src="https://img.shields.io/badge/demo-available-b5838d" alt="demo"></a>
+## A web-based merge editor
 
 Mismerge is a modern two-way and one-way merge editor for the web, built with Svelte. You can [visit the demo](https://beartocode.github.io/mismerge/) and start merging now, or use it as a component for you project.
-
-<img alt="preview" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/demo-light.png#gh-light-mode-only" />
 
 ## Features
 
