@@ -2,6 +2,8 @@
 	"name": "mismerge",
 	"type": "module",
 	"module": "esnext",
+	"license": "MIT",
+	"author": "BearToCode",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/BearToCode/mismerge.git"

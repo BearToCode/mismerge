@@ -2,10 +2,12 @@
 	"name": "@mismerge/core",
 	"version": "0.0.1",
 	"description": "A modern merge editor for the Web",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/BearToCode/mismerge.git"
 	},
+	"author": "BearToCode",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -57,5 +59,14 @@
 	"dependencies": {
 		"diff": "^5.1.0",
 		"nanoid": "^5.0.1"
-	}
+	},
+	"keywords": [
+		"editor",
+		"merge-editor",
+		"svelte",
+		"web-merge-editor",
+		"merge",
+		"mismerge",
+		"diff"
+	]
 }
