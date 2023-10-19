@@ -15,6 +15,7 @@
 	align-items: stretch;
 	padding-bottom: 1.5rem;
 	min-height: calc(100% - 1.5rem);
+	box-sizing: content-box;
 }
 
 .mismerge.disable-footer .msm__main {
