@@ -1,4 +1,4 @@
-import{w as t}from"./index.72303d17.js";const s=`void swap(int *a, int *b) {
+import{w as t}from"./index.bd07bbd4.js";const s=`void swap(int *a, int *b) {
   int t = *a;
   *a = *b;
   *b = t;
