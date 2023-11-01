@@ -9,7 +9,11 @@
 	export let side: Side;
 	export let components: BlockComponent[];
 	export let disableMerging: boolean;
-	export let componentsElements: HTMLDivElement[];
+	export let renderedSideComponents: {
+		block: HTMLDivElement;
+		lines: HTMLDivElement[];
+		linesHeights: number[];
+	}[] = [];
 
 	/* Local variables */
 
@@ -44,33 +48,35 @@
 </script>
 
 <div class="msm__side-panel msm__{direction}">
-	{#if componentsElements}
-		{#each componentsElements as compElem, compIndex}
-			{@const lineComp = linesComponents[compIndex]}
-			{#if compElem && lineComp}
-				{@const { startingLineNumber, component } = lineComp}
-				{@const lines = compElem.querySelectorAll('.msm__line')}
+	{#if renderedSideComponents}
+		{#each renderedSideComponents as { block, lines, linesHeights }, index}
+			{@const lineComponent = linesComponents[index]}
 
-				{#if lines.length == 0}
-					<div class="msm__line-placeholder {component.type}" />
-				{:else}
-					{#each lines as lineElem, lineIndex}
-						<div
-							style="height: {lineElem.getBoundingClientRect().height}px;"
-							class="msm__line-number {component.type}"
-						>
-							{#if lineIndex == 0 && !disableMerging && component.sideAction}
-								<svelte:component
-									this={component.sideAction.component}
-									{...component.sideAction.props}
-									{component}
-									{dispatch}
-								/>
-							{/if}
+			{#if lineComponent}
+				{@const { startingLineNumber, component } = lineComponent}
+				{#if block && lines}
+					{#if lines.length == 0}
+						<div class="msm__line-placeholder {component.type}" />
+					{:else}
+						<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+						{#each lines as _, lineIndex}
+							<div
+								style="height: {linesHeights[lineIndex]}px;"
+								class="msm__line-number {component.type}"
+							>
+								{#if lineIndex == 0 && !disableMerging && component.sideAction}
+									<svelte:component
+										this={component.sideAction.component}
+										{...component.sideAction.props}
+										{component}
+										{dispatch}
+									/>
+								{/if}
 
-							<pre>{startingLineNumber + lineIndex}</pre>
-						</div>
-					{/each}
+								<pre>{startingLineNumber + lineIndex}</pre>
+							</div>
+						{/each}
+					{/if}
 				{/if}
 			{/if}
 		{/each}

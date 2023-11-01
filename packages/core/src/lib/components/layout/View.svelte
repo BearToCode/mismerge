@@ -28,7 +28,11 @@
 	let containerElem: HTMLDivElement;
 	let contentElem: HTMLDivElement;
 	let sideComponents: BlockComponent[] = [];
-	let sideComponentElements: HTMLDivElement[] = [];
+	let renderedSideComponents: {
+		block: HTMLDivElement;
+		lines: HTMLDivElement[];
+		linesHeights: number[];
+	}[] = [];
 	let saveHistory: () => void;
 	let height = 0;
 	let width = 0;
@@ -40,12 +44,20 @@
 		// Find and invalidated all the elements after they have been mounted in the DOM
 		if (!contentElem) return;
 		const elements = Array.from(contentElem.querySelectorAll('.msm__block'));
-		if (elements.length == sideComponents.length) {
-			sideComponentElements = elements as HTMLDivElement[];
-		}
+		if (elements.length != sideComponents.length) return;
+
+		renderedSideComponents = elements.map((blockElem) => {
+			const lines = Array.from(blockElem.querySelectorAll('.msm__line'));
+			const heights = lines.map((line) => line.getBoundingClientRect().height);
+			return {
+				block: blockElem as HTMLDivElement,
+				lines: lines as HTMLDivElement[],
+				linesHeights: heights
+			};
+		});
 	};
 
-	const redrawLines = () => (sideComponentElements = sideComponentElements);
+	const redrawLines = () => (renderedSideComponents = renderedSideComponents);
 
 	/* Reactive statements */
 
@@ -76,7 +88,10 @@
 			childList: true,
 			subtree: true
 		});
+		// FIXME: This is a hack to make sure the elements are rendered properly
+		// the first time. I don't know why this is needed, but it works.
 		findElements();
+		setTimeout(findElements, 1);
 	});
 	onDestroy(() => observer?.disconnect());
 </script>
@@ -89,8 +104,8 @@
 		<SidePanel
 			{side}
 			{disableMerging}
+			{renderedSideComponents}
 			components={sideComponents}
-			componentsElements={sideComponentElements}
 			on:merge
 			on:resolve
 		/>
@@ -123,8 +138,8 @@
 		<SidePanel
 			{side}
 			{disableMerging}
+			{renderedSideComponents}
 			components={sideComponents}
-			componentsElements={sideComponentElements}
 			on:resolve
 			on:merge
 		/>
