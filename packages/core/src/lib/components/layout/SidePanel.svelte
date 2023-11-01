@@ -58,7 +58,8 @@
 					{#if lines.length == 0}
 						<div class="msm__line-placeholder {component.type}" />
 					{:else}
-						{#each lines as lineElem, lineIndex}
+						<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+						{#each lines as _, lineIndex}
 							<div
 								style="height: {linesHeights[lineIndex]}px;"
 								class="msm__line-number {component.type}"
