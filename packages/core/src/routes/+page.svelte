@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { DefaultDarkColors } from '$lib/internal/editor/colors';
+	import MisMerge2 from '$lib/components/MisMerge2.svelte';
+	import LhsPlaceholderText from './placeholder/lhs-quicksort.c?raw';
+	import RhsPlaceholderText from './placeholder/rhs-quicksort.c?raw';
+
 	import '$lib/styles/styles.css';
 	import '$lib/styles/dark.css';
-	import { DefaultDarkColors } from '$lib/internal/editor/colors';
-
-	let colors = DefaultDarkColors;
 </script>
 
 <svelte:head>
@@ -36,13 +38,14 @@
 		colors={DefaultDarkColors}
 		ignoreWhitespace
 	/> -->
-	<!-- <MisMerge2
-		lhs="1
-2"
-		rhs=""
-		{colors}
-	/> -->
-	<mismerge-2 lhs="1" rhs="" {colors} />
+	<MisMerge2
+		lhs={LhsPlaceholderText}
+		rhs={RhsPlaceholderText}
+		wrapLines
+		lhsEditable
+		rhsEditable
+		colors={DefaultDarkColors}
+	/>
 </main>
 
 <style>
