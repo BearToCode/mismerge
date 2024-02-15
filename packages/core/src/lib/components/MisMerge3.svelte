@@ -9,12 +9,11 @@
 	import { Side, TwoWaySide } from '$lib/internal/editor/side';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
-	import { mergeComponent } from '$lib/internal/editor/merging';
 	import { BlocksHashTable } from '$lib/internal/storage/table';
 	import Footer from './layout/Footer.svelte';
 	import { countChars, countWords } from '$lib/internal/editor/counters';
 	import { MergeConflictBlock } from '$lib/internal/blocks/merge-conflict';
-	import { browser } from '$app/environment';
+	import { browser } from '$lib/internal/env';
 
 	/* Exports */
 

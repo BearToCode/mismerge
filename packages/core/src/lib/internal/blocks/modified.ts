@@ -67,7 +67,7 @@ export class ModifiedBlock<SideType extends Side> extends LinkedComponentsBlock<
 							: {
 									component: MergeChange,
 									props: {}
-							  }
+								}
 				})
 		);
 		if (!this.unchangedSideData) return modifiedComponents;

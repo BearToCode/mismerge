@@ -12,7 +12,7 @@
 	import { countWords, countChars } from '$lib/internal/editor/counters';
 	import Footer from './layout/Footer.svelte';
 	import { DefaultLightColors, type EditorColors } from '$lib/internal/editor/colors';
-	import { browser } from '$app/environment';
+	import { browser } from '$lib/internal/env';
 
 	/* Exports */
 

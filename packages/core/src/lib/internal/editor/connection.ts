@@ -2,7 +2,7 @@ import { onDestroy, onMount } from 'svelte';
 import type { EditorColors } from './colors';
 import type { BlockComponent } from './component';
 import { TwoWaySide } from './side';
-import { dev } from '$app/environment';
+import { dev } from '$lib/internal/env';
 
 /**
  * A connection between two blocks.

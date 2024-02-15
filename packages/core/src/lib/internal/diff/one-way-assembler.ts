@@ -9,7 +9,7 @@ import { nanoid } from 'nanoid';
 import { BlocksHashTable } from '../storage/table';
 import { ModifiedBlock } from '../blocks/modified';
 import type { LinesOptions } from 'diff';
-import { dev } from '$app/environment';
+import { dev } from '$lib/internal/env';
 
 export interface OneWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;

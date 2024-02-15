@@ -9,7 +9,7 @@ import { diff2Sides, equalIgnoringWhitespace, type LineDiffAlgorithm } from './l
 import { TwoWaySide } from '../editor/side';
 import { BlocksHashTable } from '../storage/table';
 import type { LinesOptions } from 'diff';
-import { dev } from '$app/environment';
+import { dev } from '$lib/internal/env';
 
 export interface TwoWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;

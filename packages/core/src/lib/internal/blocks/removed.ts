@@ -44,7 +44,7 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 								? {
 										component: MergeChange,
 										props: {}
-								  }
+									}
 								: undefined,
 						props: { block: this, lines },
 						linesCount: this.linesCount(side),
