@@ -1,3 +1,4 @@
+import { DEV as isDevelopmentEnvironment } from 'esm-env';
 /**
  * Join a partial object with its default values.
  * @param partial The partial object.
@@ -41,4 +42,4 @@ export function debounce<T extends unknown[]>(cb: (...args: T) => unknown, wait 
 /**
  * Whether the current environment is development.
  */
-export const DEV = process.env.NODE_ENV !== 'production';
+export const DEV = isDevelopmentEnvironment;
