@@ -94,5 +94,8 @@
 		"merge",
 		"mismerge",
 		"diff"
-	]
+	],
+	"publishConfig": {
+		"access": "public"
+	}
 }
