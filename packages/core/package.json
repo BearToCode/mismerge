@@ -31,10 +31,16 @@
 			"import": "./dist/styles/*.css"
 		},
 		"./dist/styles/styles.css": {
-			"import": "./dist/styles/styles.css"
+			"import": "./dist/styles/styles.css",
+			"default": "./dist/styles/styles.css"
 		},
 		"./dist/styles/light.css": {
-			"import": "./dist/styles/light.css"
+			"import": "./dist/styles/light.css",
+			"default":  "./dist/styles/light.css"
+		},
+		"./dist/styles/dark.css": {
+			"import": "./dist/styles/dark.css",
+			"default":  "./dist/styles/dark.css"
 		},
 		"./vanilla": {
 			"types": "./vanilla.d.ts",
