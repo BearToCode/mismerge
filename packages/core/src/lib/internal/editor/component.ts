@@ -23,7 +23,7 @@ export class BlockComponent<
 	BlockProps extends Record<string, unknown> = Record<string, unknown>,
 	SideActionProps extends Record<string, unknown> = Record<string, unknown>
 > {
-	public readonly id = '@' + nanoid(6);
+	public readonly id = nanoid(8);
 	public readonly blockId: string;
 	public readonly component: typeof SvelteComponent<
 		{ component: BlockComponent<BlockProps> } & BlockProps

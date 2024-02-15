@@ -17,7 +17,7 @@ export function mergeComponent(data: {
 	components: BlockComponent[];
 	container: HTMLElement;
 }) {
-	const sourceElem = data.container.querySelector(`[id="${data.source.id}"]`);
+	const sourceElem = data.container.querySelector(`[data-component-id="${data.source.id}"]`);
 
 	if (!sourceElem) {
 		if (dev) console.error('Failed to merge component: source element not found');
@@ -37,7 +37,9 @@ export function mergeComponent(data: {
 
 	if (!targetComponent) return;
 
-	const targetElem = data.container.querySelector(`[id="${targetComponent.id}"]`);
+	const targetElem = data.container.querySelector(
+		`[data-component-id="${targetComponent.id}"]`
+	) as HTMLDivElement | null;
 
 	if (!targetElem) {
 		if (dev) console.error('Failed to merge component: corresponding component element not found');
@@ -63,7 +65,12 @@ export function mergeComponent(data: {
 	let elemFound = false;
 
 	for (const child of parent.children) {
-		if (child.id === targetElem.id) {
+		if (!(child instanceof HTMLDivElement)) {
+			if (dev) console.error('Failed to merge component: child is not an HTMLDivElement');
+			continue;
+		}
+
+		if (child.dataset.componentId === targetElem.dataset.componentId) {
 			elemFound = true;
 			continue;
 		}

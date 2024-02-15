@@ -57,12 +57,12 @@ export function drawConnections(
 
 	const width = canvas.width;
 
-	const blocks = Array.from(container.querySelectorAll('.msm__block'));
+	const blocks = Array.from(container.querySelectorAll('.msm__block')) as HTMLDivElement[];
 
 	ctx.reset();
 	for (const connection of connections) {
-		const fromElem = blocks.find((elem) => elem.id === connection.from.id);
-		const toElem = blocks.find((elem) => elem.id === connection.to.id);
+		const fromElem = blocks.find((elem) => elem.dataset.componentId === connection.from.id);
+		const toElem = blocks.find((elem) => elem.dataset.componentId === connection.to.id);
 		if (
 			!fromElem ||
 			!toElem ||

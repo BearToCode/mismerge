@@ -6,4 +6,4 @@
 	export let component: BlockComponent;
 </script>
 
-<div class="msm__block {block.placeholderType}" id={component.id} />
+<div class="msm__block {block.placeholderType}" data-component-id={component.id} />
