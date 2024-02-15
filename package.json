@@ -13,6 +13,7 @@
 		"core": "cd packages/core && npm run dev",
 		"demo": "cd demo && npm run dev",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"lint:fix": "prettier --plugin-search-dir . --write . && eslint --fix .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"check": "npx lerna run check",
 		"test": "npx lerna run test",

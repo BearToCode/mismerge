@@ -1,7 +1,7 @@
 ///
 /// Rollup configuration for the vanilla build which can be reused for
 /// projects that don't use a framework like Svelte (i.e. Vue, React), or can be imported without the need of a bundler.
-/// 
+///
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import { getBabelOutputPlugin } from '@rollup/plugin-babel';
@@ -69,7 +69,7 @@ export default [
 					{
 						src: path.join(coreSourcePath, '/dist/index.d.ts'),
 						dest: outputFolder,
-						rename: "vanilla.d.ts",
+						rename: 'vanilla.d.ts'
 					}
 				]
 			}),

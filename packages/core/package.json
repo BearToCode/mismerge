@@ -39,7 +39,7 @@
 		"./vanilla": {
 			"types": "./vanilla.d.ts",
 			"import": "./vanilla.js"
-		  }
+		}
 	},
 	"types": "./dist/index.d.ts",
 	"main": "./dist/index.js",
