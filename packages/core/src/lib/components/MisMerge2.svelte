@@ -2,17 +2,17 @@
 	import { joinWithDefault } from '$lib/internal/utils';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';
 	import type { BlockComponent } from '$lib/internal/editor/component';
-	import { drawOnChange, type Connection } from '$lib/internal/editor/connection';
+	import { onLineChange, type Connection } from '$lib/internal/editor/connection';
 	import { assembleOneWay } from '$lib/internal/diff/one-way-assembler';
 	import { OneWaySide, Side } from '$lib/internal/editor/side';
 	import View from './layout/View.svelte';
 	import Connector from './layout/Connector.svelte';
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
-	import { mergeComponent } from '$lib/internal/editor/merging';
 	import { BlocksHashTable } from '$lib/internal/storage/table';
 	import { countWords, countChars } from '$lib/internal/editor/counters';
 	import Footer from './layout/Footer.svelte';
 	import { DefaultLightColors, type EditorColors } from '$lib/internal/editor/colors';
+	import { browser } from '$app/environment';
 
 	/* Exports */
 
@@ -96,9 +96,9 @@
 	let container: HTMLDivElement;
 	let lhsViewElem: HTMLDivElement;
 	let rhsViewElem: HTMLDivElement;
-	let drawConnections: (container: HTMLDivElement, connections: Connection[]) => void;
-	let saveLhsHistory: () => void;
-	let saveRhsHistory: () => void;
+	let drawCtrConnections: (container: HTMLDivElement, connections: Connection[]) => void;
+	let updateLhsView: () => void;
+	let updateRhsView: () => void;
 
 	const hashTable = new BlocksHashTable();
 
@@ -116,24 +116,21 @@
 			.flat();
 	}
 
-	// Returns a function that merges a component from the given side.
-	function mergeComponentHandler(side: OneWaySide) {
-		return (
-			e: CustomEvent<{
-				component: BlockComponent<Record<string, unknown>>;
-			}>
-		) => {
-			mergeComponent({ source: e.detail.component, side, components, container });
-
-			// Save editor history after merging.
-			if (e.detail.component.side.eq(OneWaySide.lhs)) saveRhsHistory();
-			else saveLhsHistory();
-		};
-	}
-
-	const redrawConnections = () => {
+	const drawConnections = () => {
 		if (!container) return;
-		drawConnections(container, connections);
+		drawCtrConnections(container, connections);
+	};
+
+	const updateViews = () => {
+		if (!updateLhsView || !updateRhsView) return;
+		updateLhsView();
+		updateRhsView();
+	};
+
+	const update = () => {
+		if (!browser) return;
+		updateViews();
+		drawConnections();
 	};
 
 	/* Reactive statements */
@@ -150,12 +147,13 @@
 	$: renderComponents(blocks);
 	$: {
 		wrapLines;
-		redrawConnections();
+		editorColors;
+		update();
 	}
 
 	/* Lifecycle hooks */
 
-	drawOnChange(() => container, redrawConnections);
+	onLineChange(() => container, update);
 </script>
 
 <div
@@ -178,6 +176,7 @@
 	<div>
 		<div class="msm__main">
 			<View
+				{container}
 				{highlight}
 				{disableMerging}
 				editable={lhsEditable}
@@ -185,9 +184,8 @@
 				bind:components
 				bind:content={lhs}
 				bind:elem={lhsViewElem}
-				bind:saveHistory={saveLhsHistory}
-				on:merge={mergeComponentHandler(OneWaySide.lhs)}
-				on:height-change={redrawConnections}
+				bind:update={updateLhsView}
+				on:height-change={update}
 				on:merge
 				on:input
 				on:keydown
@@ -196,11 +194,12 @@
 			/>
 			<Connector
 				colors={editorColors}
-				bind:draw={drawConnections}
+				bind:draw={drawCtrConnections}
 				bind:lhsViewElem
 				bind:rhsViewElem
 			/>
 			<View
+				{container}
 				{highlight}
 				{disableMerging}
 				editable={rhsEditable}
@@ -208,9 +207,8 @@
 				bind:components
 				bind:content={rhs}
 				bind:elem={rhsViewElem}
-				bind:saveHistory={saveRhsHistory}
-				on:merge={mergeComponentHandler(OneWaySide.rhs)}
-				on:height-change={redrawConnections}
+				bind:update={updateRhsView}
+				on:height-change={update}
 				on:merge
 				on:input
 				on:keydown

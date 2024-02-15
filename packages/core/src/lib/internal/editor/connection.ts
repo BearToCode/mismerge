@@ -63,6 +63,7 @@ export function drawConnections(
 	for (const connection of connections) {
 		const fromElem = blocks.find((elem) => elem.id === connection.from.id);
 		const toElem = blocks.find((elem) => elem.id === connection.to.id);
+
 		if (
 			!fromElem ||
 			!toElem ||
@@ -111,15 +112,15 @@ export function drawConnections(
 }
 
 /**
- * Draw connections when the DOM changes.
+ * Execute and action when the DOM changes.
  * @param getTarget A function that returns the target element to observe. It is a function because the element
  * 									is defined only after the element is mounted.
- * @param draw Draw connections function.
+ * @param callback Draw connections function.
  */
-export function drawOnChange(getTarget: () => HTMLDivElement, draw: () => void) {
+export function onLineChange(getTarget: () => HTMLDivElement, callback: () => void) {
 	let observer: MutationObserver | undefined;
 	onMount(() => {
-		observer = new MutationObserver(draw);
+		observer = new MutationObserver(callback);
 		const target = getTarget();
 		if (!target) {
 			if (DEV) console.error('Cannot listen for changes to draw connections: target is undefined');
@@ -132,7 +133,7 @@ export function drawOnChange(getTarget: () => HTMLDivElement, draw: () => void) 
 			subtree: true
 		});
 
-		draw();
+		callback();
 	});
 
 	onDestroy(() => observer?.disconnect());

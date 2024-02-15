@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/editor/component';
-	import { drawOnChange, type Connection } from '$lib/internal/editor/connection';
+	import { onLineChange, type Connection } from '$lib/internal/editor/connection';
 	import { joinWithDefault } from '$lib/internal/utils';
 	import Connector from './layout/Connector.svelte';
 	import View from './layout/View.svelte';
@@ -14,6 +14,7 @@
 	import Footer from './layout/Footer.svelte';
 	import { countChars, countWords } from '$lib/internal/editor/counters';
 	import { MergeConflictBlock } from '$lib/internal/blocks/merge-conflict';
+	import { browser } from '$app/environment';
 
 	/* Exports */
 
@@ -116,13 +117,15 @@
 	let rhsViewElem: HTMLDivElement;
 	let drawLhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
 	let drawRhsConnections: (container: HTMLDivElement, connections: Connection[]) => void;
-	let saveCtrHistory: () => void;
+	let updateLhsView: () => void;
+	let updateCtrView: () => void;
+	let updateRhsView: () => void;
 
 	const hashTable = new BlocksHashTable<TwoWaySide>();
 
 	/* Local functions */
 
-	function renderComponents(blocks: DiffBlock<Side>[]) {
+	const renderComponents = (blocks: DiffBlock<Side>[]) => {
 		lhsConnections = [];
 		components = blocks
 			.map((block) => {
@@ -135,24 +138,25 @@
 				return comps;
 			})
 			.flat();
-	}
+	};
 
-	// Returns a function that merges a component from the given side.
-	function mergeComponentHandler(side: TwoWaySide) {
-		return (
-			e: CustomEvent<{
-				component: BlockComponent<Record<string, unknown>>;
-			}>
-		) => {
-			mergeComponent({ source: e.detail.component, side, components, container });
-			saveCtrHistory();
-		};
-	}
-
-	const redrawConnections = () => {
+	const drawConnections = () => {
 		if (!container) return;
 		drawLhsConnections(container, lhsConnections);
 		drawRhsConnections(container, rhsConnections);
+	};
+
+	const updateViews = () => {
+		if (!updateLhsView || !updateCtrView || !updateRhsView) return;
+		updateLhsView();
+		updateCtrView();
+		updateRhsView();
+	};
+
+	const update = () => {
+		if (!browser) return;
+		drawConnections();
+		updateViews();
 	};
 
 	/* Reactive statements */
@@ -170,7 +174,7 @@
 	$: {
 		wrapLines;
 		editorColors;
-		redrawConnections();
+		update();
 	}
 	$: conflictsResolved = blocks.every(
 		(block) => !(block instanceof MergeConflictBlock) || block.isResolved
@@ -178,7 +182,7 @@
 
 	/* Lifecycle hooks */
 
-	drawOnChange(() => container, redrawConnections);
+	onLineChange(() => container, update);
 </script>
 
 <div
@@ -201,6 +205,7 @@
 	<div>
 		<div class="msm__main">
 			<View
+				{container}
 				{highlight}
 				{disableMerging}
 				editable={lhsEditable}
@@ -209,8 +214,8 @@
 				bind:content={lhs}
 				bind:components
 				bind:elem={lhsViewElem}
-				on:merge={mergeComponentHandler(TwoWaySide.lhs)}
-				on:height-change={redrawConnections}
+				bind:update={updateLhsView}
+				on:height-change={update}
 				on:merge
 				on:resolve
 				on:input
@@ -225,6 +230,7 @@
 				bind:rhsViewElem={ctrViewElem}
 			/>
 			<View
+				{container}
 				{highlight}
 				{disableMerging}
 				editable={ctrEditable}
@@ -232,14 +238,13 @@
 				bind:content={ctr}
 				bind:components
 				bind:elem={ctrViewElem}
-				bind:saveHistory={saveCtrHistory}
-				on:merge={mergeComponentHandler(TwoWaySide.ctr)}
+				bind:update={updateCtrView}
 				on:resolve={() => {
 					blocks = assembleTwoWay(lhs, ctr, rhs, { lineDiffAlgorithm, hashTable });
 				}}
+				on:height-change={update}
 				on:merge
 				on:resolve
-				on:height-change={redrawConnections}
 				on:input
 				on:keydown
 				on:keypress
@@ -252,6 +257,7 @@
 				bind:rhsViewElem
 			/>
 			<View
+				{container}
 				{highlight}
 				{disableMerging}
 				editable={rhsEditable}
@@ -259,8 +265,8 @@
 				bind:content={rhs}
 				bind:components
 				bind:elem={rhsViewElem}
-				on:merge={mergeComponentHandler(TwoWaySide.rhs)}
-				on:height-change={redrawConnections}
+				bind:update={updateRhsView}
+				on:height-change={update}
 				on:merge
 				on:resolve
 				on:input

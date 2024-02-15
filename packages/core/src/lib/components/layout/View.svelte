@@ -1,14 +1,16 @@
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import type { Side } from '$lib/internal/editor/side';
-	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
-	import { DEV } from '$lib/internal/utils';
+	import { createEventDispatcher } from 'svelte';
 	import SidePanel from './SidePanel.svelte';
 	import Editor from './Editor.svelte';
 	import HighlightOverlay from './HighlightOverlay.svelte';
+	import { mergeComponent } from '$lib/internal/editor/merging';
 
 	/* Exports */
 
+	export let elem: HTMLDivElement;
+	export let container: HTMLDivElement;
 	export let components: BlockComponent[];
 	export let editable = false;
 	export let content: string;
@@ -17,15 +19,10 @@
 	export let lineNumbersSide: 'left' | 'right' = 'left';
 	export let highlight: ((text: string) => string | Promise<string>) | undefined;
 	export { clazz as class };
-	export { containerElem as elem };
-	// This way it is kept as an optional binding
-	const _saveHistory = () => saveHistory();
-	export { _saveHistory as saveHistory };
 
 	/* Local variables */
 
 	let clazz = '';
-	let containerElem: HTMLDivElement;
 	let contentElem: HTMLDivElement;
 	let sideComponents: BlockComponent[] = [];
 	let renderedSideComponents: {
@@ -36,12 +33,11 @@
 	let saveHistory: () => void;
 	let height = 0;
 	let width = 0;
-	let observer: MutationObserver | undefined;
 
 	/* Local functions */
 
-	const findElements = () => {
-		// Find and invalidated all the elements after they have been mounted in the DOM
+	export const update = () => {
+		// Find all the blocks elements after they have been mounted in the DOM
 		if (!contentElem) return;
 		const elements = Array.from(contentElem.querySelectorAll('.msm__block'));
 		if (elements.length != sideComponents.length) return;
@@ -73,31 +69,10 @@
 	const dispatch = createEventDispatcher<{
 		'height-change': Record<string, never>;
 	}>();
-
-	/* Lifecycle hooks */
-
-	onMount(() => {
-		if (!containerElem) {
-			if (DEV) console.error('containerElem is undefined');
-			return;
-		}
-		observer = new MutationObserver(findElements);
-		observer.observe(contentElem, {
-			characterData: false,
-			attributes: false,
-			childList: true,
-			subtree: true
-		});
-		// FIXME: This is a hack to make sure the elements are rendered properly
-		// the first time. I don't know why this is needed, but it works.
-		findElements();
-		setTimeout(findElements, 1);
-	});
-	onDestroy(() => observer?.disconnect());
 </script>
 
 <div
-	bind:this={containerElem}
+	bind:this={elem}
 	class="msm__view {highlight ? 'highlight' : ''} {editable ? 'editable' : ''} {clazz}"
 >
 	{#if lineNumbersSide == 'left'}
@@ -106,6 +81,10 @@
 			{disableMerging}
 			{renderedSideComponents}
 			components={sideComponents}
+			on:merge={(e) => {
+				mergeComponent({ source: e.detail.component, side, components, container });
+				saveHistory();
+			}}
 			on:merge
 			on:resolve
 		/>
@@ -140,6 +119,10 @@
 			{disableMerging}
 			{renderedSideComponents}
 			components={sideComponents}
+			on:merge={(e) => {
+				mergeComponent({ source: e.detail.component, side, components, container });
+				saveHistory();
+			}}
 			on:resolve
 			on:merge
 		/>
