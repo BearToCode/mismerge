@@ -13,8 +13,11 @@
 		"build": "vite build && npm run package",
 		"watch": "svelte-package --watch",
 		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
+		"svelte:package": "npm run prepare && svelte-package",
+		"vanilla:package": "rollup -c ./rollup.config.vanilla.js",
+		"package": "run-s *:package && publint",
 		"prepublishOnly": "npm run package",
+		"prepare": "svelte-kit sync",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest run",
@@ -27,10 +30,30 @@
 		},
 		"./*.css": {
 			"import": "./dist/styles/*.css"
+		},
+		"./dist/styles/styles.css": {
+			"import": "./dist/styles/styles.css",
+			"default": "./dist/styles/styles.css"
+		},
+		"./dist/styles/light.css": {
+			"import": "./dist/styles/light.css",
+			"default": "./dist/styles/light.css"
+		},
+		"./dist/styles/dark.css": {
+			"import": "./dist/styles/dark.css",
+			"default": "./dist/styles/dark.css"
+		},
+		"./vanilla": {
+			"types": "./vanilla.d.ts",
+			"import": "./vanilla.js"
 		}
 	},
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"main": "./dist/index.js",
 	"files": [
+		"vanilla.js",
+		"vanilla.d.ts",
 		"dist",
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*"
@@ -40,20 +63,30 @@
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "^2.5.0",
+		"@babel/preset-env": "^7.23.9",
+		"@rollup/plugin-alias": "^5.1.0",
+		"@rollup/plugin-babel": "^6.0.4",
+		"@rollup/plugin-node-resolve": "^15.2.3",
+		"@rollup/plugin-terser": "^0.4.4",
+		"@rollup/plugin-typescript": "^11.1.6",
 		"@sveltejs/package": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
 		"@types/diff": "^5.0.3",
 		"dedent": "^1.5.1",
+		"esm-env": "^1.0.0",
+		"npm-run-all": "^4.1.5",
 		"publint": "^0.1.9",
+		"rollup": "^4.9.6",
+		"rollup-plugin-copy": "^3.5.0",
+		"rollup-plugin-svelte": "^7.1.6",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
+		"svelte-preprocess": "^5.1.3",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
 		"vite": "^5.1.3",
 		"vitest": "^0.34.5"
 	},
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
 		"diff": "^5.1.0",
@@ -67,5 +100,8 @@
 		"merge",
 		"mismerge",
 		"diff"
-	]
+	],
+	"publishConfig": {
+		"access": "public"
+	}
 }

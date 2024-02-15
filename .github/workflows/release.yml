@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 21
+          cache: 'npm'
 
       - name: Install dependendencies
         run: npm i
@@ -47,6 +48,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 21
+          cache: 'npm'
 
       - name: Install dependendencies
         run: npm i

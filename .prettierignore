@@ -12,3 +12,6 @@ dist
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+
+# Vanilla build files
+vanilla.js

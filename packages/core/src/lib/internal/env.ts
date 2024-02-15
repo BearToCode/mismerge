@@ -1,2 +1,4 @@
-export const browser = typeof window !== 'undefined';
-export const dev = process.env.NODE_ENV !== 'production';
+import { DEV, BROWSER } from 'esm-env';
+
+export const browser = BROWSER;
+export const dev = DEV;

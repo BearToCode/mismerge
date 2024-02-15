@@ -33,7 +33,7 @@ export class AddedBlock<SideType extends Side = Side> extends LinkedComponentsBl
 		return [this.sidesData].flat().find((sideData) => sideData.side.eq(side))?.lines.length ?? 0;
 	}
 
-	public render() {
+	public render(): BlockComponent[] {
 		return [
 			...[this.sidesData].flat().map(
 				({ side, lines }) =>
