@@ -103,7 +103,7 @@ Here is a basic explanation of how the the rendered html looks like:
 					<!-- Blocks wrapper -->
 					<div class="msm__wrapper">
 						<!-- Blocks -->
-						<div id="@abcdef" class="msm__block block-type">
+						<div data-component-id="abcdefgh" class="msm__block block-type">
 							<!-- Lines -->
 							<div class="msm__line">
 								<!-- ... -->

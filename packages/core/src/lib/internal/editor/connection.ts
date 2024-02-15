@@ -1,8 +1,8 @@
 import { onDestroy, onMount } from 'svelte';
 import type { EditorColors } from './colors';
 import type { BlockComponent } from './component';
-import { DEV } from '../utils';
 import { TwoWaySide } from './side';
+import { dev } from '$app/environment';
 
 /**
  * A connection between two blocks.
@@ -57,13 +57,12 @@ export function drawConnections(
 
 	const width = canvas.width;
 
-	const blocks = Array.from(container.querySelectorAll('.msm__block'));
+	const blocks = Array.from(container.querySelectorAll('.msm__block')) as HTMLDivElement[];
 
 	ctx.reset();
 	for (const connection of connections) {
-		const fromElem = blocks.find((elem) => elem.id === connection.from.id);
-		const toElem = blocks.find((elem) => elem.id === connection.to.id);
-
+		const fromElem = blocks.find((elem) => elem.dataset.componentId === connection.from.id);
+		const toElem = blocks.find((elem) => elem.dataset.componentId === connection.to.id);
 		if (
 			!fromElem ||
 			!toElem ||
@@ -123,7 +122,7 @@ export function onLineChange(getTarget: () => HTMLDivElement, callback: () => vo
 		observer = new MutationObserver(callback);
 		const target = getTarget();
 		if (!target) {
-			if (DEV) console.error('Cannot listen for changes to draw connections: target is undefined');
+			if (dev) console.error('Cannot listen for changes to draw connections: target is undefined');
 			return;
 		}
 		observer.observe(target, {

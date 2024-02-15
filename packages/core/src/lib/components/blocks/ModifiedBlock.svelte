@@ -9,7 +9,7 @@
 	export let component: BlockComponent;
 </script>
 
-<div class="msm__block {block.type}" id={component.id}>
+<div class="msm__block {block.type}" data-component-id={component.id}>
 	{#each lines as line}
 		<div class="msm__line">
 			<div class="msm__content">

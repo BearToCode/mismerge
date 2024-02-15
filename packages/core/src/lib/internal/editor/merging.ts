@@ -1,4 +1,4 @@
-import { DEV } from '../utils';
+import { dev } from '$app/environment';
 import type { BlockComponent } from './component';
 import type { Side } from './side';
 
@@ -17,10 +17,10 @@ export function mergeComponent(data: {
 	components: BlockComponent[];
 	container: HTMLElement;
 }) {
-	const sourceElem = data.container.querySelector(`[id="${data.source.id}"]`);
+	const sourceElem = data.container.querySelector(`[data-component-id="${data.source.id}"]`);
 
 	if (!sourceElem) {
-		if (DEV) console.error('Failed to merge component: source element not found');
+		if (dev) console.error('Failed to merge component: source element not found');
 		return;
 	}
 
@@ -37,24 +37,26 @@ export function mergeComponent(data: {
 
 	if (!targetComponent) return;
 
-	const targetElem = data.container.querySelector(`[id="${targetComponent.id}"]`);
+	const targetElem = data.container.querySelector(
+		`[data-component-id="${targetComponent.id}"]`
+	) as HTMLDivElement | null;
 
 	if (!targetElem) {
-		if (DEV) console.error('Failed to merge component: corresponding component element not found');
+		if (dev) console.error('Failed to merge component: corresponding component element not found');
 		return;
 	}
 
 	const parent = targetElem.parentElement;
 
 	if (!parent) {
-		if (DEV) console.error('Failed to merge component: parent element is null');
+		if (dev) console.error('Failed to merge component: parent element is null');
 		return;
 	}
 
 	const textarea = parent.parentElement?.querySelector('textarea');
 
 	if (!textarea) {
-		if (DEV) console.error('Failed to merge component: failed to find textarea');
+		if (dev) console.error('Failed to merge component: failed to find textarea');
 		return;
 	}
 
@@ -63,7 +65,12 @@ export function mergeComponent(data: {
 	let elemFound = false;
 
 	for (const child of parent.children) {
-		if (child.id === targetElem.id) {
+		if (!(child instanceof HTMLDivElement)) {
+			if (dev) console.error('Failed to merge component: child is not an HTMLDivElement');
+			continue;
+		}
+
+		if (child.dataset.componentId === targetElem.dataset.componentId) {
 			elemFound = true;
 			continue;
 		}
