@@ -1,3 +1,10 @@
+<svelte:options
+	customElement={{
+		tag: 'mis-merge3',
+		shadow: 'none'
+	}}
+/>
+
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import { drawOnChange, type Connection } from '$lib/internal/editor/connection';

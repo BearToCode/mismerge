@@ -47,7 +47,10 @@ export default [
 				]
 			}),
 			svelte({
-				preprocess: sveltePreprocess()
+				preprocess: sveltePreprocess(),
+				compilerOptions: {
+					customElement: true
+				}
 			}),
 			resolve({
 				browser: true,
