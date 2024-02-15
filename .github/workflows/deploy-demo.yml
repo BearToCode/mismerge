@@ -11,15 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 6
 
       - name: Install dependendencies
-        run: pnpm i
+        run: npm i
 
       - name: Build project
-        run: pnpm run build
+        run: npm run build
 
       - name: Deploy demo
         run: |

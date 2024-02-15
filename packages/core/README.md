@@ -187,7 +187,7 @@ cd mismerge
 Download dependencies for all packages in the monorepo:
 
 ```
-pnpm i
+npm install
 ```
 
 ### The core package

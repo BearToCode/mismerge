@@ -14,24 +14,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 6
 
       - name: Install dependendencies
-        run: pnpm i
+        run: npm i
 
       - name: Build project
-        run: pnpm run build
+        run: npm run build
 
       - name: Run lint
-        run: pnpm run lint
+        run: npm run lint
 
       - name: Run check
-        run: pnpm run check
+        run: npm run check
 
       - name: Run tests
-        run: pnpm run test
+        run: npm run test
 
   release:
     needs: test
@@ -46,15 +43,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 6
 
       - name: Install dependendencies
-        run: pnpm i
+        run: npm i
 
       - name: Build core package
-        run: cd packages/core && pnpm build
+        run: cd packages/core && npm build
 
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
