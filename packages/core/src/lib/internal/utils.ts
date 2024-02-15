@@ -37,8 +37,3 @@ export function debounce<T extends unknown[]>(cb: (...args: T) => unknown, wait 
 		timeout = setTimeout(() => cb(...args), wait);
 	};
 }
-
-/**
- * Whether the current environment is development.
- */
-export const DEV = process.env.NODE_ENV !== 'production';

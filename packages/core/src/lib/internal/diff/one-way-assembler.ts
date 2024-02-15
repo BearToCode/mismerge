@@ -6,10 +6,10 @@ import { type OneWayChange, oneWayDiff } from './base';
 import { diff2Sides, equalIgnoringWhitespace, type LineDiffAlgorithm } from './line-diff';
 import { OneWaySide } from '../editor/side';
 import { nanoid } from 'nanoid';
-import { DEV } from '../utils';
 import { BlocksHashTable } from '../storage/table';
 import { ModifiedBlock } from '../blocks/modified';
 import type { LinesOptions } from 'diff';
+import { dev } from '$app/environment';
 
 export interface OneWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
@@ -98,7 +98,7 @@ class OneWayAssembler {
 		} else if (change.rhs) {
 			this.assembleChangeBlock(change, OneWaySide.rhs);
 		} else {
-			if (DEV) console.error('Invalid combination of sides in change', change);
+			if (dev) console.error('Invalid combination of sides in change', change);
 		}
 	}
 

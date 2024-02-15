@@ -1,4 +1,4 @@
-import { DEV } from '../utils';
+import { dev } from '$app/environment';
 import type { BlockComponent } from './component';
 import type { Side } from './side';
 
@@ -20,7 +20,7 @@ export function mergeComponent(data: {
 	const sourceElem = data.container.querySelector(`[id="${data.source.id}"]`);
 
 	if (!sourceElem) {
-		if (DEV) console.error('Failed to merge component: source element not found');
+		if (dev) console.error('Failed to merge component: source element not found');
 		return;
 	}
 
@@ -40,21 +40,21 @@ export function mergeComponent(data: {
 	const targetElem = data.container.querySelector(`[id="${targetComponent.id}"]`);
 
 	if (!targetElem) {
-		if (DEV) console.error('Failed to merge component: corresponding component element not found');
+		if (dev) console.error('Failed to merge component: corresponding component element not found');
 		return;
 	}
 
 	const parent = targetElem.parentElement;
 
 	if (!parent) {
-		if (DEV) console.error('Failed to merge component: parent element is null');
+		if (dev) console.error('Failed to merge component: parent element is null');
 		return;
 	}
 
 	const textarea = parent.parentElement?.querySelector('textarea');
 
 	if (!textarea) {
-		if (DEV) console.error('Failed to merge component: failed to find textarea');
+		if (dev) console.error('Failed to merge component: failed to find textarea');
 		return;
 	}
 

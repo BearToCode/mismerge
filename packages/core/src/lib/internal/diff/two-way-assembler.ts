@@ -7,9 +7,9 @@ import { UnchangedBlock } from '../blocks/unchanged';
 import { twoWayDiff, type TwoWayChange } from './base';
 import { diff2Sides, equalIgnoringWhitespace, type LineDiffAlgorithm } from './line-diff';
 import { TwoWaySide } from '../editor/side';
-import { DEV } from '../utils';
 import { BlocksHashTable } from '../storage/table';
 import type { LinesOptions } from 'diff';
+import { dev } from '$app/environment';
 
 export interface TwoWayAssemblerOptions {
 	lineDiffAlgorithm?: LineDiffAlgorithm;
@@ -80,7 +80,7 @@ class TwoWayAssembler {
 		} else if (!change.ctr && (change.lhs || change.rhs)) {
 			this.assembleAddedBlock(change);
 		} else {
-			if (DEV) console.error('Invalid combination of sides in change', change);
+			if (dev) console.error('Invalid combination of sides in change', change);
 		}
 	}
 

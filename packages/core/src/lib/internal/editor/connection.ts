@@ -1,8 +1,8 @@
 import { onDestroy, onMount } from 'svelte';
 import type { EditorColors } from './colors';
 import type { BlockComponent } from './component';
-import { DEV } from '../utils';
 import { TwoWaySide } from './side';
+import { dev } from '$app/environment';
 
 /**
  * A connection between two blocks.
@@ -122,7 +122,7 @@ export function drawOnChange(getTarget: () => HTMLDivElement, draw: () => void) 
 		observer = new MutationObserver(draw);
 		const target = getTarget();
 		if (!target) {
-			if (DEV) console.error('Cannot listen for changes to draw connections: target is undefined');
+			if (dev) console.error('Cannot listen for changes to draw connections: target is undefined');
 			return;
 		}
 		observer.observe(target, {

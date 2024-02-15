@@ -2,10 +2,10 @@
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import type { Side } from '$lib/internal/editor/side';
 	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
-	import { DEV } from '$lib/internal/utils';
 	import SidePanel from './SidePanel.svelte';
 	import Editor from './Editor.svelte';
 	import HighlightOverlay from './HighlightOverlay.svelte';
+	import { dev } from '$app/environment';
 
 	/* Exports */
 
@@ -78,7 +78,7 @@
 
 	onMount(() => {
 		if (!containerElem) {
-			if (DEV) console.error('containerElem is undefined');
+			if (dev) console.error('containerElem is undefined');
 			return;
 		}
 		observer = new MutationObserver(findElements);
