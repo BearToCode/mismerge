@@ -172,7 +172,8 @@ Events:
 | Name          | Description                                                   |
 | ------------- | ------------------------------------------------------------- |
 | `on:merge`    | Fired when a block is merged from one side to an adjacent one |
-| `on:resolve`  | Fire when a conflict has its resolved status toggled          |
+| `on:resolve`  | Fired when a conflict has its resolved status toggled         |
+| `on:delete`   | Fired when a block is deleted in the center side              |
 | `on:input`    | Default `textarea` event                                      |
 | `on:keydown`  | Default `textarea` event                                      |
 | `on:keypress` | Default `textarea` event                                      |

@@ -1,10 +1,11 @@
 import { type Line, LinkedComponentsBlock } from '.';
-import { type Side, OneWaySide } from '../editor/side';
+import { type Side, OneWaySide, TwoWaySide } from '../editor/side';
 import type { MaybeArray } from '../utils';
 import { BlockComponent } from '../editor/component';
 import RemovedBlockComponent from '$lib/components/blocks/RemovedBlock.svelte';
 import RemovedBlockPlaceholderComponent from '$lib/components/blocks/RemovedBlockPlaceholder.svelte';
 import MergeChange from '$lib/components/actions/MergeChange.svelte';
+import DeleteChange from '$lib/components/actions/DeleteChange.svelte';
 
 export type RemovedSideData<SideType extends Side> = {
 	side: SideType;
@@ -45,7 +46,12 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 										component: MergeChange,
 										props: {}
 									}
-								: undefined,
+								: side instanceof TwoWaySide && side.eq(TwoWaySide.ctr)
+									? {
+											component: DeleteChange,
+											props: {}
+										}
+									: undefined,
 						props: { block: this, lines },
 						linesCount: this.linesCount(side),
 						side,

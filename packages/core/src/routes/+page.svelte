@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { DefaultDarkColors } from '$lib/internal/editor/colors';
-	// import MisMerge3 from '$lib/components/MisMerge3.svelte';
-	import MisMerge2 from '$lib/components/MisMerge2.svelte';
+	import MisMerge3 from '$lib/components/MisMerge3.svelte';
+	// import MisMerge2 from '$lib/components/MisMerge2.svelte';
 	import LhsPlaceholderText from './placeholder/lhs-quicksort.c?raw';
-	// import CtrPlaceholderText from './placeholder/ctr-quicksort.c?raw';
+	import CtrPlaceholderText from './placeholder/ctr-quicksort.c?raw';
 	import RhsPlaceholderText from './placeholder/rhs-quicksort.c?raw';
 
 	import '$lib/styles/styles.css';
@@ -30,7 +30,7 @@
 </svelte:head>
 
 <main>
-	<!-- <MisMerge3
+	<MisMerge3
 		lhs={LhsPlaceholderText}
 		ctr={CtrPlaceholderText}
 		rhs={RhsPlaceholderText}
@@ -39,15 +39,15 @@
 		rhsEditable
 		colors={DefaultDarkColors}
 		ignoreWhitespace
-	/> -->
-	<MisMerge2
+	/>
+	<!-- <MisMerge2
 		lhs={LhsPlaceholderText}
 		rhs={RhsPlaceholderText}
 		wrapLines
 		lhsEditable
 		rhsEditable
 		colors={DefaultDarkColors}
-	/>
+	/> -->
 </main>
 
 <style>

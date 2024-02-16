@@ -5,7 +5,7 @@
 	import SidePanel from './SidePanel.svelte';
 	import Editor from './Editor.svelte';
 	import HighlightOverlay from './HighlightOverlay.svelte';
-	import { mergeComponent } from '$lib/internal/editor/merging';
+	import { deleteComponent, mergeComponent } from '$lib/internal/editor/actions';
 
 	/* Exports */
 
@@ -55,6 +55,18 @@
 
 	const redrawLines = () => (renderedSideComponents = renderedSideComponents);
 
+	// Actions
+
+	const onMerge = (e: CustomEvent<{ component: BlockComponent }>) => {
+		mergeComponent({ source: e.detail.component, side, components, container });
+		saveHistory();
+	};
+
+	const onDelete = (e: CustomEvent<{ component: BlockComponent }>) => {
+		deleteComponent({ component: e.detail.component, container });
+		saveHistory();
+	};
+
 	/* Reactive statements */
 
 	$: sideComponents = components.filter((component) => component.side.eq(side));
@@ -81,12 +93,11 @@
 			{disableMerging}
 			{renderedSideComponents}
 			components={sideComponents}
-			on:merge={(e) => {
-				mergeComponent({ source: e.detail.component, side, components, container });
-				saveHistory();
-			}}
+			on:merge={onMerge}
+			on:delete={onDelete}
 			on:merge
 			on:resolve
+			on:delete
 		/>
 	{/if}
 	<div class="msm__view-content">
@@ -119,12 +130,11 @@
 			{disableMerging}
 			{renderedSideComponents}
 			components={sideComponents}
-			on:merge={(e) => {
-				mergeComponent({ source: e.detail.component, side, components, container });
-				saveHistory();
-			}}
+			on:merge={onMerge}
+			on:delete={onDelete}
 			on:resolve
 			on:merge
+			on:delete
 		/>
 	{/if}
 </div>

@@ -323,7 +323,8 @@
 /* Block actions */
 
 .mismerge .msm__merge-button,
-.mismerge .msm__resolve-button {
+.mismerge .msm__resolve-button,
+.mismerge .msm__delete-button {
 	width: fit-content;
 	height: 24px;
 
@@ -339,23 +340,35 @@
 }
 
 .mismerge .msm__left .msm__merge-button,
-.mismerge .msm__left .msm__resolve-button {
+.mismerge .msm__left .msm__resolve-button,
+.mismerge .msm__delete-button {
 	right: unset;
 	left: 0;
 }
 
 .mismerge .msm__left .msm__merge-button {
-	transform: translateY(-50%) scale(0.9) scaleX(-1);
+	transform: translateY(-50%) scaleX(-1);
 }
-
 .mismerge .msm__right .msm__merge-button {
-	transform: translateY(-50%) scale(0.9);
+	transform: translateY(-50%);
+}
+.mismerge .msm__merge-button svg {
+	transform: scale(0.9);
 }
 
 .mismerge .msm__resolve-button {
-	transform: translateY(-50%) scale(0.8);
+	transform: translateY(-50%);
+}
+.mismerge .msm__resolve-button svg {
+	transform: scale(0.8);
 }
 
+.mismerge .msm__delete-button {
+	transform: translateY(-50%);
+}
+.mismerge .msm__delete-button svg {
+	transform: scale(1.8);
+}
 /* Highlight overlay */
 
 .mismerge .msm__view.highlight textarea {

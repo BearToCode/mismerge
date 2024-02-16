@@ -216,6 +216,7 @@
 				bind:update={updateLhsView}
 				on:height-change={update}
 				on:merge
+				on:delete
 				on:resolve
 				on:input
 				on:keydown
@@ -243,6 +244,7 @@
 				}}
 				on:height-change={update}
 				on:merge
+				on:delete
 				on:resolve
 				on:input
 				on:keydown
@@ -267,6 +269,7 @@
 				bind:update={updateRhsView}
 				on:height-change={update}
 				on:merge
+				on:delete
 				on:resolve
 				on:input
 				on:keydown

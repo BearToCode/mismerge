@@ -48,12 +48,14 @@
 }
 
 .mismerge .msm__merge-button,
-.mismerge .msm__resolve-button {
+.mismerge .msm__resolve-button,
+.mismerge .msm__delete-button {
 	color: var(--primary-400);
 }
 
 .mismerge .msm__merge-button:hover,
-.mismerge .msm__resolve-button:hover {
+.mismerge .msm__resolve-button:hover,
+.mismerge .msm__delete-button:hover {
 	color: var(--primary-500);
 }
 
