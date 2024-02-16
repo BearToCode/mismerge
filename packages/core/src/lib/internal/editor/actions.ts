@@ -44,23 +44,24 @@ export function mergeComponent(data: {
 		return;
 	}
 
-	const wrapper = correspondingComponentElem.parentElement;
-	if (!wrapper) {
+	const correspondingWrapper = correspondingComponentElem.parentElement;
+	if (!correspondingWrapper) {
 		if (dev) console.error('Failed to merge component: parent element is null');
 		return;
 	}
 
-	const textarea = wrapper.parentElement?.querySelector('textarea');
+	const textarea = correspondingWrapper.parentElement?.querySelector('textarea');
 	if (!textarea) {
 		if (dev) console.error('Failed to merge component: failed to find textarea');
 		return;
 	}
 
-	const {
-		prevLines: prevLines,
-		compLines: sourceLines,
-		nextLines: nextLines
-	} = getContentAroundComponent(wrapper, data.source);
+	const { prevLines, nextLines } = getContentAroundComponent(
+		correspondingWrapper,
+		correspondingComponent
+	);
+
+	const sourceLines = getLinesFromElem(sourceElem as HTMLDivElement);
 
 	textarea.value = Array.prototype.concat(prevLines, sourceLines, nextLines).join('\n');
 
