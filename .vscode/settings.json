@@ -2,14 +2,19 @@
 	"cSpell.words": [
 		"codicon",
 		"cyrb",
+		"devicon",
 		"fontisto",
+		"heroicons",
 		"iconify",
 		"limerge",
+		"majesticons",
 		"mismerge",
 		"nonicons",
 		"preinstall",
 		"publint",
-		"tabler"
+		"shiki",
+		"tabler",
+		"twotone"
 	],
 	"[svelte]": {
 		"editor.defaultFormatter": "svelte.svelte-vscode"

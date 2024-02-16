@@ -24,6 +24,7 @@
 }
 
 .mismerge pre,
+.mismerge code,
 .mismerge textarea,
 .mismerge button {
 	font-family: inherit;

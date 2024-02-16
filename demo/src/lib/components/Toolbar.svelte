@@ -14,6 +14,38 @@
 		theme,
 		wrapLines
 	} from '$lib/stores';
+	import type { BundledLanguage, SpecialLanguage } from 'shiki';
+
+	const languages: {
+		name: string;
+		code: BundledLanguage | SpecialLanguage;
+		icon: string;
+	}[] = [
+		{ name: 'Plain', code: 'plaintext', icon: 'majesticons:text' },
+		{ name: 'Bash', code: 'bash', icon: 'codicon:terminal-bash' },
+		{ name: 'CSS', code: 'css', icon: 'ri:css3-fill' },
+		{ name: 'CSV', code: 'csv', icon: 'eos-icons:csv-file' },
+		{ name: 'HTML', code: 'html', icon: 'ri:html5-fill' },
+		{ name: 'HTTP', code: 'http', icon: 'ic:twotone-http' },
+		{ name: 'JavaScript', code: 'js', icon: 'bxl:javascript' },
+		{ name: 'JSON', code: 'json', icon: 'nonicons:json-16' },
+		{ name: 'Markdown', code: 'md', icon: 'pajamas:markdown-mark-solid' },
+		{ name: 'Perl', code: 'perl', icon: 'nonicons:perl-16' },
+		{ name: 'Lua', code: 'lua', icon: 'nonicons:lua-16' },
+		{ name: 'Python', code: 'py', icon: 'nonicons:python-16' },
+		{ name: 'SQL', code: 'sql', icon: 'tabler:file-type-sql' },
+		{ name: 'TypeScript', code: 'ts', icon: 'bxl:typescript' },
+		{ name: 'Yaml', code: 'yaml', icon: 'file-icons:yaml-alt1' },
+		{ name: 'Docker', code: 'docker', icon: 'fontisto:docker' },
+		{ name: 'C', code: 'c', icon: 'devicon-plain:c' },
+		{ name: 'C++', code: 'cpp', icon: 'tabler:brand-cpp' },
+		{ name: 'C#', code: 'c#', icon: 'tabler:brand-c-sharp' },
+		{ name: 'XML', code: 'xml', icon: 'carbon:xml' },
+		{ name: 'Rust', code: 'rs', icon: 'nonicons:rust-16' },
+		{ name: 'Go', code: 'go', icon: 'file-icons:go' },
+		{ name: 'Java', code: 'java', icon: 'nonicons:java-16' },
+		{ name: 'Assembly', code: 'asm', icon: 'heroicons:cpu-chip-20-solid' }
+	];
 </script>
 
 <div class="toolbar">
@@ -56,115 +88,12 @@
 		<span>Language</span>
 
 		<ul slot="dropdown" let:RadioOption class="dropdown-list radio-languages">
-			<RadioOption bind:selectedValue={$language} value="plain">
-				<iconify-icon icon="majesticons:text" />
-				<span>Plain</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="bash">
-				<iconify-icon icon="codicon:terminal-bash" />
-				<span>Bash</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="css">
-				<iconify-icon icon="ri:css3-fill" />
-				<span>CSS</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="csv">
-				<iconify-icon icon="eos-icons:csv-file" />
-				<span>CSV</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="html">
-				<iconify-icon icon="ri:html5-fill" />
-				<span>HTML</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="http">
-				<iconify-icon icon="ic:twotone-http" />
-				<span>HTTP</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="js">
-				<iconify-icon icon="bxl:javascript" />
-				<span>JavaScript</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="json">
-				<iconify-icon icon="nonicons:json-16" />
-				<span>JSON</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="md">
-				<iconify-icon icon="pajamas:markdown-mark-solid" />
-				<span>Markdown</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="perl">
-				<iconify-icon icon="nonicons:perl-16" />
-				<span>Perl</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="lua">
-				<iconify-icon icon="nonicons:lua-16" />
-				<span>Lua</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="py">
-				<iconify-icon icon="nonicons:python-16" />
-				<span>Python</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="sql">
-				<iconify-icon icon="tabler:file-type-sql" />
-				<span>SQL</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="ts">
-				<iconify-icon icon="bxl:typescript" />
-				<span>TypeScript</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="yaml">
-				<iconify-icon icon="file-icons:yaml-alt1" />
-				<span>Yaml</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="docker">
-				<iconify-icon icon="fontisto:docker" />
-				<span>Docker</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="c">
-				<iconify-icon icon="devicon-plain:c" />
-				<span>C</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="xml">
-				<iconify-icon icon="carbon:xml" />
-				<span>XML</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="rs">
-				<iconify-icon icon="nonicons:rust-16" />
-				<span>Rust</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="go">
-				<iconify-icon icon="file-icons:go" />
-				<span>GO</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="java">
-				<iconify-icon icon="nonicons:java-16" />
-				<span>Java</span>
-			</RadioOption>
-
-			<RadioOption bind:selectedValue={$language} value="asm">
-				<iconify-icon icon="heroicons:cpu-chip-20-solid" />
-				<span>Assembly</span>
-			</RadioOption>
+			{#each languages as lang}
+				<RadioOption bind:selectedValue={$language} value={lang.code}>
+					<iconify-icon icon={lang.icon} />
+					<span>{lang.name}</span>
+				</RadioOption>
+			{/each}
 		</ul>
 	</Radio>
 

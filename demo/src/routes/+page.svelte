@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { codeToHtml } from 'shiki';
 	import {
 		DefaultDarkColors,
 		MisMerge2,
@@ -20,17 +22,15 @@
 		wrapLines
 	} from '$lib/stores';
 	import { loadDynamicStylesheet } from '$lib/dynamic-css';
-	import { highlightText } from '@speed-highlight/core';
-	import { onMount } from 'svelte';
 	import Toolbar from '$lib/components/Toolbar.svelte';
-
-	import '$lib/styles/styles.css';
-	import '@mismerge/core/styles.css';
 	import mismergeLightStyle from '@mismerge/core/light.css?raw';
 	import mismergeDarkStyle from '@mismerge/core/dark.css?raw';
 	import codeLightStyle from '$lib/styles/code-light.css?raw';
 	import codeDarkStyle from '$lib/styles/code-dark.css?raw';
 	import Footer from '$lib/components/Footer.svelte';
+
+	import '$lib/styles/styles.css';
+	import '@mismerge/core/styles.css';
 
 	let mounted = false;
 	let unloadStylesheets: (() => void)[] = [];
@@ -63,7 +63,10 @@
 	});
 
 	const highlight = async (text: string) =>
-		highlightText(text, $language, true, { hideLineNumbers: true });
+		await codeToHtml(text, {
+			lang: $language,
+			theme: $theme == 'dark' ? 'min-dark' : 'min-light'
+		});
 
 	let colors: EditorColors;
 	const updateColors = (theme: string) =>
@@ -94,7 +97,7 @@
 
 <main>
 	<Toolbar />
-	{#key $language}
+	{#key $language + $theme}
 		{#if $component == 'mismerge2'}
 			<MisMerge2
 				{colors}
@@ -136,5 +139,9 @@
 		font-variant-ligatures: normal;
 		min-height: 80vh;
 		margin-top: 1rem;
+	}
+
+	:global(.shiki) {
+		background-color: transparent !important;
 	}
 </style>

@@ -61,14 +61,18 @@ npm i @mismerge/core
 
 ### Adding syntax highlighting
 
-You need to provide your own syntax highlighter. Example and demo using [Speed-Highlight JS](https://github.com/speed-highlight/core). The highlighter can be either sync or async.
+You need to provide your own syntax highlighter. Example and demo using [Shiki-JS](https://github.com/shikijs/shiki). The highlighter can be either sync or async.
 
 ```svelte
 <script>
-	import { highlightText } from '@speed-highlight/core';
+	import { codeToHtml } from 'shiki';
 	// ...
 
-	const highlight = async (text) => highlightText(text, 'js', true, { hideLineNumbers: true });
+	const highlight = async (text: string) =>
+		await codeToHtml(text, {
+			lang: 'js',
+			theme: 'min-dark'
+		});
 </script>
 
 <MisMerge3 ... {highlight} />
