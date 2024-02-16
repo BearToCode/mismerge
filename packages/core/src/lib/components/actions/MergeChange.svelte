@@ -8,6 +8,10 @@
 	export let dispatch: ReturnType<typeof createEventDispatcher<SidePanelEvents>>;
 </script>
 
-<button class="msm__merge-button" on:click={() => dispatch('merge', { component })}>
+<button
+	class="msm__merge-button"
+	aria-label="merge change"
+	on:click={() => dispatch('merge', { component })}
+>
 	<ArrowIcon />
 </button>

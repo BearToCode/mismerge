@@ -13,6 +13,7 @@
 
 <button
 	class="msm__resolve-button"
+	aria-label="mark as {resolved ? 'unresolved' : 'resolved'}"
 	on:click={() => {
 		toggleResolved();
 		dispatch('resolve', { component });

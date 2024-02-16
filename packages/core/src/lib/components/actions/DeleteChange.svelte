@@ -8,6 +8,10 @@
 	export let dispatch: ReturnType<typeof createEventDispatcher<SidePanelEvents>>;
 </script>
 
-<button class="msm__delete-button" on:click={() => dispatch('delete', { component })}>
+<button
+	class="msm__delete-button"
+	aria-label="delete change"
+	on:click={() => dispatch('delete', { component })}
+>
 	<CrossIcon />
 </button>
