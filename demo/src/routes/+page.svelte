@@ -65,7 +65,7 @@
 	const highlight = async (text: string) =>
 		await codeToHtml(text, {
 			lang: $language,
-			theme: $theme == 'dark' ? 'min-dark' : 'min-light'
+			theme: $theme == 'dark' ? 'github-dark' : 'github-light'
 		});
 
 	let colors: EditorColors;
