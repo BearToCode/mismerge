@@ -24,8 +24,8 @@
 		"publish": "cd packages/core && npx --no-install semantic-release -e semantic-release-monorepo"
 	},
 	"workspaces": [
-		"demo",
-		"packages/*"
+		"packages/*",
+		"demo"
 	],
 	"devDependencies": {
 		"@types/node": "^18.16.3",
