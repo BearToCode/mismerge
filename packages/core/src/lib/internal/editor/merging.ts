@@ -66,7 +66,6 @@ export function mergeComponent(data: {
 
 	for (const child of parent.children) {
 		if (!(child instanceof HTMLDivElement)) {
-			if (dev) console.error('Failed to merge component: child is not an HTMLDivElement');
 			continue;
 		}
 
