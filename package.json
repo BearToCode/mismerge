@@ -12,7 +12,7 @@
 	"scripts": {
 		"core": "cd packages/core && npm run dev",
 		"demo": "cd demo && npm run dev",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"check": "npm run check --workspaces --if-present",
 		"test": "npm run test --workspaces --if-present",
@@ -29,8 +29,8 @@
 	],
 	"devDependencies": {
 		"@types/node": "^18.16.3",
-		"@typescript-eslint/eslint-plugin": "^5.59.1",
-		"@typescript-eslint/parser": "^5.59.1",
+		"@typescript-eslint/eslint-plugin": "^7.0.1",
+		"@typescript-eslint/parser": "^7.0.1",
 		"commitizen": "^4.3.0",
 		"concurrently": "^8.2.2",
 		"cz-conventional-changelog": "^3.3.0",
