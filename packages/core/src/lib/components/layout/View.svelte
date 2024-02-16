@@ -110,9 +110,13 @@
 			{#each sideComponents as blockComponent}
 				<svelte:component
 					this={blockComponent.component}
-					component={blockComponent}
-					{...blockComponent.props}
+					{...{ ...blockComponent.props, component: blockComponent }}
 				/>
+				<!-- 
+					☝️ The weird spread is needed due to a Svelte bug affecting the use of 
+					`<svelte:component>` with spread props and normal ones in v4.
+					See here for more details: https://github.com/sveltejs/svelte/issues/9177	
+				-->
 			{/each}
 		</div>
 

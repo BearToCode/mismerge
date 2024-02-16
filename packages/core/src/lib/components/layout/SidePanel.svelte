@@ -64,13 +64,16 @@
 								style="height: {linesHeights[lineIndex]}px;"
 								class="msm__line-number {component.type}"
 							>
-								{#if lineIndex == 0 && !disableMerging && component.sideAction}
+								{#if lineIndex == 0 && !disableMerging && component.sideAction && dispatch !== undefined}
 									<svelte:component
 										this={component.sideAction.component}
-										{...component.sideAction.props}
-										{component}
-										{dispatch}
+										{...{ ...component.sideAction.props, dispatch, component }}
 									/>
+									<!-- 
+										☝️ The weird spread is needed due to a Svelte bug affecting the use of 
+										`<svelte:component>` with spread props and normal ones in v4.
+										See here for more details: https://github.com/sveltejs/svelte/issues/9177	
+									-->
 								{/if}
 
 								<pre>{startingLineNumber + lineIndex}</pre>
