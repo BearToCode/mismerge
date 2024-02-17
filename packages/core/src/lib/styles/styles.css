@@ -182,7 +182,7 @@
 	width: 100%;
 }
 
-.mismerge.wrap-lines .msm__view.editable .msm__line pre,
+.mismerge.wrap-lines .msm__view .msm__line pre,
 .mismerge.wrap-lines .msm__view textarea {
 	white-space: pre-wrap;
 	word-break: normal;
