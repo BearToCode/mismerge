@@ -2,6 +2,9 @@
 	position: relative;
 	tab-size: 2;
 	overflow: hidden;
+}
+
+.mismerge * {
 	box-sizing: content-box;
 }
 
