@@ -1,0 +1,46 @@
+{
+	"name": "@mismerge/react",
+	"description": "React implementation of Mismerge",
+	"version": "0.0.0",
+	"type": "module",
+	"author": "BearToCode",
+	"license": "MIT",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build && publint",
+		"prepublishOnly": "npm run build",
+		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"preview": "vite preview"
+	},
+	"peerDependencies": {
+		"@mismerge/core": "^1.2.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@mismerge/core": "../core",
+		"@types/react": "^18.2.56",
+		"@types/react-dom": "^18.2.19",
+		"@typescript-eslint/eslint-plugin": "^7.0.2",
+		"@typescript-eslint/parser": "^7.0.2",
+		"@vitejs/plugin-react-swc": "^3.5.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"typescript": "^5.2.2",
+		"vite": "^5.1.4",
+		"vite-plugin-dts": "^3.7.3",
+		"publint": "^0.1.9"
+	},
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.js"
+		}
+	}
+}

@@ -1,7 +1,10 @@
 <svelte:options
 	customElement={{
 		tag: 'mis-merge2',
-		shadow: 'none'
+		shadow: 'none',
+		props: {
+			colors: { reflect: true, attribute: 'colors', type: 'Object' }
+		}
 	}}
 />
 
