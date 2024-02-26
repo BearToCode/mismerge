@@ -25,7 +25,9 @@
 		"publish": "cd packages/core && npx --no-install semantic-release -e semantic-release-monorepo"
 	},
 	"workspaces": [
-		"packages/*",
+		"packages/core",
+		"packages/adapter-react",
+		"packages/adapter-vue",
 		"demo"
 	],
 	"devDependencies": {
