@@ -1,3 +1,13 @@
+<svelte:options
+	customElement={{
+		tag: 'mis-merge3',
+		shadow: 'none',
+		props: {
+			colors: { reflect: true, attribute: 'colors', type: 'Object' }
+		}
+	}}
+/>
+
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import { onLineChange, type Connection } from '$lib/internal/editor/connection';

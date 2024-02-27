@@ -58,7 +58,7 @@ export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
 		}
 	}
 
-	public render() {
+	public render(): BlockComponent[] {
 		if (this.resolved) return this.renderResolved();
 		else return this.renderUnresolved();
 	}

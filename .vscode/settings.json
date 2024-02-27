@@ -3,6 +3,7 @@
 		"codicon",
 		"cyrb",
 		"devicon",
+		"fileoverview",
 		"fontisto",
 		"heroicons",
 		"iconify",
@@ -18,5 +19,13 @@
 	],
 	"[svelte]": {
 		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"[vue]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascriptreact]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}
 }

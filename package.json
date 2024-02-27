@@ -13,18 +13,21 @@
 		"core": "cd packages/core && npm run dev",
 		"demo": "cd demo && npm run dev",
 		"lint": "prettier --check . && eslint .",
+		"lint:fix": "prettier --write . && eslint --fix .",
 		"format": "prettier --write .",
 		"check": "npm run check --workspaces --if-present",
 		"test": "npm run test --workspaces --if-present",
 		"build": "npm run build --workspaces --if-present",
-		"prepare": "npx husky install",
+		"prepare": "husky install",
 		"publish-demo": "npm run build && cd demo && npm run gh-pages",
 		"commit": "cz",
 		"semantic-release": "semantic-release",
 		"publish": "cd packages/core && npx --no-install semantic-release -e semantic-release-monorepo"
 	},
 	"workspaces": [
-		"packages/*",
+		"packages/core",
+		"packages/adapter-react",
+		"packages/adapter-vue",
 		"demo"
 	],
 	"devDependencies": {
@@ -34,7 +37,7 @@
 		"commitizen": "^4.3.0",
 		"concurrently": "^8.2.2",
 		"cz-conventional-changelog": "^3.3.0",
-		"eslint": "^8.39.0",
+		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-svelte": "^2.34.0",
 		"husky": "^8.0.3",
@@ -64,6 +67,5 @@
 			"@semantic-release/github"
 		]
 	},
-	"version": "0.0.0-development",
-	"packageManager": "yarn@4.1.0"
+	"version": "0.0.0-development"
 }

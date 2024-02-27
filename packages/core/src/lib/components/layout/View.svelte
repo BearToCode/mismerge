@@ -59,12 +59,12 @@
 
 	const onMerge = (e: CustomEvent<{ component: BlockComponent }>) => {
 		mergeComponent({ source: e.detail.component, side, components, container });
-		saveHistory();
+		if (saveHistory) saveHistory();
 	};
 
 	const onDelete = (e: CustomEvent<{ component: BlockComponent }>) => {
 		deleteComponent({ component: e.detail.component, container });
-		saveHistory();
+		if (saveHistory) saveHistory();
 	};
 
 	/* Reactive statements */

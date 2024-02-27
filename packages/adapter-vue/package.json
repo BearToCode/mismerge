@@ -1,0 +1,38 @@
+{
+	"name": "@mismerge/vue",
+	"description": "Vue implementation of Mismerge",
+	"version": "0.0.0",
+	"type": "module",
+	"author": "BearToCode",
+	"license": "MIT",
+	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc && vite build && publint",
+		"preview": "vite preview"
+	},
+	"peerDependencies": {
+		"@mismerge/core": "^1.2.0",
+		"vue": "^3.0.0"
+	},
+	"devDependencies": {
+		"@mismerge/core": "../core",
+		"@vitejs/plugin-vue": "^5.0.4",
+		"typescript": "^5.2.2",
+		"vite": "^5.1.4",
+		"vite-plugin-dts": "^3.7.3",
+		"vue": "^3.0.0",
+		"vue-tsc": "^1.8.27"
+	},
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.js"
+		}
+	}
+}

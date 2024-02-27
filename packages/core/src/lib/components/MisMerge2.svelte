@@ -1,3 +1,13 @@
+<svelte:options
+	customElement={{
+		tag: 'mis-merge2',
+		shadow: 'none',
+		props: {
+			colors: { reflect: true, attribute: 'colors', type: 'Object' }
+		}
+	}}
+/>
+
 <script lang="ts">
 	import { joinWithDefault } from '$lib/internal/utils';
 	import { type DiffBlock, LinkedComponentsBlock } from '$lib/internal/blocks';

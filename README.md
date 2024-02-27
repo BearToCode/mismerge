@@ -10,19 +10,20 @@
 
 ## A web-based merge editor
 
-Mismerge is a modern two-way and one-way merge editor for the web, built with Svelte. You can [visit the demo](https://beartocode.github.io/mismerge/) and start merging now, or use it as a component for your project.
+Mismerge is a modern two-way and one-way merge editor for the web, built with **Svelte**. You can [visit the demo](https://beartocode.github.io/mismerge/) and start merging now, or use it as a component for your project. It is also available in **React** and **Vue**.
 
 ## Features
 
-- Two way merge editor
-- One way merge editor
-- Support lines wrapping
-- Support syntax highlighting
-- Can ignore whitespace
-- Can ignore case
-- Custom input history
-- Blocks, words and chars counter
-- Works in SvelteKit & TypeScript
+- ▶️ One way merge editor
+- 🔀 Two way merge editor
+- 📑 Support lines wrapping
+- 🌈 Support syntax highlighting
+- ➖ Can ignore whitespace
+- 📜 Custom input history
+- 🔠 Can ignore case
+- 🔢 Blocks, words and chars counter
+- ✅ Works in SvelteKit & TypeScript
+- 🌎 Available in React & Vue
 
 ## Installation
 
@@ -31,6 +32,8 @@ npm i @mismerge/core
 ```
 
 ## Usage
+
+### Svelte
 
 ```svelte
 <script>
@@ -59,6 +62,74 @@ npm i @mismerge/core
   }
 </style>
 ```
+
+### React
+
+Install the **additional** adapter package:
+
+```
+npm i @mismerge/react
+```
+
+```jsx
+import { DefaultDarkColors, MisMerge3 } from './lib';
+import { useEffect, useState } from 'react';
+import '@mismerge/core/styles.css';
+import '@mismerge/core/dark.css';
+
+function App() {
+	const [ctr, setCtr] = useState('Hello world!');
+
+	useEffect(() => {
+		console.log(ctr);
+	}, [ctr]);
+
+	return (
+		<>
+			<MisMerge3
+				lhs="Hello world!"
+				ctr={ctr}
+				rhs="Hello world!"
+				onCtrChange={setCtr}
+				colors={DefaultDarkColors}
+				wrapLines={true}
+			/>
+		</>
+	);
+}
+```
+
+### Vue
+
+Install the **additional** adapter package:
+
+```
+npm i @mismerge/vue
+```
+
+> [!NOTE]  
+> Due to some differences in how Vue treats boolean attributes, some default properties may not correspond to the ones described in the API section.
+
+```vue
+<script setup lang="ts">
+import { MisMerge3, DefaultDarkColors } from './lib';
+import '@mismerge/core/styles.css';
+import '@mismerge/core/dark.css';
+</script>
+
+<template>
+	<MisMerge3
+		lhs="Hello"
+		ctr="World"
+		rhs="!"
+		ctr-editable
+		:colors="DefaultDarkColors"
+		:on-ctr-change="console.log"
+	/>
+</template>
+```
+
+## Customization
 
 ### Adding syntax highlighting
 
@@ -167,7 +238,7 @@ A list of properties for `<MisMerge2>`(2), `<MisMerge3>`(3), or both.
 | `ignoreCase`            | `boolean`                                       | `false`               | Ignore case in diff                               | Both      |
 | `conflictsResolved`     | `boolean`                                       | -                     | Binding for when all conflicts have been resolved | 3         |
 
-Events:
+Events (available for Svelte):
 
 | Name          | Description                                                   |
 | ------------- | ------------------------------------------------------------- |
