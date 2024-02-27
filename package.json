@@ -18,11 +18,10 @@
 		"check": "npm run check --workspaces --if-present",
 		"test": "npm run test --workspaces --if-present",
 		"build": "npm run build --workspaces --if-present",
+		"publish": "npm run publish --workspaces --if-present",
 		"prepare": "husky install",
 		"publish-demo": "npm run build && cd demo && npm run gh-pages",
-		"commit": "cz",
-		"semantic-release": "semantic-release",
-		"publish": "cd packages/core && npx --no-install semantic-release -e semantic-release-monorepo"
+		"commit": "cz"
 	},
 	"workspaces": [
 		"packages/core",

@@ -10,7 +10,8 @@
 		"build": "tsc && vite build && publint",
 		"prepublishOnly": "npm run build",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"publish": "npx --no-install semantic-release -e semantic-release-monorepo"
 	},
 	"peerDependencies": {
 		"@mismerge/core": "^1.2.0",
