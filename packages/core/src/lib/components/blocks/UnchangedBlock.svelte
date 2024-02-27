@@ -10,11 +10,7 @@
 	{#each lines as line}
 		<div class="msm__line">
 			<div class="msm__content">
-				<!-- 
-					An empty character is needed, as in Chromium <pre> elements with
-					no content have height 0. 
-				-->
-				<pre>{line.content.trim() != '' ? line.content : ' '}</pre>
+				<pre>{line.content}</pre>
 			</div>
 		</div>
 	{/each}

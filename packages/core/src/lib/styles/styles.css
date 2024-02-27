@@ -243,9 +243,8 @@
 	width: 100%;
 }
 
-.mismerge .msm__line pre:empty::before {
-	content: '.';
-	visibility: hidden;
+.mismerge .msm__line pre {
+	min-height: 1lh;
 }
 
 .mismerge .msm__block.modified pre {
