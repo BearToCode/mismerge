@@ -53,8 +53,8 @@ jobs:
       - name: Install dependendencies
         run: npm i
 
-      - name: Build core package
-        run: cd packages/core && npm run build
+      - name: Build projects
+        run: npm run build
 
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
