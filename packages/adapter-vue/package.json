@@ -8,7 +8,8 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc && vite build && publint",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"publish": "npx --no-install semantic-release -e semantic-release-monorepo"
 	},
 	"peerDependencies": {
 		"@mismerge/core": "^1.2.0",
