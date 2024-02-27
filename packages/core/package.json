@@ -28,9 +28,17 @@
 			"svelte": "./dist/index.js",
 			"import": "./dist/index.js"
 		},
-		"./*.css": {
-			"import": "./dist/styles/*.css",
-			"default": "./dist/styles/*.css"
+		"./styles.css": {
+			"import": "./dist/styles/styles.css",
+			"default": "./dist/styles/styles.css"
+		},
+		"./light.css": {
+			"import": "./dist/styles/light.css",
+			"default": "./dist/styles/light.css"
+		},
+		"./dark.css": {
+			"import": "./dist/styles/dark.css",
+			"default": "./dist/styles/dark.css"
 		},
 		"./web": {
 			"import": "./dist/web.js",
