@@ -72,7 +72,7 @@ npm i @mismerge/react
 ```
 
 ```jsx
-import { DefaultDarkColors, MisMerge3 } from './lib';
+import { DefaultDarkColors, MisMerge3 } from '@mismerge/react';
 import { useEffect, useState } from 'react';
 import '@mismerge/core/styles.css';
 import '@mismerge/core/dark.css';
@@ -112,7 +112,7 @@ npm i @mismerge/vue
 
 ```vue
 <script setup lang="ts">
-import { MisMerge3, DefaultDarkColors } from './lib';
+import { MisMerge3, DefaultDarkColors } from '@mismerge/vue';
 import '@mismerge/core/styles.css';
 import '@mismerge/core/dark.css';
 </script>
