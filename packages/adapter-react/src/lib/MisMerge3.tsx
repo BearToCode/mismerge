@@ -1,4 +1,3 @@
-import '@mismerge/core/web';
 import type { EditorColors, Highlighter, LineDiffAlgorithm } from '@mismerge/core';
 import { useEffect, useRef } from 'react';
 
@@ -48,6 +47,11 @@ export function MisMerge3({
 	onConflictsResolvedChange?: (conflictsResolved: boolean) => void;
 }) {
 	const ref = useRef<JSX.IntrinsicElements['mis-merge2']>(null);
+
+	useEffect(() => {
+		// @ts-expect-error No definitions provided for web components
+		import('@mismerge/core/web');
+	}, []);
 
 	useEffect(() => {
 		if (ref.current) {
