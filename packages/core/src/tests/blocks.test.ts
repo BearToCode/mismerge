@@ -2,10 +2,10 @@ import { assembleOneWay } from '$lib/internal/diff/one-way-assembler';
 import { expect, test } from 'vitest';
 import dedent from 'dedent';
 import { assembleTwoWay } from '$lib/internal/diff/two-way-assembler';
-import { AddedBlock } from '$lib/internal/blocks/added';
-import { RemovedBlock } from '$lib/internal/blocks/removed';
 import { UnchangedBlock } from '$lib/internal/blocks/unchanged';
 import { ModifiedBlock } from '$lib/internal/blocks/modified';
+import { RemovedBlock } from '$lib/internal/blocks/removed';
+import { AddedBlock } from '$lib/internal/blocks/added';
 
 test('assemble-one-way unchanged', () => {
 	const blocks = assembleOneWay(
@@ -32,7 +32,7 @@ test('assemble-one-way added', () => {
 	);
 
 	expect(blocks).toHaveLength(2);
-	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
+	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
 });
 
 test('assemble-one-way removed', () => {
@@ -47,7 +47,7 @@ test('assemble-one-way removed', () => {
 	);
 
 	expect(blocks).toHaveLength(2);
-	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
+	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
 });
 
 test('assemble-one-way added and removed', () => {
@@ -63,9 +63,9 @@ test('assemble-one-way added and removed', () => {
 	);
 
 	expect(blocks).toHaveLength(3);
-	expect(blocks.at(0)).toBeInstanceOf(AddedBlock);
+	expect(blocks.at(0)).toBeInstanceOf(RemovedBlock);
 	expect(blocks.at(1)).toBeInstanceOf(UnchangedBlock);
-	expect(blocks.at(2)).toBeInstanceOf(RemovedBlock);
+	expect(blocks.at(2)).toBeInstanceOf(AddedBlock);
 });
 
 test('assemble-one-way modified', () => {
@@ -114,7 +114,7 @@ test('assemble-two-way removed', () => {
 	);
 
 	expect(blocks).toHaveLength(2);
-	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
+	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
 });
 
 test('assemble-two-way added lhs', () => {
@@ -132,7 +132,7 @@ test('assemble-two-way added lhs', () => {
 	);
 
 	expect(blocks).toHaveLength(2);
-	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
+	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
 });
 
 test('assemble-two-way added rhs', () => {
@@ -150,5 +150,5 @@ test('assemble-two-way added rhs', () => {
 	);
 
 	expect(blocks).toHaveLength(2);
-	expect(blocks.at(1)).toBeInstanceOf(AddedBlock);
+	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
 });

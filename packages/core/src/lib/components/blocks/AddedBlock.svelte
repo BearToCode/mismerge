@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { Line } from '$lib/internal/blocks';
-	import type { AddedBlock } from '$lib/internal/blocks/added';
+	import type { RemovedBlock } from '$lib/internal/blocks/removed';
 	import type { BlockComponent } from '$lib/internal/editor/component';
 
-	export let block: AddedBlock;
+	export let block: RemovedBlock;
 	export let component: BlockComponent;
 	export let lines: Line[];
 </script>

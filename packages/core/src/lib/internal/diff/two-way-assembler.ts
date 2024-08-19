@@ -1,8 +1,8 @@
 import type { DiffBlock } from '../blocks';
-import { AddedBlock, type AddedSideData } from '../blocks/added';
+import { RemovedBlock, type RemovedSideData } from '../blocks/removed';
 import { MergeConflictBlock } from '../blocks/merge-conflict';
 import { ModifiedBlock } from '../blocks/modified';
-import { RemovedBlock, type RemovedSideData } from '../blocks/removed';
+import { AddedBlock, type AddedSideData } from '../blocks/added';
 import { UnchangedBlock } from '../blocks/unchanged';
 import { twoWayDiff, type TwoWayChange } from './base';
 import { diff2Sides, equalIgnoringWhitespace, type LineDiffAlgorithm } from './line-diff';
@@ -87,7 +87,7 @@ class TwoWayAssembler {
 	private assembleAddedBlock(change: TwoWayChange) {
 		const side = change.lhs ? TwoWaySide.lhs : change.ctr ? TwoWaySide.ctr : TwoWaySide.rhs;
 
-		const block = this.hashTable.new(AddedBlock, {
+		const block = this.hashTable.new(RemovedBlock, {
 			sidesData: {
 				lines: this.intoLines(change.content),
 				side
@@ -123,7 +123,7 @@ class TwoWayAssembler {
 				side: TwoWaySide.rhs
 			});
 
-		const block = this.hashTable.new(RemovedBlock, {
+		const block = this.hashTable.new(AddedBlock, {
 			sidesData,
 			placeholderSide: side.adjacentSides().filter((side) => {
 				if (side.eq(TwoWaySide.lhs)) return !change.lhs;
@@ -170,9 +170,9 @@ class TwoWayAssembler {
 
 	private generateMergeConflictBlocks() {
 		const blocks: DiffBlock<TwoWaySide>[] = [];
-		let conflictBlocks: (AddedBlock<TwoWaySide> | RemovedBlock<TwoWaySide>)[] = [];
+		let conflictBlocks: (RemovedBlock<TwoWaySide> | AddedBlock<TwoWaySide>)[] = [];
 		for (const [index, block] of this.blocks.entries()) {
-			if (block instanceof AddedBlock || block instanceof RemovedBlock) {
+			if (block instanceof RemovedBlock || block instanceof AddedBlock) {
 				conflictBlocks.push(block);
 			}
 
@@ -182,7 +182,7 @@ class TwoWayAssembler {
 					blocks.push(conflictBlocks[0]);
 					conflictBlocks = [];
 				} else if (conflictBlocks.length > 1) {
-					const sidesData: (AddedSideData<TwoWaySide> | RemovedSideData<TwoWaySide>)[] = [];
+					const sidesData: (RemovedSideData<TwoWaySide> | AddedSideData<TwoWaySide>)[] = [];
 					const lhs = TwoWaySide.lhs;
 					const ctr = TwoWaySide.ctr;
 					const rhs = TwoWaySide.rhs;

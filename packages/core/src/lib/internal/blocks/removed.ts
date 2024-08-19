@@ -1,11 +1,10 @@
 import { type Line, LinkedComponentsBlock } from '.';
-import { type Side, OneWaySide, TwoWaySide } from '../editor/side';
+import type { Side } from '../editor/side';
 import type { MaybeArray } from '../utils';
 import { BlockComponent } from '../editor/component';
 import RemovedBlockComponent from '$lib/components/blocks/RemovedBlock.svelte';
 import RemovedBlockPlaceholderComponent from '$lib/components/blocks/RemovedBlockPlaceholder.svelte';
 import MergeChange from '$lib/components/actions/MergeChange.svelte';
-import DeleteChange from '$lib/components/actions/DeleteChange.svelte';
 
 export type RemovedSideData<SideType extends Side> = {
 	side: SideType;
@@ -19,6 +18,7 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 
 	public readonly sidesData: MaybeArray<RemovedSideData<SideType>>;
 	public readonly placeholderSide: MaybeArray<Side>;
+	public readonly unchangedSide?: Side;
 
 	constructor(params: {
 		sidesData: MaybeArray<RemovedSideData<SideType>>;
@@ -40,22 +40,14 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 					new BlockComponent({
 						component: RemovedBlockComponent,
 						blockId: this.id,
-						sideAction:
-							side instanceof OneWaySide
-								? {
-										component: MergeChange,
-										props: {}
-									}
-								: side instanceof TwoWaySide && side.eq(TwoWaySide.ctr)
-									? {
-											component: DeleteChange,
-											props: {}
-										}
-									: undefined,
 						props: { block: this, lines },
 						linesCount: this.linesCount(side),
 						side,
-						type: this.type
+						type: this.type,
+						sideAction: {
+							component: MergeChange,
+							props: {}
+						}
 					})
 			),
 			...[this.placeholderSide].flat().map(
@@ -64,8 +56,8 @@ export class RemovedBlock<SideType extends Side = Side> extends LinkedComponents
 						component: RemovedBlockPlaceholderComponent,
 						blockId: this.id,
 						props: { block: this },
-						linesCount: 0,
 						side,
+						linesCount: 0,
 						placeholder: true,
 						type: this.placeholderType
 					})

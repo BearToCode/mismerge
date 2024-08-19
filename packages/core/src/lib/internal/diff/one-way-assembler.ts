@@ -1,6 +1,6 @@
 import type { DiffBlock } from '../blocks';
-import { AddedBlock } from '../blocks/added';
 import { RemovedBlock } from '../blocks/removed';
+import { AddedBlock } from '../blocks/added';
 import { UnchangedBlock } from '../blocks/unchanged';
 import { type OneWayChange, oneWayDiff } from './base';
 import { diff2Sides, equalIgnoringWhitespace, type LineDiffAlgorithm } from './line-diff';
@@ -105,7 +105,7 @@ class OneWayAssembler {
 	private assembleChangeBlock(change: OneWayChange, side: OneWaySide) {
 		let block: DiffBlock<OneWaySide>;
 		if (this.addSide.eq(side)) {
-			block = this.hashTable.new(AddedBlock, {
+			block = this.hashTable.new(RemovedBlock, {
 				sidesData: {
 					lines: this.intoLines(change.content),
 					side
@@ -113,7 +113,7 @@ class OneWayAssembler {
 				placeholderSide: side.opposite()
 			});
 		} else {
-			block = this.hashTable.new(RemovedBlock, {
+			block = this.hashTable.new(AddedBlock, {
 				sidesData: {
 					lines: this.intoLines(change.content),
 					side
