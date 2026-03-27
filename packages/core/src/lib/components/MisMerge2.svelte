@@ -20,9 +20,12 @@
 	import { BlocksHashTable } from '$lib/internal/storage/table';
 	import { countWords, countChars } from '$lib/internal/editor/counters';
 	import Footer from './layout/Footer.svelte';
+	import Header from './layout/Header.svelte';
 	import { DefaultLightColors, type EditorColors } from '$lib/internal/editor/colors';
 	import { browser } from '$lib/internal/env';
 	import type { Snippet } from 'svelte';
+	import { mergeComponent } from '$lib/internal/editor/actions';
+	import type { DiffBlock } from '$lib/internal/blocks';
 
 	let {
 		lhs = $bindable(),
@@ -36,6 +39,7 @@
 		syncHorizontalScroll = false,
 		wrapLines = false,
 		disableFooter = false,
+		disableHeader = false,
 		disableWordsCounter = false,
 		disableCharsCounter = false,
 		disableBlocksCounters = false,
@@ -57,6 +61,7 @@
 		syncHorizontalScroll?: boolean;
 		wrapLines?: boolean;
 		disableFooter?: boolean;
+		disableHeader?: boolean;
 		disableWordsCounter?: boolean;
 		disableCharsCounter?: boolean;
 		disableBlocksCounters?: boolean;
@@ -166,6 +171,22 @@
 	});
 
 	onLineChange(() => container as HTMLDivElement, update);
+
+	function handleAcceptLeft(block: DiffBlock<OneWaySide>) {
+		const comp = components.find(
+			(c) => c.blockId === block.id && c.side.eq(OneWaySide.lhs) && !c.placeholder
+		);
+		if (!comp || !container) return;
+		mergeComponent({ source: comp, side: OneWaySide.lhs, components, container });
+	}
+
+	function handleAcceptRight(block: DiffBlock<OneWaySide>) {
+		const comp = components.find(
+			(c) => c.blockId === block.id && c.side.eq(OneWaySide.rhs) && !c.placeholder
+		);
+		if (!comp || !container) return;
+		mergeComponent({ source: comp, side: OneWaySide.rhs, components, container });
+	}
 </script>
 
 <div
@@ -180,9 +201,19 @@
 	class="mismerge msm__one-way
 	{wrapLines ? 'wrap-lines' : ''} 
 	{disableFooter ? 'disable-footer' : ''} 
+	{disableHeader ? 'disable-header' : ''} 
 	{clazz}"
 	bind:this={container}
 >
+	{#if !disableHeader}
+		<Header
+			{blocks}
+			{components}
+			{container}
+			onacceptleft={handleAcceptLeft}
+			onacceptright={handleAcceptRight}
+		/>
+	{/if}
 	{#if header}{@render header()}{/if}
 
 	<div>

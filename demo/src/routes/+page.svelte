@@ -12,6 +12,7 @@
 		component,
 		ctr,
 		disableFooter,
+		disableHeader,
 		disableMerging,
 		disableSyntaxHighlighting,
 		fixedHeight,
@@ -116,6 +117,7 @@
 					wrapLines={$wrapLines}
 					disableMerging={$disableMerging}
 					disableFooter={$disableFooter}
+					disableHeader={$disableHeader}
 					ignoreWhitespace={$ignoreWhitespace}
 					ignoreCase={$ignoreCase}
 				/>
@@ -132,6 +134,7 @@
 					wrapLines={$wrapLines}
 					disableMerging={$disableMerging}
 					disableFooter={$disableFooter}
+					disableHeader={$disableHeader}
 					ignoreWhitespace={$ignoreWhitespace}
 					ignoreCase={$ignoreCase}
 				/>

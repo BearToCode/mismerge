@@ -6,6 +6,7 @@
 		component,
 		ctrPlaceholder,
 		disableFooter,
+		disableHeader,
 		disableMerging,
 		disableSyntaxHighlighting,
 		fixedHeight,
@@ -127,6 +128,11 @@
 	<CheckBox bind:checked={$disableFooter}>
 		<iconify-icon icon="pixelarticons:layout-footer"></iconify-icon>
 		<span>Disable footer</span>
+	</CheckBox>
+
+	<CheckBox bind:checked={$disableHeader}>
+		<iconify-icon icon="pixelarticons:layout-header"></iconify-icon>
+		<span>Disable header</span>
 	</CheckBox>
 
 	<CheckBox bind:checked={$disableSyntaxHighlighting}>

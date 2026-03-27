@@ -28,6 +28,20 @@
 	color: var(--primary-400);
 }
 
+.mismerge .msm__header {
+	background-color: var(--background);
+	border-bottom: var(--primary-200) 1px solid;
+}
+
+.mismerge .msm__header-button {
+	color: var(--primary-400);
+}
+
+.mismerge .msm__header-button:hover:not(:disabled) {
+	background: var(--primary-200);
+	color: var(--primary-500);
+}
+
 .mismerge .msm__view-content textarea {
 	color: var(--primary-600);
 	caret-color: var(--primary-500);

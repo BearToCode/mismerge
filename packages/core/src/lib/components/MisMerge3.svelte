@@ -20,10 +20,13 @@
 	import type { LineDiffAlgorithm } from '$lib/internal/diff/line-diff';
 	import { BlocksHashTable } from '$lib/internal/storage/table';
 	import Footer from './layout/Footer.svelte';
+	import Header from './layout/Header.svelte';
 	import { countChars, countWords } from '$lib/internal/editor/counters';
 	import { MergeConflictBlock } from '$lib/internal/blocks/merge-conflict';
 	import { browser } from '$lib/internal/env';
 	import type { Snippet } from 'svelte';
+	import { mergeComponent } from '$lib/internal/editor/actions';
+	import type { DiffBlock } from '$lib/internal/blocks';
 
 	let {
 		lhs = $bindable(),
@@ -39,6 +42,7 @@
 		syncHorizontalScroll = false,
 		wrapLines = false,
 		disableFooter = false,
+		disableHeader = false,
 		disableWordsCounter = false,
 		disableCharsCounter = false,
 		disableBlocksCounters = false,
@@ -63,6 +67,7 @@
 		syncHorizontalScroll?: boolean;
 		wrapLines?: boolean;
 		disableFooter?: boolean;
+		disableHeader?: boolean;
 		disableWordsCounter?: boolean;
 		disableCharsCounter?: boolean;
 		disableBlocksCounters?: boolean;
@@ -194,6 +199,22 @@
 		resolveCount++;
 	}
 
+	function handleAcceptLeft(block: DiffBlock<TwoWaySide>) {
+		const comp = components.find(
+			(c) => c.blockId === block.id && c.side.eq(TwoWaySide.lhs) && !c.placeholder
+		);
+		if (!comp || !container) return;
+		mergeComponent({ source: comp, side: TwoWaySide.lhs, components, container });
+	}
+
+	function handleAcceptRight(block: DiffBlock<TwoWaySide>) {
+		const comp = components.find(
+			(c) => c.blockId === block.id && c.side.eq(TwoWaySide.rhs) && !c.placeholder
+		);
+		if (!comp || !container) return;
+		mergeComponent({ source: comp, side: TwoWaySide.rhs, components, container });
+	}
+
 	onLineChange(() => container as HTMLDivElement, update);
 </script>
 
@@ -209,9 +230,19 @@
 	class="mismerge msm__two-way
 		{wrapLines ? 'wrap-lines' : ''} 
 		{disableFooter ? 'disable-footer' : ''} 
+		{disableHeader ? 'disable-header' : ''} 
 		{clazz}"
 	bind:this={container}
 >
+	{#if !disableHeader}
+		<Header
+			{blocks}
+			{components}
+			{container}
+			onacceptleft={handleAcceptLeft}
+			onacceptright={handleAcceptRight}
+		/>
+	{/if}
 	{#if header}{@render header()}{/if}
 
 	<div>
