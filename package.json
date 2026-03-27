@@ -19,9 +19,7 @@
 		"test": "npm run test --workspaces --if-present",
 		"build": "npm run build --workspaces --if-present",
 		"publish": "npm run publish --workspaces --if-present",
-		"prepare": "husky",
-		"publish-demo": "npm run build && cd demo && npm run gh-pages",
-		"commit": "cz"
+		"publish-demo": "npm run build && cd demo && npm run gh-pages"
 	},
 	"workspaces": [
 		"packages/core",
@@ -35,15 +33,10 @@
 		"@types/node": "^25.5.0",
 		"@typescript-eslint/eslint-plugin": "^8.57.2",
 		"@typescript-eslint/parser": "^8.57.2",
-		"commitizen": "^4.3.1",
-		"concurrently": "^9.2.1",
-		"cz-conventional-changelog": "^3.3.0",
 		"esbuild": "^0.27.4",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^2.46.1",
-		"husky": "^9.1.7",
-		"only-allow": "^1.2.2",
 		"picomatch": "^4.0.4",
 		"prettier": "3.8.1",
 		"prettier-plugin-svelte": "^3.5.1",
@@ -54,12 +47,10 @@
 	},
 	"overrides": {
 		"ajv": "6.14.0",
-		"brace-expansion": "1.1.13",
 		"braces": "3.0.3",
 		"flatted": "3.4.2",
 		"js-yaml": "4.1.1",
 		"micromatch": "4.0.8",
-		"minimatch": "3.1.4",
 		"yaml": "1.10.3",
 		"@sveltejs/kit": {
 			"cookie": "0.7.0"
@@ -73,11 +64,6 @@
 		"*.{js,ts,css,md,svelte,html,yml,json,cjs}": "prettier --write",
 		"*.{js,ts}": "eslint --cache --fix",
 		"*.{js,ts,css,md}": "prettier --write"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
 	},
 	"release": {
 		"plugins": [

@@ -275,13 +275,3 @@ The core package is inside `packages/core`. You can run the associated sveltekit
 
 The demo is inside the `demo` root folder. You can run it from root using `npm run demo` or `cd demo` & `npm run dev`.
 It is automatically deployed to Github Pages with every push to master.
-
-### Committing
-
-This repository uses [commitizen](https://github.com/commitizen/cz-cli) to enforce similar commit messages. Commit using:
-
-```
-npm run commit
-# or
-git cz
-```

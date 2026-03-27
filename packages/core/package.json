@@ -74,9 +74,9 @@
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
 		"@testing-library/svelte": "^5.2.8",
 		"@types/diff": "^5.2.3",
+		"dedent": "^1.7.2",
 		"rollup": "^4.60.0",
 		"rollup-plugin-svelte": "^7.2.3",
-		"esm-env": "^1.2.2",
 		"publint": "^0.3.18",
 		"svelte": "^5.55.0",
 		"svelte-check": "^4.4.5",
@@ -90,6 +90,7 @@
 	"type": "module",
 	"dependencies": {
 		"diff": "^5.2.2",
+		"esm-env": "^1.2.2",
 		"nanoid": "^5.1.7"
 	},
 	"keywords": [
