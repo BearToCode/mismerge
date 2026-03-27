@@ -1,34 +1,36 @@
 <div align="right">
-<a href="https://www.npmjs.com/package/@mismerge/core"><img src="https://img.shields.io/npm/v/%40mismerge%2Fcore?color=6a7fec&labelColor=171d27&logo=npm&logoColor=white" alt="npm"></a>
-<a href="https://bundlephobia.com/package/@mismerge/core"><img src="https://img.shields.io/bundlephobia/min/%40mismerge%2Fcore?color=6a7fec&labelColor=171d27&logo=javascript&logoColor=white" alt="bundle"></a>
-<a href="https://github.com/vostej/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/beartocode/mismerge?color=6a7fec&labelColor=171d27&logo=git&logoColor=white" alt="license"></a>
+<a href="https://github.com/vostej/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/vostej/mismerge?color=6a7fec&labelColor=171d27&logo=git&logoColor=white" alt="license"></a>
 <a href="http://vostej.github.io/mismerge/"><img src="https://img.shields.io/badge/available-red?label=demo&color=6a7fec&labelColor=171d27&logo=svelte&logoColor=white" alt="demo"></a>
 </div>
 
-<img alt="banner" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/banner-light.png#gh-light-mode-only" />
-<img alt="banner" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/banner-dark.png#gh-dark-mode-only" />
+<img alt="banner" src="https://raw.githubusercontent.com/vostej/mismerge/master/images/banner-light.png#gh-light-mode-only" />
+<img alt="banner" src="https://raw.githubusercontent.com/vostej/mismerge/master/images/banner-dark.png#gh-dark-mode-only" />
 
 ## A web-based merge editor
 
-Mismerge is a modern two-way and one-way merge editor for the web, built with **Svelte**. You can [visit the demo](https://vostej.github.io/mismerge/) and start merging now, or use it as a component for your project. It is also available in **React** and **Vue**.
+Mismerge is a modern one-way and two-way merge editor for the web, built with **Svelte**. You can [visit the demo](https://vostej.github.io/mismerge/) and start merging now, or use it as a component in your own project. The current adapters in this repo target **React** and **Solid**.
 
 ## Features
 
 - ▶️ One way merge editor
 - 🔀 Two way merge editor
-- 📑 Support lines wrapping
-- 🌈 Support syntax highlighting
+- 📑 Optional line wrapping
+- 🌈 Optional syntax highlighting
 - ➖ Can ignore whitespace
-- 📜 Custom input history
 - 🔠 Can ignore case
-- 🔢 Blocks, words and chars counter
+- ↔️ Optional synced horizontal scrolling
+- 🧱 Header, footer and counters can be toggled
+- 🔢 Words, chars and blocks counters
 - ✅ Works in SvelteKit & TypeScript
-- 🌎 Available in React & Vue
+- 🌎 Available in React & Solid
 
 ## Installation
 
-```
-npm i @mismerge/core
+The packages in this repo are currently configured for the `@vostej` scope and publish to GitHub Packages.
+
+```sh
+npm config set @vostej:registry https://npm.pkg.github.com
+npm i @vostej/core
 ```
 
 ## Usage
@@ -37,12 +39,12 @@ npm i @mismerge/core
 
 ```svelte
 <script>
-	import { MisMerge3 } from '@mismerge/core';
+	import { MisMerge3 } from '@vostej/core';
 	// Core styles, required for the editor to work properly
-	import '@mismerge/core/styles.css';
+	import '@vostej/core/styles.css';
 
-	import '@mismerge/core/light.css';
-	// Or  '@mismerge/core/dark.css';
+	import '@vostej/core/light.css';
+	// Or '@vostej/core/dark.css';
 
 	let lhs = 'foo';
 	let ctr = 'bar';
@@ -67,15 +69,16 @@ npm i @mismerge/core
 
 Install the **additional** adapter package:
 
-```
-npm i @mismerge/react
+```sh
+npm config set @vostej:registry https://npm.pkg.github.com
+npm i @vostej/react
 ```
 
 ```jsx
-import { DefaultDarkColors, MisMerge3 } from '@mismerge/react';
+import { DefaultDarkColors, MisMerge3 } from '@vostej/react';
 import { useEffect, useState } from 'react';
-import '@mismerge/core/styles.css';
-import '@mismerge/core/dark.css';
+import '@vostej/core/styles.css';
+import '@vostej/core/dark.css';
 
 function App() {
 	const [ctr, setCtr] = useState('Hello world!');
@@ -99,34 +102,35 @@ function App() {
 }
 ```
 
-### Vue
+### Solid
 
 Install the **additional** adapter package:
 
+```sh
+npm config set @vostej:registry https://npm.pkg.github.com
+npm i @vostej/solid
 ```
-npm i @mismerge/vue
-```
 
-> [!NOTE]  
-> Due to some differences in how Vue treats boolean attributes, some default properties may not correspond to the ones described in the API section.
+```tsx
+import { createSignal } from 'solid-js';
+import { DefaultDarkColors, MisMerge3 } from '@vostej/solid';
+import '@vostej/core/styles.css';
+import '@vostej/core/dark.css';
 
-```vue
-<script setup lang="ts">
-import { MisMerge3, DefaultDarkColors } from '@mismerge/vue';
-import '@mismerge/core/styles.css';
-import '@mismerge/core/dark.css';
-</script>
+export default function App() {
+	const [ctr, setCtr] = createSignal('World');
 
-<template>
-	<MisMerge3
-		lhs="Hello"
-		ctr="World"
-		rhs="!"
-		ctr-editable
-		:colors="DefaultDarkColors"
-		:on-ctr-change="console.log"
-	/>
-</template>
+	return (
+		<MisMerge3
+			lhs="Hello"
+			ctr={ctr()}
+			rhs="!"
+			onCtrChange={setCtr}
+			colors={DefaultDarkColors}
+			wrapLines={true}
+		/>
+	);
+}
 ```
 
 ## Customization
@@ -154,7 +158,7 @@ You need to provide your own syntax highlighter. Example and demo using [Shiki-J
 
 ```svelte
 <script>
-	import { DefaultDarkColors } from '@mismerge/core';
+	import { DefaultDarkColors } from '@vostej/core';
 	// ...
 </script>
 
@@ -163,7 +167,7 @@ You need to provide your own syntax highlighter. Example and demo using [Shiki-J
 
 ### Styles
 
-If you want to customize the editor styles, you can copy the default [light](https://github.com/vostej/mismerge/blob/master/packages/core/src/lib/styles/light.css) or [dark](https://github.com/vostej/mismerge/blob/master/packages/core/src/lib/styles/dark.css) theme and adapt it to your need.
+If you want to customize the editor styles, you can copy the default [light](https://github.com/vostej/mismerge/blob/master/packages/core/src/lib/styles/light.css) or [dark](https://github.com/vostej/mismerge/blob/master/packages/core/src/lib/styles/dark.css) theme and adapt it to your needs.
 
 Here is a basic explanation of how the the rendered html looks like:
 
@@ -235,9 +239,10 @@ A list of properties for `<MisMerge2>`(2), `<MisMerge3>`(3), or both.
 | `disableCharsCounter`   | `boolean`                                       | `false`               | Disables chars counter                            | Both      |
 | `disableBlocksCounters` | `boolean`                                       | `false`               | Disables blocks counter                           | Both      |
 | `disableFooter`         | `boolean`                                       | `false`               | Disables footer                                   | Both      |
+| `disableHeader`         | `boolean`                                       | `false`               | Disables header                                   | Both      |
 | `ignoreWhitespace`      | `boolean`                                       | `false`               | Ignore whitespace in diff                         | Both      |
 | `ignoreCase`            | `boolean`                                       | `false`               | Ignore case in diff                               | Both      |
-| `conflictsResolved`     | `boolean`                                       | -                     | Binding for when all conflicts have been resolved | 3         |
+| `conflictsResolved`     | `boolean`                                       | `false`               | Binding for when all conflicts have been resolved | 3         |
 
 Events (available for Svelte):
 
