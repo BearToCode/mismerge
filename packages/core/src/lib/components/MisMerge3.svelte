@@ -25,8 +25,6 @@
 	import { MergeConflictBlock } from '$lib/internal/blocks/merge-conflict';
 	import { browser } from '$lib/internal/env';
 	import type { Snippet } from 'svelte';
-	import { mergeComponent } from '$lib/internal/editor/actions';
-	import type { DiffBlock } from '$lib/internal/blocks';
 
 	let {
 		lhs = $bindable(),
@@ -199,20 +197,12 @@
 		resolveCount++;
 	}
 
-	function handleAcceptLeft(block: DiffBlock<TwoWaySide>) {
-		const comp = components.find(
-			(c) => c.blockId === block.id && c.side.eq(TwoWaySide.lhs) && !c.placeholder
-		);
-		if (!comp || !container) return;
-		mergeComponent({ source: comp, side: TwoWaySide.lhs, components, container });
+	function handleAcceptLeft() {
+		ctr = lhs;
 	}
 
-	function handleAcceptRight(block: DiffBlock<TwoWaySide>) {
-		const comp = components.find(
-			(c) => c.blockId === block.id && c.side.eq(TwoWaySide.rhs) && !c.placeholder
-		);
-		if (!comp || !container) return;
-		mergeComponent({ source: comp, side: TwoWaySide.rhs, components, container });
+	function handleAcceptRight() {
+		ctr = rhs;
 	}
 
 	onLineChange(() => container as HTMLDivElement, update);
@@ -239,6 +229,7 @@
 			{blocks}
 			{components}
 			{container}
+			acceptMode="all"
 			onacceptleft={handleAcceptLeft}
 			onacceptright={handleAcceptRight}
 		/>

@@ -35,14 +35,7 @@ export function mergeComponent(data: {
 
 	const sourceLines = getLinesFromElem(mergeData.sourceElem as HTMLDivElement);
 	const mergeStrategy = getMergeStrategy(data.source, mergeData.correspondingComponent);
-
-	const mergedLines =
-		mergeStrategy === 'insert-above'
-			? Array.prototype.concat(sourceLines, compLines)
-			: mergeStrategy === 'insert-below'
-				? Array.prototype.concat(compLines, sourceLines)
-				: sourceLines;
-
+	const mergedLines = applyMergedLines(compLines, sourceLines, mergeStrategy);
 	mergeData.textarea.value = Array.prototype.concat(prevLines, mergedLines, nextLines).join('\n');
 
 	// Trigger update using event
@@ -244,6 +237,24 @@ function getMergeStrategy(
 	}
 
 	return 'insert-below';
+}
+
+function applyMergedLines(
+	compLines: string[],
+	sourceLines: string[],
+	mergeStrategy: 'replace' | 'insert-above' | 'insert-below'
+) {
+	if (mergeStrategy === 'insert-above') {
+		if (startsWithSequence(compLines, sourceLines)) return compLines;
+		return Array.prototype.concat(sourceLines, compLines);
+	}
+
+	if (mergeStrategy === 'insert-below') {
+		if (endsWithSequence(compLines, sourceLines)) return compLines;
+		return Array.prototype.concat(compLines, sourceLines);
+	}
+
+	return sourceLines;
 }
 
 function supportsInsertMerge(sourceType: string, correspondingType: string) {

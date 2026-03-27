@@ -1,7 +1,10 @@
 // @vitest-environment jsdom
 
 import { expect, test } from 'vitest';
-import { mergeComponent, removeMergedComponent } from '$lib/internal/editor/actions';
+import {
+	mergeComponent,
+	removeMergedComponent
+} from '$lib/internal/editor/actions';
 import { BlockComponent } from '$lib/internal/editor/component';
 import { OneWaySide, TwoWaySide } from '$lib/internal/editor/side';
 import TestBlock from './fixtures/TestBlock.svelte';
@@ -49,6 +52,51 @@ function createContainer(
 	const textareas = container.querySelectorAll('textarea');
 	const targetTextarea = textareas.item(1) as HTMLTextAreaElement;
 	return { container, targetTextarea };
+}
+
+function createThreeWayContainer(
+	leftComponent: BlockComponent,
+	centerComponent: BlockComponent,
+	rightComponent: BlockComponent,
+	leftLines: string[],
+	centerLines: string[],
+	rightLines: string[]
+) {
+	const leftHtml = leftLines
+		.map((line) => `<div class="msm__line"><div class="msm__content">${line}</div></div>`)
+		.join('');
+	const centerHtml = centerLines
+		.map((line) => `<div class="msm__line"><div class="msm__content">${line}</div></div>`)
+		.join('');
+	const rightHtml = rightLines
+		.map((line) => `<div class="msm__line"><div class="msm__content">${line}</div></div>`)
+		.join('');
+
+	const container = document.createElement('div');
+	container.innerHTML = `
+		<div class="msm__view-content">
+			<div class="msm__wrapper">
+				<div class="msm__block" data-component-id="${leftComponent.id}">${leftHtml}</div>
+			</div>
+			<textarea></textarea>
+		</div>
+		<div class="msm__view-content">
+			<div class="msm__wrapper">
+				<div class="msm__block" data-component-id="${centerComponent.id}">${centerHtml}</div>
+			</div>
+			<textarea></textarea>
+		</div>
+		<div class="msm__view-content">
+			<div class="msm__wrapper">
+				<div class="msm__block" data-component-id="${rightComponent.id}">${rightHtml}</div>
+			</div>
+			<textarea></textarea>
+		</div>
+	`;
+
+	const textareas = container.querySelectorAll('textarea');
+	const centerTextarea = textareas.item(1) as HTMLTextAreaElement;
+	return { container, centerTextarea };
 }
 
 test('merging a one-way modified change still replaces the target lines', () => {

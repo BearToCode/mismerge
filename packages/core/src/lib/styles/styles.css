@@ -97,6 +97,30 @@
 	gap: 0.25rem;
 }
 
+.mismerge .msm__header-content-center {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.25rem;
+}
+
+.mismerge .msm__header-content-global {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	column-gap: 0.75rem;
+}
+
+.mismerge .msm__header-content-pane-start {
+	justify-content: flex-end;
+	min-width: 0;
+}
+
+.mismerge .msm__header-content-pane-end {
+	justify-content: flex-start;
+	min-width: 0;
+}
+
 .mismerge .msm__header-nav {
 	display: inline-flex;
 	align-items: center;

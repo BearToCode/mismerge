@@ -11,7 +11,7 @@
 		"gh-pages": "npx gh-pages -d build -t"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-static": "^0.0.17",
+		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.55.0",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
 		"concurrently": "^9.2.1",

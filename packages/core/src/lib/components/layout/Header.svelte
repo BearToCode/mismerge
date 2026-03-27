@@ -19,6 +19,7 @@
 		disableAcceptLeft = false,
 		disableAcceptRight = false,
 		disableNavigation = false,
+		acceptMode = 'current',
 		onacceptleft,
 		onacceptright,
 		children
@@ -29,8 +30,9 @@
 		disableAcceptLeft?: boolean;
 		disableAcceptRight?: boolean;
 		disableNavigation?: boolean;
-		onacceptleft?: (block: DiffBlock<Side>) => void;
-		onacceptright?: (block: DiffBlock<Side>) => void;
+		acceptMode?: 'current' | 'all';
+		onacceptleft?: (block?: DiffBlock<Side>) => void;
+		onacceptright?: (block?: DiffBlock<Side>) => void;
 		children?: Snippet;
 	} = $props();
 
@@ -86,76 +88,145 @@
 	}
 
 	function handleAcceptLeft() {
+		if (acceptMode === 'all') {
+			onacceptleft?.();
+			return;
+		}
 		if (navigableBlocks.length === 0 || currentIndex < 0) return;
 		onacceptleft?.(navigableBlocks[currentIndex]);
 	}
 
 	function handleAcceptRight() {
+		if (acceptMode === 'all') {
+			onacceptright?.();
+			return;
+		}
 		if (navigableBlocks.length === 0 || currentIndex < 0) return;
 		onacceptright?.(navigableBlocks[currentIndex]);
 	}
 </script>
 
 <header class="msm__header">
-	<div class="msm__header-content">
-		<div class="msm__header-content-left">
-			{#if !disableNavigation}
-				<div class="msm__header-nav">
+	{#if acceptMode === 'all'}
+		<div class="msm__header-content msm__header-content-global">
+			<div class="msm__header-content-left msm__header-content-pane-start">
+				{#if !disableAcceptLeft}
 					<button
-						class="msm__header-button"
-						aria-label="Previous {label}"
-						title="Previous {label}"
-						disabled={navigableBlocks.length === 0}
-						onclick={handlePrevious}
+						class="msm__header-button msm__accept-left"
+						aria-label="Accept All Incoming Changes from Left"
+						title="Accept All Incoming Changes from Left"
+						onclick={handleAcceptLeft}
 					>
-						<ChevronUpIcon />
+						<AcceptLeftIcon />
 					</button>
-					<span class="msm__header-counter">
-						{#if navigableBlocks.length > 0}
-							{currentIndex < 0 ? '–' : currentIndex + 1} / {navigableBlocks.length}
-							{label}{navigableBlocks.length === 1 ? '' : 's'}
-						{:else}
-							No {label}s
-						{/if}
-					</span>
+				{/if}
+			</div>
+			<div class="msm__header-content-center">
+				{#if !disableNavigation}
+					<div class="msm__header-nav">
+						<button
+							class="msm__header-button"
+							aria-label="Previous {label}"
+							title="Previous {label}"
+							disabled={navigableBlocks.length === 0}
+							onclick={handlePrevious}
+						>
+							<ChevronUpIcon />
+						</button>
+						<span class="msm__header-counter">
+							{#if navigableBlocks.length > 0}
+								{currentIndex < 0 ? '–' : currentIndex + 1} / {navigableBlocks.length}
+								{label}{navigableBlocks.length === 1 ? '' : 's'}
+							{:else}
+								No {label}s
+							{/if}
+						</span>
+						<button
+							class="msm__header-button"
+							aria-label="Next {label}"
+							title="Next {label}"
+							disabled={navigableBlocks.length === 0}
+							onclick={handleNext}
+						>
+							<ChevronDownIcon />
+						</button>
+					</div>
+				{/if}
+			</div>
+			<div class="msm__header-content-right msm__header-content-pane-end">
+				{#if !disableAcceptRight}
 					<button
-						class="msm__header-button"
-						aria-label="Next {label}"
-						title="Next {label}"
-						disabled={navigableBlocks.length === 0}
-						onclick={handleNext}
+						class="msm__header-button msm__accept-right"
+						aria-label="Accept All Incoming Changes from Right"
+						title="Accept All Incoming Changes from Right"
+						onclick={handleAcceptRight}
 					>
-						<ChevronDownIcon />
+						<AcceptRightIcon />
 					</button>
-				</div>
-			{/if}
+				{/if}
+			</div>
 		</div>
-		<div class="msm__header-content-right">
-			{#if !disableAcceptLeft}
-				<button
-					class="msm__header-button msm__accept-left"
-					aria-label="Accept left"
-					title="Accept left"
-					disabled={navigableBlocks.length === 0 || currentIndex < 0}
-					onclick={handleAcceptLeft}
-				>
-					<AcceptLeftIcon />
-					<span>Accept Left</span>
-				</button>
-			{/if}
-			{#if !disableAcceptRight}
-				<button
-					class="msm__header-button msm__accept-right"
-					aria-label="Accept right"
-					title="Accept right"
-					disabled={navigableBlocks.length === 0 || currentIndex < 0}
-					onclick={handleAcceptRight}
-				>
-					<span>Accept Right</span>
-					<AcceptRightIcon />
-				</button>
-			{/if}
+	{:else}
+		<div class="msm__header-content">
+			<div class="msm__header-content-left">
+				{#if !disableNavigation}
+					<div class="msm__header-nav">
+						<button
+							class="msm__header-button"
+							aria-label="Previous {label}"
+							title="Previous {label}"
+							disabled={navigableBlocks.length === 0}
+							onclick={handlePrevious}
+						>
+							<ChevronUpIcon />
+						</button>
+						<span class="msm__header-counter">
+							{#if navigableBlocks.length > 0}
+								{currentIndex < 0 ? '–' : currentIndex + 1} / {navigableBlocks.length}
+								{label}{navigableBlocks.length === 1 ? '' : 's'}
+							{:else}
+								No {label}s
+							{/if}
+						</span>
+						<button
+							class="msm__header-button"
+							aria-label="Next {label}"
+							title="Next {label}"
+							disabled={navigableBlocks.length === 0}
+							onclick={handleNext}
+						>
+							<ChevronDownIcon />
+						</button>
+					</div>
+				{/if}
+			</div>
+			<div class="msm__header-content-right">
+				{#if !disableAcceptLeft}
+					<button
+						class="msm__header-button msm__accept-left"
+						aria-label="Accept left"
+						title="Accept left"
+						disabled={navigableBlocks.length === 0 || currentIndex < 0}
+						onclick={handleAcceptLeft}
+					>
+						<AcceptLeftIcon />
+						<span>Accept Left</span>
+					</button>
+				{/if}
+				{#if !disableAcceptRight}
+					<button
+						class="msm__header-button msm__accept-right"
+						aria-label="Accept right"
+						title="Accept right"
+						disabled={navigableBlocks.length === 0 || currentIndex < 0}
+						onclick={handleAcceptRight}
+					>
+						<span>Accept Right</span>
+						<AcceptRightIcon />
+					</button>
+				{/if}
+			</div>
 		</div>
-	</div>
+	{/if}
 	{@render children?.()}
 </header>
