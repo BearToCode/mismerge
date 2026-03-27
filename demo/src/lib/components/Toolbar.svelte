@@ -7,6 +7,7 @@
 		ctrPlaceholder,
 		disableFooter,
 		disableMerging,
+		disableSyntaxHighlighting,
 		fixedHeight,
 		ignoreCase,
 		ignoreWhitespace,
@@ -126,6 +127,11 @@
 	<CheckBox bind:checked={$disableFooter}>
 		<iconify-icon icon="pixelarticons:layout-footer"></iconify-icon>
 		<span>Disable footer</span>
+	</CheckBox>
+
+	<CheckBox bind:checked={$disableSyntaxHighlighting}>
+		<iconify-icon icon="material-symbols:code-off-rounded"></iconify-icon>
+		<span>Disable syntax highlighting</span>
 	</CheckBox>
 
 	<CheckBox bind:checked={$ignoreWhitespace}>

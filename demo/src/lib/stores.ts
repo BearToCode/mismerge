@@ -13,6 +13,7 @@ const defaultFixedHeight = false;
 const defaultSyncHorizontalScroll = false;
 const defaultDisableMerging = false;
 const defaultDisableFooter = false;
+const defaultDisableSyntaxHighlighting = false;
 const defaultIgnoreWhitespace = false;
 const defaultIgnoreCase = false;
 const defaultTheme = 'light' as const;
@@ -27,6 +28,7 @@ const demoStorageKeys = [
 	'syncHorizontalScroll',
 	'disableMerging',
 	'disableFooter',
+	'disableSyntaxHighlighting',
 	'ignoreWhitespace',
 	'ignoreCase',
 	'theme'
@@ -74,6 +76,10 @@ export const disableMerging = writableWithLocalStorage<boolean>(
 	defaultDisableMerging
 );
 export const disableFooter = writableWithLocalStorage<boolean>('disableFooter', defaultDisableFooter);
+export const disableSyntaxHighlighting = writableWithLocalStorage<boolean>(
+	'disableSyntaxHighlighting',
+	defaultDisableSyntaxHighlighting
+);
 export const ignoreWhitespace = writableWithLocalStorage<boolean>(
 	'ignoreWhitespace',
 	defaultIgnoreWhitespace
@@ -99,6 +105,7 @@ export function resetDemoState() {
 	syncHorizontalScroll.set(defaultSyncHorizontalScroll);
 	disableMerging.set(defaultDisableMerging);
 	disableFooter.set(defaultDisableFooter);
+	disableSyntaxHighlighting.set(defaultDisableSyntaxHighlighting);
 	ignoreWhitespace.set(defaultIgnoreWhitespace);
 	ignoreCase.set(defaultIgnoreCase);
 	theme.set(defaultTheme);

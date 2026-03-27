@@ -412,9 +412,7 @@
 /* Highlight overlay */
 
 .mismerge .msm__view.highlight textarea {
-	color: var(--primary-600, #323232);
-	caret-color: var(--primary-500, currentColor);
-	-webkit-text-fill-color: transparent;
+	color: transparent;
 }
 
 .mismerge .msm__highlight-overlay {
@@ -454,3 +452,5 @@
 	word-break: normal;
 	word-wrap: break-word;
 }
+
+

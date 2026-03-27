@@ -13,6 +13,7 @@
 		ctr,
 		disableFooter,
 		disableMerging,
+		disableSyntaxHighlighting,
 		fixedHeight,
 		ignoreCase,
 		ignoreWhitespace,
@@ -70,7 +71,9 @@
 			theme: $theme == 'dark' ? 'github-dark' : 'github-light'
 		});
 
-	let colors: EditorColors;
+	const activeHighlight = $derived($disableSyntaxHighlighting ? undefined : highlight);
+
+	let colors = $state<EditorColors>(DefaultLightColors);
 	const updateColors = (theme: string) =>
 		(colors = theme == 'light' ? DefaultLightColors : DefaultDarkColors);
 	theme.subscribe(updateColors);
@@ -100,11 +103,11 @@
 <main>
 	<Toolbar />
 	<div class:fixed-height={$fixedHeight} class="merge-panel">
-		{#key $language + $theme}
+		{#key $language + $theme + String($disableSyntaxHighlighting)}
 			{#if $component == 'mismerge2'}
 				<MisMerge2
 					{colors}
-					{highlight}
+					highlight={activeHighlight}
 					bind:lhs={$lhs}
 					bind:rhs={$rhs}
 					{...{ syncHorizontalScroll: $syncHorizontalScroll }}
@@ -119,7 +122,7 @@
 			{:else}
 				<MisMerge3
 					{colors}
-					{highlight}
+					highlight={activeHighlight}
 					bind:lhs={$lhs}
 					bind:ctr={$ctr}
 					bind:rhs={$rhs}

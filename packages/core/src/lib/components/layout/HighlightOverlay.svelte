@@ -10,23 +10,19 @@
 	} = $props();
 
 	let highlighted = $state('');
-
-	function escapeHtml(value: string) {
-		return value
-			.replaceAll('&', '&amp;')
-			.replaceAll('<', '&lt;')
-			.replaceAll('>', '&gt;')
-			.replaceAll('"', '&quot;')
-			.replaceAll("'", '&#39;');
-	}
+	let renderVersion = 0;
 
 	$effect(() => {
+		const currentVersion = ++renderVersion;
+
 		(async () => {
 			try {
-				highlighted = await highlight(content);
+				const rendered = await highlight(content);
+				if (currentVersion !== renderVersion) return;
+				highlighted = rendered;
 			} catch {
-				// Keep code visible even when syntax highlighting fails.
-				highlighted = `<pre><code>${escapeHtml(content)}</code></pre>`;
+				if (currentVersion !== renderVersion) return;
+				highlighted = '';
 			}
 		})();
 	});
