@@ -11,7 +11,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
-		"watch": "svelte-package --watch",
+		"watch": "svelte-kit sync && svelte-package --watch",
 		"preview": "vite preview",
 		"package:svelte": "svelte-package",
 		"package:web": "rollup -c",
@@ -72,6 +72,7 @@
 		"@sveltejs/kit": "^2.55.0",
 		"@sveltejs/package": "^2.5.7",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
+		"@testing-library/svelte": "^5.2.8",
 		"@types/diff": "^5.2.3",
 		"rollup": "^4.60.0",
 		"rollup-plugin-svelte": "^7.2.3",
@@ -83,7 +84,8 @@
 		"tslib": "^2.8.1",
 		"typescript": "^5.9.3",
 		"vite": "^8.0.3",
-		"vitest": "^4.1.2"
+		"vitest": "^4.1.2",
+		"jsdom": "^26.1.0"
 	},
 	"type": "module",
 	"dependencies": {

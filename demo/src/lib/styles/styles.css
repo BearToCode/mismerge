@@ -58,16 +58,13 @@ main {
 .toolbar {
 	width: 100%;
 	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: flex-start;
 }
 
 .toolbar > * {
-	margin-right: 0.75rem;
-	flex-shrink: 0;
-	flex-grow: 1;
-}
-
-.toolbar > *:last-child {
-	margin-right: 0;
+	flex: 0 0 auto;
 }
 
 /* Buttons */
@@ -86,11 +83,11 @@ main {
 	border: 1px solid #e1dce1;
 	border-radius: 6px;
 
-	min-width: 10rem;
-
 	display: inline-flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	width: fit-content;
+	max-width: 100%;
 
 	transition: all 0.1s ease-in-out;
 }
@@ -120,6 +117,13 @@ main {
 .toolbar > button > *:last-child,
 .toolbar > .radio > button > *:last-child {
 	margin-right: 0;
+}
+
+@media screen and (max-width: 900px) {
+	.toolbar > button,
+	.toolbar > .radio {
+		min-width: 0;
+	}
 }
 
 /* Dropdown */

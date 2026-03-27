@@ -1,31 +1,37 @@
-void swap(int *a, int *b) {
-  int t = *a;
-  *a = *b;
-  *b = t;
+typedef struct {
+  const char *base_url;
+  const char *project;
+  const char *branch;
+  const char *search;
+  int page;
+  int page_size;
+  int timeout_ms;
+  int include_archived;
+} MergePreviewRequest;
+
+static void append_bool(char *buffer, size_t size, const char *name, int enabled) {
+  snprintf(buffer + strlen(buffer), size - strlen(buffer), "&%s=%s", name, enabled ? "true" : "false");
 }
 
-int partition(int array[], int low, int high) {
-  int pivot = array[high];
-  int i = low - 1;
-
-	// Move all the elements higher than the pivot
-	// to the left side of the partition
-  for (int j = low; j < high; j++) {
-    if (array[j] <= pivot) {
-      i++;
-      swap(&array[i], &array[j]);
-    }
+int build_merge_preview_url(const MergePreviewRequest *request, char *buffer, size_t size) {
+  if (!request || !buffer || size == 0) {
+    return -1;
   }
-  swap(&array[i + 1], &array[high]);
-  
-  return i + 1;
+
+  snprintf(buffer, size, "%s/api/v1/projects/%s/compare?branch=%s&query=%s&page=%d&page_size=%d&timeout_ms=%d", request->base_url, request->project, request->branch, request->search, request->page, request->page_size, request->timeout_ms);
+  append_bool(buffer, size, "include_archived", request->include_archived);
+
+  return 0;
 }
 
-void quick_sort(int array[], int low, int high) {
-  if (low < high) {
-    int pi = partition(array, low, high);
-   
-    quick_sort(array, low, pi - 1);
-    quick_sort(array, pi + 1, high);
+int send_merge_preview_request(const MergePreviewRequest *request, char *response, size_t response_size) {
+  char url[1024];
+  int status = build_merge_preview_url(request, url, sizeof(url));
+
+  if (status != 0) {
+    return status;
   }
+
+  snprintf(response, response_size, "GET %s HTTP/1.1\nHost: merge-preview.internal\nX-Debug-Trace: project=%s branch=%s query=%s page=%d page_size=%d timeout_ms=%d\n\n", url, request->project, request->branch, request->search, request->page, request->page_size, request->timeout_ms);
+  return 200;
 }

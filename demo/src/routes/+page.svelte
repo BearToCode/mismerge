@@ -13,6 +13,7 @@
 		ctr,
 		disableFooter,
 		disableMerging,
+		fixedHeight,
 		ignoreCase,
 		ignoreWhitespace,
 		language,
@@ -97,38 +98,40 @@
 
 <main>
 	<Toolbar />
-	{#key $language + $theme}
-		{#if $component == 'mismerge2'}
-			<MisMerge2
-				{colors}
-				{highlight}
-				bind:lhs={$lhs}
-				bind:rhs={$rhs}
-				lhsEditable
-				rhsEditable
-				wrapLines={$wrapLines}
-				disableMerging={$disableMerging}
-				disableFooter={$disableFooter}
-				ignoreWhitespace={$ignoreWhitespace}
-				ignoreCase={$ignoreCase}
-			/>
-		{:else}
-			<MisMerge3
-				{colors}
-				{highlight}
-				bind:lhs={$lhs}
-				bind:ctr={$ctr}
-				bind:rhs={$rhs}
-				lhsEditable
-				rhsEditable
-				wrapLines={$wrapLines}
-				disableMerging={$disableMerging}
-				disableFooter={$disableFooter}
-				ignoreWhitespace={$ignoreWhitespace}
-				ignoreCase={$ignoreCase}
-			/>
-		{/if}
-	{/key}
+	<div class:fixed-height={$fixedHeight} class="merge-panel">
+		{#key $language + $theme}
+			{#if $component == 'mismerge2'}
+				<MisMerge2
+					{colors}
+					{highlight}
+					bind:lhs={$lhs}
+					bind:rhs={$rhs}
+					lhsEditable
+					rhsEditable
+					wrapLines={$wrapLines}
+					disableMerging={$disableMerging}
+					disableFooter={$disableFooter}
+					ignoreWhitespace={$ignoreWhitespace}
+					ignoreCase={$ignoreCase}
+				/>
+			{:else}
+				<MisMerge3
+					{colors}
+					{highlight}
+					bind:lhs={$lhs}
+					bind:ctr={$ctr}
+					bind:rhs={$rhs}
+					lhsEditable
+					rhsEditable
+					wrapLines={$wrapLines}
+					disableMerging={$disableMerging}
+					disableFooter={$disableFooter}
+					ignoreWhitespace={$ignoreWhitespace}
+					ignoreCase={$ignoreCase}
+				/>
+			{/if}
+		{/key}
+	</div>
 
 	<Footer />
 </main>
@@ -139,6 +142,12 @@
 		font-variant-ligatures: normal;
 		min-height: 80vh;
 		margin-top: 1rem;
+	}
+
+	.merge-panel.fixed-height :global(.mismerge) {
+		height: 70vh;
+		min-height: 70vh;
+		max-height: 70vh;
 	}
 
 	:global(.shiki) {

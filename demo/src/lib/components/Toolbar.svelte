@@ -2,15 +2,21 @@
 	import CheckBox from './CheckBox.svelte';
 	import Radio from './Radio.svelte';
 	import {
+		clearDemoLocalStorage,
 		component,
 		ctr,
+		ctrPlaceholder,
 		disableFooter,
 		disableMerging,
+		fixedHeight,
 		ignoreCase,
 		ignoreWhitespace,
 		language,
 		lhs,
+		lhsPlaceholder,
+		resetDemoState,
 		rhs,
+		rhsPlaceholder,
 		theme,
 		wrapLines
 	} from '$lib/stores';
@@ -50,12 +56,26 @@
 
 <div class="toolbar">
 	<button
-		class="reset"
-		aria-label="Clear all"
+		class="clear-storage"
+		aria-label="Clear saved state"
+		title="Clear saved state"
 		on:click={() => {
-			lhs.set('');
-			rhs.set('');
-			ctr.set('');
+			clearDemoLocalStorage();
+			resetDemoState();
+		}}
+	>
+		<iconify-icon icon="mdi:database-remove-outline"></iconify-icon>
+		<span>Clear saved state</span>
+	</button>
+
+	<button
+		class="reset"
+		aria-label="Reset sample"
+		title="Reset sample"
+		on:click={() => {
+			lhs.set(lhsPlaceholder);
+			rhs.set(rhsPlaceholder);
+			ctr.set(ctrPlaceholder);
 		}}
 	>
 		<iconify-icon icon="pajamas:clear-all"></iconify-icon>
@@ -102,6 +122,11 @@
 	<CheckBox bind:checked={$wrapLines}>
 		<iconify-icon icon="uis:wrap-text"></iconify-icon>
 		<span>Wrap lines</span>
+	</CheckBox>
+
+	<CheckBox bind:checked={$fixedHeight}>
+		<iconify-icon icon="material-symbols:height-rounded"></iconify-icon>
+		<span>Fixed height</span>
 	</CheckBox>
 
 	<CheckBox bind:checked={$disableMerging}>

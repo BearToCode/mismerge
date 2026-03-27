@@ -63,10 +63,24 @@
 
 .mismerge ::-webkit-scrollbar {
 	width: 6px;
+	background: transparent;
 }
 
 .mismerge ::-webkit-scrollbar-track {
-	background: none;
+	background: transparent;
+	box-shadow: none;
+}
+
+.mismerge ::-webkit-scrollbar-track-piece,
+.mismerge ::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+.mismerge:focus-within ::-webkit-scrollbar-track,
+.mismerge:focus-within ::-webkit-scrollbar-track-piece,
+.mismerge:focus-within ::-webkit-scrollbar-corner {
+	background: transparent;
+	box-shadow: none;
 }
 
 .mismerge ::-webkit-scrollbar-thumb {
