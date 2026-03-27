@@ -10,6 +10,7 @@ const defaultComponent = 'mismerge3' as const;
 const defaultLanguage = 'c' as const satisfies BundledLanguage;
 const defaultWrapLines = false;
 const defaultFixedHeight = false;
+const defaultSyncHorizontalScroll = false;
 const defaultDisableMerging = false;
 const defaultDisableFooter = false;
 const defaultIgnoreWhitespace = false;
@@ -23,6 +24,7 @@ const demoStorageKeys = [
 	'language',
 	'wrapLines',
 	'fixedHeight',
+	'syncHorizontalScroll',
 	'disableMerging',
 	'disableFooter',
 	'ignoreWhitespace',
@@ -63,6 +65,10 @@ export const component = writableWithLocalStorage<ComponentType>('component', de
 export const language = writableWithLocalStorage<BundledLanguage>('language', defaultLanguage);
 export const wrapLines = writableWithLocalStorage<boolean>('wrapLines', defaultWrapLines);
 export const fixedHeight = writableWithLocalStorage<boolean>('fixedHeight', defaultFixedHeight);
+export const syncHorizontalScroll = writableWithLocalStorage<boolean>(
+	'syncHorizontalScroll',
+	defaultSyncHorizontalScroll
+);
 export const disableMerging = writableWithLocalStorage<boolean>(
 	'disableMerging',
 	defaultDisableMerging
@@ -90,6 +96,7 @@ export function resetDemoState() {
 	language.set(defaultLanguage);
 	wrapLines.set(defaultWrapLines);
 	fixedHeight.set(defaultFixedHeight);
+	syncHorizontalScroll.set(defaultSyncHorizontalScroll);
 	disableMerging.set(defaultDisableMerging);
 	disableFooter.set(defaultDisableFooter);
 	ignoreWhitespace.set(defaultIgnoreWhitespace);

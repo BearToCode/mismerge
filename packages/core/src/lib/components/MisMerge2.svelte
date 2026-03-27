@@ -33,6 +33,7 @@
 		lineDiffAlgorithm = 'words_with_space' as LineDiffAlgorithm,
 		class: clazz = '',
 		disableMerging = false,
+		syncHorizontalScroll = false,
 		wrapLines = false,
 		disableFooter = false,
 		disableWordsCounter = false,
@@ -53,6 +54,7 @@
 		lineDiffAlgorithm?: LineDiffAlgorithm;
 		class?: string;
 		disableMerging?: boolean;
+		syncHorizontalScroll?: boolean;
 		wrapLines?: boolean;
 		disableFooter?: boolean;
 		disableWordsCounter?: boolean;
@@ -98,6 +100,8 @@
 	let container = $state<HTMLDivElement | undefined>(undefined);
 	let lhsViewElem = $state<HTMLDivElement | undefined>(undefined);
 	let rhsViewElem = $state<HTMLDivElement | undefined>(undefined);
+	let lhsContentContainer = $state<HTMLDivElement | undefined>(undefined);
+	let rhsContentContainer = $state<HTMLDivElement | undefined>(undefined);
 
 	let lhsViewRef: View;
 	let rhsViewRef: View;
@@ -124,6 +128,41 @@
 		void wrapLines;
 		void editorColors;
 		update();
+	});
+
+	$effect(() => {
+		if (!browser || !syncHorizontalScroll) return;
+		const scrollContainers = [lhsContentContainer, rhsContentContainer].filter(
+			(container): container is HTMLDivElement => !!container
+		);
+		if (scrollContainers.length < 2) return;
+
+		let syncing = false;
+		const syncScroll = (source: HTMLDivElement) => {
+			if (syncing) return;
+			syncing = true;
+			const nextScrollLeft = source.scrollLeft;
+			for (const container of scrollContainers) {
+				if (container === source || container.scrollLeft === nextScrollLeft) continue;
+				container.scrollLeft = nextScrollLeft;
+			}
+			syncing = false;
+		};
+
+		const listeners = scrollContainers.map((container) => {
+			const listener = () => syncScroll(container);
+			container.addEventListener('scroll', listener, { passive: true });
+			return { container, listener };
+		});
+
+		const [firstContainer] = scrollContainers;
+		syncScroll(firstContainer);
+
+		return () => {
+			for (const { container, listener } of listeners) {
+				container.removeEventListener('scroll', listener);
+			}
+		};
 	});
 
 	onLineChange(() => container as HTMLDivElement, update);
@@ -157,6 +196,7 @@
 				{components}
 				bind:content={lhs}
 				bind:elem={lhsViewElem}
+				bind:contentContainer={lhsContentContainer}
 				bind:this={lhsViewRef}
 				onheightchange={update}
 			/>
@@ -170,6 +210,7 @@
 				{components}
 				bind:content={rhs}
 				bind:elem={rhsViewElem}
+				bind:contentContainer={rhsContentContainer}
 				bind:this={rhsViewRef}
 				onheightchange={update}
 			/>

@@ -6,6 +6,9 @@ import { UnchangedBlock } from '$lib/internal/blocks/unchanged';
 import { ModifiedBlock } from '$lib/internal/blocks/modified';
 import { RemovedBlock } from '$lib/internal/blocks/removed';
 import { AddedBlock } from '$lib/internal/blocks/added';
+import DeleteChange from '$lib/components/actions/DeleteChange.svelte';
+import MergeChange from '$lib/components/actions/MergeChange.svelte';
+import { TwoWaySide } from '$lib/internal/editor/side';
 
 test('assemble-one-way unchanged', () => {
 	const blocks = assembleOneWay(
@@ -152,3 +155,49 @@ test('assemble-two-way added rhs', () => {
 	expect(blocks).toHaveLength(2);
 	expect(blocks.at(1)).toBeInstanceOf(RemovedBlock);
 });
+
+test('modified blocks show delete action when a side is already merged into center', () => {
+	const modifiedBlock = new ModifiedBlock({
+		modifiedSidesData: [
+			{
+				side: TwoWaySide.lhs,
+				lines: [{ parts: [{ content: 'left change', overlay: false }] }]
+			},
+			{
+				side: TwoWaySide.ctr,
+				lines: [{ parts: [{ content: 'center change', overlay: false }] }]
+			}
+		]
+	});
+
+	const components = modifiedBlock.render();
+	const leftComponent = components.find((component) => component.side.eq(TwoWaySide.lhs));
+	const centerComponent = components.find((component) => component.side.eq(TwoWaySide.ctr));
+
+	expect(leftComponent?.sideAction?.component).toBe(MergeChange);
+	expect(centerComponent?.sideAction).toBeUndefined();
+
+	const mergedBlock = new ModifiedBlock({
+		modifiedSidesData: [
+			{
+				side: TwoWaySide.lhs,
+				lines: [{ parts: [{ content: 'left change', overlay: false }] }]
+			},
+			{
+				side: TwoWaySide.ctr,
+				lines: [
+					{ parts: [{ content: 'left change', overlay: false }] },
+					{ parts: [{ content: 'center change', overlay: false }] }
+				]
+			}
+		]
+	});
+
+	const mergedComponents = mergedBlock.render();
+	const mergedLeftComponent = mergedComponents.find((component) => component.side.eq(TwoWaySide.lhs));
+	const mergedCenterComponent = mergedComponents.find((component) => component.side.eq(TwoWaySide.ctr));
+
+	expect(mergedLeftComponent?.sideAction?.component).toBe(DeleteChange);
+	expect(mergedCenterComponent?.props.acceptedInCenter).toBe(true);
+});
+

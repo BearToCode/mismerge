@@ -7,11 +7,17 @@
 	let {
 		block,
 		lines,
+		acceptedInCenter = false,
 		component
-	}: { block: ModifiedBlock<Side>; lines: LineDiff[]; component: BlockComponent } = $props();
+	}: {
+		block: ModifiedBlock<Side>;
+		lines: LineDiff[];
+		acceptedInCenter?: boolean;
+		component: BlockComponent;
+	} = $props();
 </script>
 
-<div class="msm__block {block.type}" data-component-id={component.id}>
+<div class="msm__block {block.type} {acceptedInCenter ? 'accepted' : ''}" data-component-id={component.id}>
 	{#each lines as line}
 		<div class="msm__line">
 			<div class="msm__content">

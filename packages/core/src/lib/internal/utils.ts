@@ -38,3 +38,14 @@ export function debounce<T extends unknown[]>(cb: (...args: T) => unknown, wait 
 		timeout = setTimeout(() => cb(...args), wait);
 	};
 }
+
+export function startsWithSequence<T>(items: T[], sequence: T[]) {
+	if (sequence.length > items.length) return false;
+	return sequence.every((item, index) => items[index] === item);
+}
+
+export function endsWithSequence<T>(items: T[], sequence: T[]) {
+	if (sequence.length > items.length) return false;
+	const offset = items.length - sequence.length;
+	return sequence.every((item, index) => items[offset + index] === item);
+}

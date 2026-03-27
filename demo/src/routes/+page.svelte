@@ -19,6 +19,7 @@
 		language,
 		lhs,
 		rhs,
+		syncHorizontalScroll,
 		theme,
 		wrapLines
 	} from '$lib/stores';
@@ -106,6 +107,7 @@
 					{highlight}
 					bind:lhs={$lhs}
 					bind:rhs={$rhs}
+					{...{ syncHorizontalScroll: $syncHorizontalScroll }}
 					lhsEditable
 					rhsEditable
 					wrapLines={$wrapLines}
@@ -121,6 +123,7 @@
 					bind:lhs={$lhs}
 					bind:ctr={$ctr}
 					bind:rhs={$rhs}
+					{...{ syncHorizontalScroll: $syncHorizontalScroll }}
 					lhsEditable
 					rhsEditable
 					wrapLines={$wrapLines}

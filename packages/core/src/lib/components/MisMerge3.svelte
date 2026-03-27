@@ -36,6 +36,7 @@
 		ctrEditable = true,
 		rhsEditable = false,
 		disableMerging = false,
+		syncHorizontalScroll = false,
 		wrapLines = false,
 		disableFooter = false,
 		disableWordsCounter = false,
@@ -59,6 +60,7 @@
 		ctrEditable?: boolean;
 		rhsEditable?: boolean;
 		disableMerging?: boolean;
+		syncHorizontalScroll?: boolean;
 		wrapLines?: boolean;
 		disableFooter?: boolean;
 		disableWordsCounter?: boolean;
@@ -118,6 +120,9 @@
 	let lhsViewElem = $state<HTMLDivElement | undefined>(undefined);
 	let ctrViewElem = $state<HTMLDivElement | undefined>(undefined);
 	let rhsViewElem = $state<HTMLDivElement | undefined>(undefined);
+	let lhsContentContainer = $state<HTMLDivElement | undefined>(undefined);
+	let ctrContentContainer = $state<HTMLDivElement | undefined>(undefined);
+	let rhsContentContainer = $state<HTMLDivElement | undefined>(undefined);
 
 	let lhsViewRef: View;
 	let ctrViewRef: View;
@@ -148,6 +153,41 @@
 		void wrapLines;
 		void editorColors;
 		update();
+	});
+
+	$effect(() => {
+		if (!browser || !syncHorizontalScroll) return;
+		const scrollContainers = [lhsContentContainer, ctrContentContainer, rhsContentContainer].filter(
+			(container): container is HTMLDivElement => !!container
+		);
+		if (scrollContainers.length < 2) return;
+
+		let syncing = false;
+		const syncScroll = (source: HTMLDivElement) => {
+			if (syncing) return;
+			syncing = true;
+			const nextScrollLeft = source.scrollLeft;
+			for (const container of scrollContainers) {
+				if (container === source || container.scrollLeft === nextScrollLeft) continue;
+				container.scrollLeft = nextScrollLeft;
+			}
+			syncing = false;
+		};
+
+		const listeners = scrollContainers.map((container) => {
+			const listener = () => syncScroll(container);
+			container.addEventListener('scroll', listener, { passive: true });
+			return { container, listener };
+		});
+
+		const [firstContainer] = scrollContainers;
+		syncScroll(firstContainer);
+
+		return () => {
+			for (const { container, listener } of listeners) {
+				container.removeEventListener('scroll', listener);
+			}
+		};
 	});
 
 	function handleResolve() {
@@ -186,6 +226,7 @@
 				bind:content={lhs}
 				{components}
 				bind:elem={lhsViewElem}
+				bind:contentContainer={lhsContentContainer}
 				bind:this={lhsViewRef}
 				onheightchange={update}
 			/>
@@ -204,6 +245,7 @@
 				bind:content={ctr}
 				{components}
 				bind:elem={ctrViewElem}
+				bind:contentContainer={ctrContentContainer}
 				bind:this={ctrViewRef}
 				onresolve={handleResolve}
 				onheightchange={update}
@@ -223,6 +265,7 @@
 				bind:content={rhs}
 				{components}
 				bind:elem={rhsViewElem}
+				bind:contentContainer={rhsContentContainer}
 				bind:this={rhsViewRef}
 				onheightchange={update}
 			/>

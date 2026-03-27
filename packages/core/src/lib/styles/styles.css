@@ -2,6 +2,9 @@
 	position: relative;
 	tab-size: 2;
 	overflow: hidden;
+	--msm-footer-height: 2rem;
+	background: var(--background, #ffffff);
+	color: var(--primary-600, #323232);
 }
 
 .mismerge * {
@@ -16,8 +19,8 @@
 .mismerge .msm__main {
 	display: flex;
 	align-items: stretch;
-	padding-bottom: 1.5rem;
-	min-height: calc(100% - 1.5rem);
+	padding-bottom: var(--msm-footer-height);
+	min-height: calc(100% - var(--msm-footer-height));
 	box-sizing: content-box;
 }
 
@@ -40,16 +43,31 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	height: 1.5rem;
+	height: var(--msm-footer-height);
+	z-index: 1;
+	background: var(--background, #ffffff);
+	overflow: hidden;
 
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
+.mismerge .msm__footer::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: var(--background, #ffffff);
+	z-index: 0;
+}
+
 .mismerge .msm__footer-content {
-	width: calc(100% - 2rem);
+	width: 100%;
 	display: inline-flex;
+	position: relative;
+	z-index: 1;
+	box-sizing: border-box;
+	background: var(--background, #ffffff);
 
 	padding-left: 1rem;
 	padding-right: 1rem;
@@ -278,6 +296,14 @@
 	background-color: var(--modified);
 }
 
+.mismerge .msm__block.accepted {
+	background-color: var(--added);
+}
+
+.mismerge .msm__line-number.accepted {
+	background-color: var(--added);
+}
+
 /* Overlays */
 
 .mismerge .msm__block.modified .overlay {
@@ -343,19 +369,24 @@
 
 .mismerge .msm__left .msm__merge-button,
 .mismerge .msm__left .msm__resolve-button,
-.mismerge .msm__delete-button {
+.mismerge .msm__left .msm__delete-button {
 	right: unset;
 	left: 0;
 }
 
 .mismerge .msm__left .msm__merge-button {
-	transform: translateY(-50%) scaleX(-1);
+	transform: translateY(-50%);
 }
 .mismerge .msm__right .msm__merge-button {
 	transform: translateY(-50%);
 }
 .mismerge .msm__merge-button svg {
 	transform: scale(0.9);
+	transform-origin: center;
+}
+
+.mismerge .msm__left .msm__merge-button svg {
+	transform: scale(0.9) scaleX(-1);
 }
 
 .mismerge .msm__resolve-button {
@@ -374,7 +405,9 @@
 /* Highlight overlay */
 
 .mismerge .msm__view.highlight textarea {
-	color: transparent;
+	color: var(--primary-600, #323232);
+	caret-color: var(--primary-500, currentColor);
+	-webkit-text-fill-color: transparent;
 }
 
 .mismerge .msm__highlight-overlay {
@@ -396,6 +429,16 @@
 }
 
 .mismerge .msm__highlight-overlay pre {
+	white-space: pre;
+}
+
+.mismerge .msm__highlight-overlay .line {
+	display: block;
+	min-height: 1lh;
+}
+
+.mismerge .msm__highlight-overlay .line:empty::before {
+	content: ' ';
 	white-space: pre;
 }
 

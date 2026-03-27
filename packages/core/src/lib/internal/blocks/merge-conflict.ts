@@ -8,6 +8,8 @@ import ResolvedConflictBlockComponent from '$lib/components/blocks/ResolvedConfl
 import ResolvedConflictPlaceholderComponent from '$lib/components/blocks/ResolvedConflictPlaceholder.svelte';
 import MergeChange from '$lib/components/actions/MergeChange.svelte';
 import ResolveConflict from '$lib/components/actions/ResolveConflict.svelte';
+import DeleteChange from '$lib/components/actions/DeleteChange.svelte';
+import { endsWithSequence, startsWithSequence } from '$lib/internal/utils';
 
 type MergeConflictSideData<SideType extends Side> = {
 	side: SideType;
@@ -42,6 +44,27 @@ export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
 		return [...this.sidesData].find((sideData) => sideData.side.eq(side))?.lines.length ?? 0;
 	}
 
+	private getLines(side: Side): string[] {
+		return ([...this.sidesData].find((sideData) => sideData.side.eq(side))?.lines ?? []).map(
+			(line) => line.content
+		);
+	}
+
+	private hasMergedIntoCenter(side: Side) {
+		if (!(side instanceof TwoWaySide) || side.eq(TwoWaySide.ctr)) return false;
+
+		const sourceLines = this.getLines(side);
+		const centerLines = this.getLines(TwoWaySide.ctr);
+
+		if (sourceLines.length === 0 || centerLines.length === 0) return false;
+
+		if (side.eq(TwoWaySide.lhs)) {
+			return startsWithSequence(centerLines, sourceLines);
+		}
+
+		return endsWithSequence(centerLines, sourceLines);
+	}
+
 	private toggleResolved = () => (this.resolved = !this.resolved);
 
 	private getSideAction(side: Side): SideAction {
@@ -52,7 +75,7 @@ export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
 			};
 		else {
 			return {
-				component: MergeChange,
+				component: this.hasMergedIntoCenter(side) ? DeleteChange : MergeChange,
 				props: {}
 			};
 		}

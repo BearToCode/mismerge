@@ -18,6 +18,10 @@
 	export function saveHistory() {
 		codeInput?.saveHistoryState();
 	}
+
+	export function focus() {
+		elem?.focus();
+	}
 </script>
 
 <textarea

@@ -17,6 +17,7 @@
 		resetDemoState,
 		rhs,
 		rhsPlaceholder,
+		syncHorizontalScroll,
 		theme,
 		wrapLines
 	} from '$lib/stores';
@@ -69,7 +70,7 @@
 	</button>
 
 	<button
-		class="reset"
+		class="toolbar-icon-button reset"
 		aria-label="Reset sample"
 		title="Reset sample"
 		on:click={() => {
@@ -82,7 +83,7 @@
 	</button>
 
 	<button
-		class="change-theme"
+		class="toolbar-icon-button change-theme"
 		aria-label="Toggle theme"
 		on:click={() => {
 			if ($theme == 'light') {
@@ -129,6 +130,11 @@
 		<span>Fixed height</span>
 	</CheckBox>
 
+	<CheckBox bind:checked={$syncHorizontalScroll}>
+		<iconify-icon icon="material-symbols:sync-alt-rounded"></iconify-icon>
+		<span>Sync horizontal scroll</span>
+	</CheckBox>
+
 	<CheckBox bind:checked={$disableMerging}>
 		<iconify-icon icon="jam:merge"></iconify-icon>
 		<span>Disable merging</span>
@@ -151,15 +157,23 @@
 </div>
 
 <style>
-	.reset,
-	.change-theme {
-		width: fit-content;
-		min-width: unset;
-		padding: 0;
-		width: 1.75rem;
+	.toolbar-icon-button {
+		justify-content: center;
+		padding: 0.25rem;
+		width: 2rem;
+		height: 2rem;
+		min-width: 2rem;
+	}
+
+	.toolbar-icon-button iconify-icon {
+		font-size: 1.1rem;
 	}
 
 	.change-theme {
-		font-size: 1.5rem;
+		font-size: 1rem;
+	}
+
+	.change-theme iconify-icon {
+		font-size: 1.35rem;
 	}
 </style>

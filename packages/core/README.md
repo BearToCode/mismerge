@@ -229,6 +229,7 @@ A list of properties for `<MisMerge2>`(2), `<MisMerge3>`(3), or both.
 | `lineDiffAlgorithm`     | `'characters' \| 'words' \| 'words_with_space'` | `words_with_space`    | Diff algorithm for same line side by side diff    | Both      |
 | `disableMerging`        | `boolean`                                       | `false`               | Disables merging                                  | Both      |
 | `wrapLines`             | `boolean`                                       | `false`               | Enables lines wrapping                            | Both      |
+| `syncHorizontalScroll`  | `boolean`                                       | `false`               | Synchronizes horizontal scrolling between panels  | Both      |
 | `disableWordsCounter`   | `boolean`                                       | `false`               | Disables words counter                            | Both      |
 | `disableCharsCounter`   | `boolean`                                       | `false`               | Disables chars counter                            | Both      |
 | `disableBlocksCounters` | `boolean`                                       | `false`               | Disables blocks counter                           | Both      |

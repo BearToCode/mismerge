@@ -44,14 +44,15 @@
 
 			{#if lineComponent}
 				{@const { startingLineNumber, component } = lineComponent}
+				{@const acceptedClass = component.props.acceptedInCenter ? 'accepted' : ''}
 				{#if block && lines}
 					{#if lines.length == 0}
-						<div class="msm__line-placeholder {component.type}"></div>
+						<div class="msm__line-placeholder {component.type} {acceptedClass}"></div>
 					{:else}
 						{#each lines as _line, lineIndex}
 							<div
 								style="height: {linesHeights[lineIndex]}px;"
-								class="msm__line-number {component.type}"
+								class="msm__line-number {component.type} {acceptedClass}"
 							>
 								{#if lineIndex == 0 && !disableMerging && component.sideAction}
 									{@const ActionComp = component.sideAction.component}

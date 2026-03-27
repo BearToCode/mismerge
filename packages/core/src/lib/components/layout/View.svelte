@@ -1,13 +1,14 @@
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/editor/component';
-	import type { Side } from '$lib/internal/editor/side';
+	import { TwoWaySide, type Side } from '$lib/internal/editor/side';
 	import SidePanel from './SidePanel.svelte';
 	import Editor from './Editor.svelte';
 	import HighlightOverlay from './HighlightOverlay.svelte';
-	import { deleteComponent, mergeComponent } from '$lib/internal/editor/actions';
+	import { deleteComponent, mergeComponent, removeMergedComponent } from '$lib/internal/editor/actions';
 
 	let {
 		elem = $bindable(),
+		contentContainer = $bindable(),
 		container,
 		components,
 		editable = false,
@@ -23,6 +24,7 @@
 		onresolve
 	}: {
 		elem?: HTMLDivElement;
+		contentContainer?: HTMLDivElement;
 		container: HTMLDivElement;
 		components: BlockComponent[];
 		editable?: boolean;
@@ -77,7 +79,17 @@
 	}
 
 	function handleDelete(component: BlockComponent) {
-		deleteComponent({ component, container });
+		if (
+			component.side instanceof TwoWaySide &&
+			!component.side.eq(TwoWaySide.ctr) &&
+			['modified', 'merge-conflict', 'resolved-merge-conflict', 'unchanged'].includes(
+				component.type
+			)
+		) {
+			removeMergedComponent({ source: component, side, components, container });
+		} else {
+			deleteComponent({ component, container });
+		}
 		editorRef?.saveHistory();
 		ondelete?.(component);
 	}
@@ -102,7 +114,7 @@
 			onresolve={handleResolve}
 		/>
 	{/if}
-	<div class="msm__view-content">
+	<div class="msm__view-content" bind:this={contentContainer}>
 		<div
 			class="msm__wrapper"
 			bind:this={contentElem}

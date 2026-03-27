@@ -2,7 +2,13 @@
 	import type { Line } from '$lib/internal/blocks';
 	import type { BlockComponent } from '$lib/internal/editor/component';
 
-	let { lines, component }: { lines: Line[]; component: BlockComponent } = $props();
+	let {
+		lines,
+		component
+	}: {
+		lines: Line[];
+		component: BlockComponent;
+	} = $props();
 </script>
 
 <div class="msm__block {component.type}" data-component-id={component.id}>
