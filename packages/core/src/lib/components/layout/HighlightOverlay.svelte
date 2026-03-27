@@ -12,6 +12,12 @@
 	let highlighted = $state('');
 	let renderVersion = 0;
 
+	function cleanShikiHtml(html: string): string {
+		return html
+			.replace(/ tabindex="[^"]*"/g, '')
+			.replace(/<\/span>\n<span class="line"/g, '</span><span class="line"');
+	}
+
 	$effect(() => {
 		const currentVersion = ++renderVersion;
 
@@ -19,7 +25,7 @@
 			try {
 				const rendered = await highlight(content);
 				if (currentVersion !== renderVersion) return;
-				highlighted = rendered;
+				highlighted = cleanShikiHtml(rendered);
 			} catch {
 				if (currentVersion !== renderVersion) return;
 				highlighted = '';

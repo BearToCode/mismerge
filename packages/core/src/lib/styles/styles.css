@@ -427,6 +427,7 @@
 
 	overflow-y: hidden;
 	padding: 0 0.5rem 0 0.5rem;
+	pointer-events: none;
 }
 
 .mismerge .msm__highlight-overlay pre {
