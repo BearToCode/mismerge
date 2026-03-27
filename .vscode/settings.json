@@ -21,11 +21,9 @@
 		"editor.defaultFormatter": "svelte.svelte-vscode"
 	},
 	"[vue]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.formatOnSave": true
 	},
 	"[javascriptreact]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.formatOnSave": true
 	}
 }

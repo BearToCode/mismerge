@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/BearToCode/mismerge.git"
+		"url": "https://github.com/vostej/mismerge.git"
 	},
 	"author": "BearToCode",
 	"scripts": {

@@ -7,7 +7,7 @@
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/BearToCode/mismerge.git"
+		"url": "https://github.com/vostej/mismerge.git"
 	},
 	"scripts": {
 		"core": "cd packages/core && npm run dev",

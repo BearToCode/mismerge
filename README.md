@@ -1,8 +1,8 @@
 <div align="right">
 <a href="https://www.npmjs.com/package/@mismerge/core"><img src="https://img.shields.io/npm/v/%40mismerge%2Fcore?color=6a7fec&labelColor=171d27&logo=npm&logoColor=white" alt="npm"></a>
 <a href="https://bundlephobia.com/package/@mismerge/core"><img src="https://img.shields.io/bundlephobia/min/%40mismerge%2Fcore?color=6a7fec&labelColor=171d27&logo=javascript&logoColor=white" alt="bundle"></a>
-<a href="https://github.com/BearToCode/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/beartocode/mismerge?color=6a7fec&labelColor=171d27&logo=git&logoColor=white" alt="license"></a>
-<a href="http://beartocode.github.io/mismerge/"><img src="https://img.shields.io/badge/available-red?label=demo&color=6a7fec&labelColor=171d27&logo=svelte&logoColor=white" alt="demo"></a>
+<a href="https://github.com/vostej/mismerge/blob/master/LICENSE"><img src="https://img.shields.io/github/license/beartocode/mismerge?color=6a7fec&labelColor=171d27&logo=git&logoColor=white" alt="license"></a>
+<a href="http://vostej.github.io/mismerge/"><img src="https://img.shields.io/badge/available-red?label=demo&color=6a7fec&labelColor=171d27&logo=svelte&logoColor=white" alt="demo"></a>
 </div>
 
 <img alt="banner" src="https://raw.githubusercontent.com/BearToCode/mismerge/master/images/banner-light.png#gh-light-mode-only" />
@@ -10,7 +10,7 @@
 
 ## A web-based merge editor
 
-Mismerge is a modern two-way and one-way merge editor for the web, built with **Svelte**. You can [visit the demo](https://beartocode.github.io/mismerge/) and start merging now, or use it as a component for your project. It is also available in **React** and **Vue**.
+Mismerge is a modern two-way and one-way merge editor for the web, built with **Svelte**. You can [visit the demo](https://vostej.github.io/mismerge/) and start merging now, or use it as a component for your project. It is also available in **React** and **Vue**.
 
 ## Features
 
@@ -163,7 +163,7 @@ You need to provide your own syntax highlighter. Example and demo using [Shiki-J
 
 ### Styles
 
-If you want to customize the editor styles, you can copy the default [light](https://github.com/BearToCode/mismerge/blob/master/packages/core/src/lib/styles/light.css) or [dark](https://github.com/BearToCode/mismerge/blob/master/packages/core/src/lib/styles/dark.css) theme and adapt it to your need.
+If you want to customize the editor styles, you can copy the default [light](https://github.com/vostej/mismerge/blob/master/packages/core/src/lib/styles/light.css) or [dark](https://github.com/vostej/mismerge/blob/master/packages/core/src/lib/styles/dark.css) theme and adapt it to your need.
 
 Here is a basic explanation of how the the rendered html looks like:
 
@@ -258,7 +258,7 @@ Events (available for Svelte):
 Clone the repo:
 
 ```
-git clone https://github.com/BearToCode/mismerge.git
+git clone https://github.com/vostej/mismerge.git
 cd mismerge
 ```
 

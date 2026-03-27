@@ -6,7 +6,7 @@
 		<iconify-icon icon="gg:npm"></iconify-icon>
 	</a>
 
-	<a href="https://github.com/BearToCode/mismerge" aria-label="GitHub">
+	<a href="https://github.com/vostej/mismerge" aria-label="GitHub">
 		<iconify-icon icon="ri:github-fill"></iconify-icon>
 	</a>
 </div>
