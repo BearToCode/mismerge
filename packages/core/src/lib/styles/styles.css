@@ -2,6 +2,8 @@
 	position: relative;
 	tab-size: 2;
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 	--msm-footer-height: 2rem;
 	--msm-header-height: 2.25rem;
 	background: var(--background, #ffffff);
@@ -13,7 +15,8 @@
 }
 
 .mismerge > div {
-	height: 100%;
+	flex: 1;
+	min-height: 0;
 	overflow-y: scroll;
 }
 
