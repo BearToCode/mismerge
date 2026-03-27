@@ -25,8 +25,8 @@
 	} from '$lib/stores';
 	import { loadDynamicStylesheet } from '$lib/dynamic-css';
 	import Toolbar from '$lib/components/Toolbar.svelte';
-	import mismergeLightStyle from '@vostej/core/light.css?raw';
-	import mismergeDarkStyle from '@vostej/core/dark.css?raw';
+	import mismergeLightStyle from '@vostej/core/source-styles/light.css?raw';
+	import mismergeDarkStyle from '@vostej/core/source-styles/dark.css?raw';
 	import codeLightStyle from '$lib/styles/code-light.css?raw';
 	import codeDarkStyle from '$lib/styles/code-dark.css?raw';
 	import Footer from '$lib/components/Footer.svelte';

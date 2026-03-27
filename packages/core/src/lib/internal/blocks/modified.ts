@@ -3,8 +3,10 @@ import { BlockComponent } from '../editor/component';
 import type { LineDiff } from '../diff/line-diff';
 import { Side, TwoWaySide } from '../editor/side';
 import ModifiedBlockComponent from '$lib/components/blocks/ModifiedBlock.svelte';
+import AddedBlockComponent from '$lib/components/blocks/AddedBlock.svelte';
 import UnchangedBlockComponent from '$lib/components/blocks/UnchangedBlock.svelte';
 import { UnchangedBlock } from './unchanged';
+import { AddedBlock } from './added';
 import type { Connection } from '../editor/connection';
 import MergeChange from '$lib/components/actions/MergeChange.svelte';
 import DeleteChange from '$lib/components/actions/DeleteChange.svelte';
@@ -87,45 +89,57 @@ export class ModifiedBlock<SideType extends Side> extends LinkedComponentsBlock<
 		);
 	}
 
+	private toPlainLines(lines: LineDiff[]): Line[] {
+		return lines.map((line) => ({
+			content: line.parts.map((part) => part.content).join('').replaceAll('\r', '').replaceAll('\n', '')
+		}));
+	}
+
 	public render() {
 		// Return two modified components for the sides where the line was modified
 		// and one unchanged component for the side where the line wasn't.
 		const modifiedComponents = this.modifiedSidesData.map(
 			({ side, lines }) => {
+				const acceptedFromSource = this.hasMergedIntoCenter(side);
 				const acceptedInCenter =
 					side instanceof TwoWaySide && side.eq(TwoWaySide.ctr) && this.centerIncludesMergedChange();
+				const rendersAsAdded = acceptedFromSource || acceptedInCenter;
 
 				return new BlockComponent({
-					component: ModifiedBlockComponent,
+					component: rendersAsAdded ? AddedBlockComponent : ModifiedBlockComponent,
 					blockId: this.id,
 					props: {
-						block: this,
-						lines,
+						...(rendersAsAdded
+							? { block: this, lines: this.toPlainLines(lines) }
+							: { block: this, lines }),
 						acceptedInCenter
 					},
 					linesCount: this.linesCount(side),
 					side: side,
 					type: this.type,
+					visualType: rendersAsAdded ? AddedBlock.type : this.type,
 					sideAction:
 						side instanceof TwoWaySide && side.eq(TwoWaySide.ctr)
 							? undefined
 							: {
-									component: this.hasMergedIntoCenter(side) ? DeleteChange : MergeChange,
+									component: acceptedFromSource ? DeleteChange : MergeChange,
 									props: {}
 								}
 				});
 			}
 		);
 		if (!this.unchangedSideData) return modifiedComponents;
+		const acceptedFromUnchangedSource = this.hasMergedIntoCenter(this.unchangedSideData.side);
 		return Array.prototype.concat(modifiedComponents, [
 			new BlockComponent({
-				component: UnchangedBlockComponent,
+				component: acceptedFromUnchangedSource ? AddedBlockComponent : UnchangedBlockComponent,
 				blockId: this.id,
 				props: { lines: this.unchangedSideData.lines },
 				linesCount: this.linesCount(this.unchangedSideData.side),
 				side: this.unchangedSideData.side,
 				type: UnchangedBlock.type,
-				sideAction: this.hasMergedIntoCenter(this.unchangedSideData.side)
+				visualType: acceptedFromUnchangedSource ? AddedBlock.type : UnchangedBlock.type,
+				sideAction: acceptedFromUnchangedSource
 					? {
 						component: DeleteChange,
 						props: {}

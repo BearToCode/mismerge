@@ -4,7 +4,6 @@
 	import {
 		clearDemoLocalStorage,
 		component,
-		ctr,
 		ctrPlaceholder,
 		disableFooter,
 		disableMerging,
@@ -12,10 +11,8 @@
 		ignoreCase,
 		ignoreWhitespace,
 		language,
-		lhs,
 		lhsPlaceholder,
 		resetDemoState,
-		rhs,
 		rhsPlaceholder,
 		syncHorizontalScroll,
 		theme,
@@ -57,26 +54,12 @@
 
 <div class="toolbar">
 	<button
-		class="clear-storage"
-		aria-label="Clear saved state"
-		title="Clear saved state"
-		on:click={() => {
-			clearDemoLocalStorage();
-			resetDemoState();
-		}}
-	>
-		<iconify-icon icon="mdi:database-remove-outline"></iconify-icon>
-		<span>Clear saved state</span>
-	</button>
-
-	<button
 		class="toolbar-icon-button reset"
 		aria-label="Reset sample"
 		title="Reset sample"
 		on:click={() => {
-			lhs.set(lhsPlaceholder);
-			rhs.set(rhsPlaceholder);
-			ctr.set(ctrPlaceholder);
+			clearDemoLocalStorage();
+			resetDemoState();
 		}}
 	>
 		<iconify-icon icon="pajamas:clear-all"></iconify-icon>

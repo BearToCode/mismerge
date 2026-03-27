@@ -4,6 +4,7 @@ import dedent from 'dedent';
 import { assembleTwoWay } from '$lib/internal/diff/two-way-assembler';
 import { UnchangedBlock } from '$lib/internal/blocks/unchanged';
 import { ModifiedBlock } from '$lib/internal/blocks/modified';
+import { MergeConflictBlock } from '$lib/internal/blocks/merge-conflict';
 import { RemovedBlock } from '$lib/internal/blocks/removed';
 import { AddedBlock } from '$lib/internal/blocks/added';
 import DeleteChange from '$lib/components/actions/DeleteChange.svelte';
@@ -198,6 +199,63 @@ test('modified blocks show delete action when a side is already merged into cent
 	const mergedCenterComponent = mergedComponents.find((component) => component.side.eq(TwoWaySide.ctr));
 
 	expect(mergedLeftComponent?.sideAction?.component).toBe(DeleteChange);
+	expect(mergedLeftComponent?.type).toBe(ModifiedBlock.type);
+	expect(mergedLeftComponent?.visualType).toBe(AddedBlock.type);
 	expect(mergedCenterComponent?.props.acceptedInCenter).toBe(true);
+	expect(mergedCenterComponent?.type).toBe(ModifiedBlock.type);
+	expect(mergedCenterComponent?.visualType).toBe(AddedBlock.type);
+});
+
+test('accepted merge conflict source blocks render as added blocks', () => {
+	const mergedConflict = new MergeConflictBlock({
+		sidesData: [
+			{
+				side: TwoWaySide.lhs,
+				lines: [{ content: 'left conflict' }]
+			},
+			{
+				side: TwoWaySide.ctr,
+				lines: [{ content: 'left conflict' }, { content: 'center conflict' }]
+			},
+			{
+				side: TwoWaySide.rhs,
+				lines: [{ content: 'right conflict' }]
+			}
+		]
+	});
+
+	const components = mergedConflict.render();
+	const leftComponent = components.find((component) => component.side.eq(TwoWaySide.lhs));
+	const centerComponent = components.find((component) => component.side.eq(TwoWaySide.ctr));
+
+	expect(leftComponent?.sideAction?.component).toBe(DeleteChange);
+	expect(leftComponent?.type).toBe(MergeConflictBlock.type);
+	expect(leftComponent?.visualType).toBe(AddedBlock.type);
+	expect(centerComponent?.type).toBe(MergeConflictBlock.type);
+});
+
+test('accepted unchanged source rows render as added blocks', () => {
+	const mergedBlock = new ModifiedBlock({
+		modifiedSidesData: [
+			{
+				side: TwoWaySide.ctr,
+				lines: [
+					{ parts: [{ content: 'shared line', overlay: false }] },
+					{ parts: [{ content: 'center-only line', overlay: false }] }
+				]
+			}
+		],
+		unchangedSideData: {
+			side: TwoWaySide.lhs,
+			lines: [{ content: 'shared line' }]
+		}
+	});
+
+	const components = mergedBlock.render();
+	const leftComponent = components.find((component) => component.side.eq(TwoWaySide.lhs));
+
+	expect(leftComponent?.sideAction?.component).toBe(DeleteChange);
+	expect(leftComponent?.type).toBe(UnchangedBlock.type);
+	expect(leftComponent?.visualType).toBe(AddedBlock.type);
 });
 

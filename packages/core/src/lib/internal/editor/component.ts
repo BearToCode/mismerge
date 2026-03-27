@@ -20,6 +20,7 @@ export class BlockComponent {
 	public readonly side: Side;
 	public readonly props: Record<string, unknown>;
 	public readonly type: string;
+	public readonly visualType: string;
 	public readonly linesCount: number;
 	public readonly placeholder: boolean;
 	public readonly sideAction?: SideAction;
@@ -30,6 +31,7 @@ export class BlockComponent {
 		props: Record<string, unknown>;
 		side: Side;
 		type: string;
+		visualType?: string;
 		linesCount: number;
 		placeholder?: boolean;
 	}) {
@@ -38,6 +40,7 @@ export class BlockComponent {
 		this.side = params.side;
 		this.props = params.props;
 		this.type = params.type;
+		this.visualType = params.visualType ?? params.type;
 		this.linesCount = params.linesCount;
 		this.placeholder = params.placeholder ?? false;
 		this.sideAction = params.sideAction;

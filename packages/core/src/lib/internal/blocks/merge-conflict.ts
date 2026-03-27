@@ -6,6 +6,8 @@ import MergeConflictBlockComponent from '$lib/components/blocks/MergeConflictBlo
 import MergeConflictPlaceholderComponent from '$lib/components/blocks/MergeConflictPlaceholder.svelte';
 import ResolvedConflictBlockComponent from '$lib/components/blocks/ResolvedConflictBlock.svelte';
 import ResolvedConflictPlaceholderComponent from '$lib/components/blocks/ResolvedConflictPlaceholder.svelte';
+import AddedBlockComponent from '$lib/components/blocks/AddedBlock.svelte';
+import { AddedBlock } from './added';
 import MergeChange from '$lib/components/actions/MergeChange.svelte';
 import ResolveConflict from '$lib/components/actions/ResolveConflict.svelte';
 import DeleteChange from '$lib/components/actions/DeleteChange.svelte';
@@ -89,8 +91,11 @@ export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
 	private renderUnresolved() {
 		return [
 			...this.sidesData.map(({ side, lines }) => {
+				const acceptedFromSource = this.hasMergedIntoCenter(side);
+				const rendersAsAdded = acceptedFromSource && !side.eq(TwoWaySide.ctr);
+
 				return new BlockComponent({
-					component: MergeConflictBlockComponent,
+					component: rendersAsAdded ? AddedBlockComponent : MergeConflictBlockComponent,
 					blockId: this.id,
 					props: {
 						block: this,
@@ -99,6 +104,7 @@ export class MergeConflictBlock extends LinkedComponentsBlock<TwoWaySide> {
 					linesCount: this.linesCount(side),
 					side,
 					type: this.type,
+					visualType: rendersAsAdded ? AddedBlock.type : this.type,
 					sideAction: this.getSideAction(side)
 				});
 			}),

@@ -14,7 +14,7 @@ export type Connection = {
 
 function componentColor(component: BlockComponent, colors: EditorColors): `#${string}` {
 	const defaultColor = '#ffffff';
-	switch (component.type) {
+	switch (component.visualType) {
 		case 'added':
 		case 'added-placeholder':
 			return colors.added ?? defaultColor;

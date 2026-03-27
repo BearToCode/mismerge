@@ -355,6 +355,10 @@
 .mismerge .msm__delete-button {
 	width: fit-content;
 	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 0;
 
 	position: absolute;
 	right: 0;
@@ -381,6 +385,7 @@
 	transform: translateY(-50%);
 }
 .mismerge .msm__merge-button svg {
+	display: block;
 	transform: scale(0.9);
 	transform-origin: center;
 }
@@ -393,6 +398,7 @@
 	transform: translateY(-50%);
 }
 .mismerge .msm__resolve-button svg {
+	display: block;
 	transform: scale(0.8);
 }
 
@@ -400,6 +406,7 @@
 	transform: translateY(-50%);
 }
 .mismerge .msm__delete-button svg {
+	display: block;
 	transform: scale(1.8);
 }
 /* Highlight overlay */

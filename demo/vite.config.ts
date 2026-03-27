@@ -53,6 +53,10 @@ export default defineConfig({
 	resolve: {
 		alias: [
 			{
+				find: '@vostej/core/source-styles/',
+				replacement: `${coreLibRoot}/styles/`
+			},
+			{
 				find: '@vostej/core/styles.css',
 				replacement: `${coreLibRoot}/styles/styles.css`
 			},
