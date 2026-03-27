@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { BlockComponent } from '$lib/internal/editor/component';
 	import { TwoWaySide, type Side } from '$lib/internal/editor/side';
+	import { browser } from '$lib/internal/env';
 	import SidePanel from './SidePanel.svelte';
 	import Editor from './Editor.svelte';
 	import HighlightOverlay from './HighlightOverlay.svelte';
@@ -42,8 +43,38 @@
 
 	let contentElem: HTMLDivElement;
 	let editorRef = $state<Editor | undefined>(undefined);
+	let scrollbarRef = $state<HTMLDivElement | undefined>(undefined);
 	let height = $state(0);
 	let width = $state(0);
+
+	// Sync scrollLeft bidirectionally between contentContainer and sticky scrollbar
+	$effect(() => {
+		if (!browser || !contentContainer || !scrollbarRef) return;
+		const cc = contentContainer;
+		const sb = scrollbarRef;
+
+		let syncing = false;
+		const onContentScroll = () => {
+			if (syncing) return;
+			syncing = true;
+			sb.scrollLeft = cc.scrollLeft;
+			syncing = false;
+		};
+		const onScrollbarScroll = () => {
+			if (syncing) return;
+			syncing = true;
+			cc.scrollLeft = sb.scrollLeft;
+			syncing = false;
+		};
+
+		cc.addEventListener('scroll', onContentScroll, { passive: true });
+		sb.addEventListener('scroll', onScrollbarScroll, { passive: true });
+
+		return () => {
+			cc.removeEventListener('scroll', onContentScroll);
+			sb.removeEventListener('scroll', onScrollbarScroll);
+		};
+	});
 
 	let renderedSideComponents = $state<
 		{ block: HTMLDivElement; lines: HTMLDivElement[]; linesHeights: number[] }[]
@@ -114,26 +145,31 @@
 			onresolve={handleResolve}
 		/>
 	{/if}
-	<div class="msm__view-content" bind:this={contentContainer}>
-		<div
-			class="msm__wrapper"
-			bind:this={contentElem}
-			bind:clientWidth={width}
-			bind:clientHeight={height}
-		>
-			{#each sideComponents as blockComponent}
-				{@const BlockComp = blockComponent.component}
-				<BlockComp {...blockComponent.props} component={blockComponent} />
-			{/each}
+	<div class="msm__view-inner">
+		<div class="msm__view-content" bind:this={contentContainer}>
+			<div
+				class="msm__wrapper"
+				bind:this={contentElem}
+				bind:clientWidth={width}
+				bind:clientHeight={height}
+			>
+				{#each sideComponents as blockComponent}
+					{@const BlockComp = blockComponent.component}
+					<BlockComp {...blockComponent.props} component={blockComponent} />
+				{/each}
+			</div>
+
+			{#if highlight}
+				<HighlightOverlay {content} {width} {highlight} />
+			{/if}
+
+			{#if editable}
+				<Editor bind:content {width} bind:this={editorRef} />
+			{/if}
 		</div>
-
-		{#if highlight}
-			<HighlightOverlay {content} {width} {highlight} />
-		{/if}
-
-		{#if editable}
-			<Editor bind:content {width} bind:this={editorRef} />
-		{/if}
+		<div class="msm__sticky-scrollbar" bind:this={scrollbarRef}>
+			<div style:width="{width}px"></div>
+		</div>
 	</div>
 	{#if lineNumbersSide == 'right'}
 		<SidePanel
