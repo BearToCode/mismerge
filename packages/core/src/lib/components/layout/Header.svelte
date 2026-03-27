@@ -54,6 +54,41 @@
 	const label = $derived(conflicts.length > 0 ? 'conflict' : 'change');
 
 	let currentIndex = $state(-1);
+	let activeComponentIds: string[] = [];
+
+	function clearActiveDiff() {
+		if (!container) {
+			activeComponentIds = [];
+			return;
+		}
+
+		for (const componentId of activeComponentIds) {
+			const elements = container.querySelectorAll(`[data-component-id="${componentId}"]`);
+			for (const element of elements) {
+				element.classList.remove('msm__active-diff');
+			}
+		}
+
+		activeComponentIds = [];
+	}
+
+	function highlightBlock(block: DiffBlock<Side> | undefined) {
+		clearActiveDiff();
+		if (!container || !block) return;
+
+		const componentIds = components
+			.filter((component) => component.blockId === block.id && !component.placeholder)
+			.map((component) => component.id);
+
+		for (const componentId of componentIds) {
+			const elements = container.querySelectorAll(`[data-component-id="${componentId}"]`);
+			for (const element of elements) {
+				element.classList.add('msm__active-diff');
+			}
+		}
+
+		activeComponentIds = componentIds;
+	}
 
 	function scrollToBlock(block: DiffBlock<Side>) {
 		if (!container) return;
@@ -104,6 +139,24 @@
 		if (navigableBlocks.length === 0 || currentIndex < 0) return;
 		onacceptright?.(navigableBlocks[currentIndex]);
 	}
+
+	$effect(() => {
+		void container;
+		void components;
+		void currentIndex;
+		void navigableBlocks;
+
+		if (currentIndex < 0 || currentIndex >= navigableBlocks.length) {
+			clearActiveDiff();
+			return;
+		}
+
+		highlightBlock(navigableBlocks[currentIndex]);
+
+		return () => {
+			clearActiveDiff();
+		};
+	});
 </script>
 
 <header class="msm__header">

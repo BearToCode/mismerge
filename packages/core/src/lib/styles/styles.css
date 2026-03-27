@@ -455,6 +455,18 @@
 	background-color: var(--added);
 }
 
+.mismerge .msm__line-number pre {
+	color: var(--inactive-gutter, var(--primary-400, #797b7e));
+	transition:
+		color 120ms ease,
+		font-weight 120ms ease;
+}
+
+.mismerge .msm__line-number.msm__active-diff pre {
+	color: var(--active-gutter, #8a6400);
+	font-weight: 700;
+}
+
 .mismerge .msm__line-number.accepted {
 	background-color: var(--added);
 }

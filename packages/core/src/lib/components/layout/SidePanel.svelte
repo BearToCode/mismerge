@@ -47,12 +47,16 @@
 				{@const acceptedClass = component.props.acceptedInCenter ? 'accepted' : ''}
 				{#if block && lines}
 					{#if lines.length == 0}
-						<div class="msm__line-placeholder {component.visualType} {acceptedClass}"></div>
+						<div
+							class="msm__line-placeholder {component.visualType} {acceptedClass}"
+							data-component-id={component.id}
+						></div>
 					{:else}
 						{#each lines as _line, lineIndex}
 							<div
 								style="height: {linesHeights[lineIndex]}px;"
 								class="msm__line-number {component.visualType} {acceptedClass}"
+								data-component-id={component.id}
 							>
 								{#if lineIndex == 0 && !disableMerging && component.sideAction}
 									{@const ActionComp = component.sideAction.component}

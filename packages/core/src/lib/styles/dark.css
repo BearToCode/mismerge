@@ -15,6 +15,8 @@
 	--primary-400: #9fa0a4;
 	--primary-500: #e3e3e3;
 	--primary-600: #d8d8db;
+	--inactive-gutter: #7b7d82;
+	--active-gutter: #ffb15a;
 
 	--selection: rgba(87, 130, 111, 0.25);
 }
